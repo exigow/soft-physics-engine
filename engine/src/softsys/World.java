@@ -23,8 +23,8 @@ public class World {
       particle.velocity.x += gravity.x;
       particle.velocity.y += gravity.y;
       block(particle);
-      particle.position.x += particle.velocity.x;
-      particle.position.y += particle.velocity.y;
+      particle.x += particle.velocity.x;
+      particle.y += particle.velocity.y;
     }
 
     //Collections.shuffle(joints, new Random(1235678));
@@ -36,24 +36,24 @@ public class World {
 
   private void block(Particle particle) {
     float mul = .5f;
-    if (particle.position.y < -size.y) {
-      particle.position.y = -size.y;
-      particle.prevPosition.y = particle.position.y;
+    if (particle.y < -size.y) {
+      particle.y = -size.y;
+      particle.prevPosition.y = particle.y;
       particle.velocity.y = -particle.velocity.y * mul;
     }
-    if (particle.position.y > size.y) {
-      particle.position.y = size.y;
-      particle.prevPosition.y = particle.position.y;
+    if (particle.y > size.y) {
+      particle.y = size.y;
+      particle.prevPosition.y = particle.y;
       particle.velocity.y = -particle.velocity.y * mul;
     }
-    if (particle.position.x < -size.x) {
-      particle.position.x = -size.x;
-      particle.prevPosition.x = particle.position.x;
+    if (particle.x < -size.x) {
+      particle.x = -size.x;
+      particle.prevPosition.x = particle.x;
       particle.velocity.x = -particle.velocity.x * mul;
     }
-    if (particle.position.x > size.x) {
-      particle.position.x = size.x;
-      particle.prevPosition.x = particle.position.x;
+    if (particle.x > size.x) {
+      particle.x = size.x;
+      particle.prevPosition.x = particle.x;
       particle.velocity.x = -particle.velocity.x * mul;
     }
   }

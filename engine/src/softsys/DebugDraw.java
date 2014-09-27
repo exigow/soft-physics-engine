@@ -12,7 +12,7 @@ public class DebugDraw {
   private final static Color
     SHAPE_COLOR = new Color(.5f, .75f, 1f, ALPHA),
     VELOCITY_COLOR = new Color(.5f, 1f, .75f, ALPHA),
-    JOINT_COLOR = new Color(.5f, .325f, .25f, ALPHA),
+    JOINT_COLOR = new Color(.75f, .5f, .325f, ALPHA),
     CAGE_COLOR = new Color(.325f, .325f, .325f, ALPHA);
 
   private final World world;
@@ -23,8 +23,8 @@ public class DebugDraw {
 
   public void drawAll(ShapeRenderer renderer) {
     drawJoints(renderer, world.joints);
-    //drawVelocities(renderer, world.particles);
-    //drawParticles(renderer, world.particles);
+    drawVelocities(renderer, world.particles);
+    drawParticles(renderer, world.particles);
     drawCage(renderer);
   }
 
@@ -32,7 +32,7 @@ public class DebugDraw {
     renderer.setColor(SHAPE_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles)
-      renderer.circle(particle.position.x, particle.position.y, 1f);
+      renderer.circle(particle.x, particle.y, 1f);
     renderer.end();
   }
 
@@ -40,19 +40,19 @@ public class DebugDraw {
     renderer.setColor(VELOCITY_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Particle particle : particles)
-      renderer.line(particle.position.x, particle.position.y, particle.position.x + particle.velocity.x, particle.position.y + particle.velocity.y);
+      renderer.line(particle.x, particle.y, particle.x + particle.velocity.x, particle.y + particle.velocity.y);
     renderer.end();
   }
 
   private void drawJoints(ShapeRenderer renderer, Collection<DistanceJoint> constraints) {
     renderer.begin(ShapeRenderer.ShapeType.Line);
-    for (DistanceJoint constraint : constraints) {
-      float tension = constraint.getTension(),
-        red = tension * JOINT_COLOR.r,
-        green = (1 - tension) * JOINT_COLOR.g;
-      Color color = new Color(red, green, 1f * JOINT_COLOR.b, 1f * JOINT_COLOR.a);
+    for (DistanceJoint joint : constraints) {
+      float tension = joint.getTension(),
+        red = .125f + (tension * JOINT_COLOR.r) * .875f,
+        green = .125f + ((1f - tension) * JOINT_COLOR.g) * .875f;
+      Color color = new Color(red, green, JOINT_COLOR.b, JOINT_COLOR.a);
       renderer.setColor(color);
-      renderer.line(constraint.red.position.x, constraint.red.position.y, constraint.blue.position.x, constraint.blue.position.y);
+      renderer.line(joint.red.x, joint.red.y, joint.blue.x, joint.blue.y);
     }
     renderer.end();
   }

@@ -16,8 +16,8 @@ public abstract class Joint {
   public abstract void relax(float delta);
 
   protected Vec2 normal() {
-    normal.x = -blue.position.x + red.position.x;
-    normal.y = -blue.position.y + red.position.y;
+    normal.x = -blue.x + red.x;
+    normal.y = -blue.y + red.y;
     return normal;
   }
 

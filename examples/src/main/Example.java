@@ -33,13 +33,7 @@ public class Example implements ApplicationListener {
     world = new World(new Vector2(0f, -0.025f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
     createCloth(new Vector2(0f, 0f), 512, 512, 32, .975f);
-    /*for (int i = 0; i < 128; i++) {
-      Particle particle = new Particle(new Vector2(i * 1f, 0));
-      world.particles.add(particle);
-      if (i != 0) {
-        world.joints.add(new DistanceJoint(world.particles.get(i - 1), world.particles.get(i), .75f));
-      }
-    }*/
+    //createRope();
   }
 
   public void render() {
@@ -58,10 +52,8 @@ public class Example implements ApplicationListener {
     }
     if (prevClicked && !clicked)
       selected = null;
-    if (selected != null) {
-      selected.position.x = mousePosition.x;
-      selected.position.y = mousePosition.y;
-    }
+    if (selected != null)
+      selected.set(mousePosition.x, mousePosition.y);
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     shapeRenderer.setProjectionMatrix(camera.combined);
@@ -75,7 +67,7 @@ public class Example implements ApplicationListener {
     float length = 32f;
     Particle nearest = null;
     for (Particle particle : particles) {
-      float checkLength = Vector2.dst(particle.position.x, particle.position.y, position.x, position.y);
+      float checkLength = Vector2.dst(particle.x, particle.y, position.x, position.y);
       if (checkLength < length) {
         nearest = particle;
         length = checkLength;
@@ -84,16 +76,26 @@ public class Example implements ApplicationListener {
     return nearest;
   }
 
-  public void createCloth(Vector2 origin, int width, int height, int segments, float stiffness) {
+  private void createRope() {
+    for (int i = 0; i < 32; i++) {
+      Particle particle = new Particle(i * 8f, 0);
+      world.particles.add(particle);
+      if (i != 0) {
+        world.joints.add(new DistanceJoint(world.particles.get(i - 1), world.particles.get(i), .75f));
+      }
+    }
+  }
+
+  private void createCloth(Vector2 origin, int width, int height, int segments, float stiffness) {
     float xStride = width / segments;
     float yStride = height / segments;
     for (int y = 0; y < segments; ++y) {
       for (int x = 0; x < segments; ++x) {
-        Vector2 p = new Vector2(
-          origin.x + x * xStride - width / 2f + xStride / 2f,
-          origin.y + y * yStride - height / 2f + yStride / 2f
-        );
-        world.particles.add(new Particle(p));
+
+        float px = origin.x + x * xStride - width / 2f + xStride / 2f,
+          py = origin.y + y * yStride - height / 2f + yStride / 2f;
+
+        world.particles.add(new Particle(px, py));
         if (x > 0)
           world.joints.add(new DistanceJoint(world.particles.get(y * segments + x), world.particles.get(y * segments + x - 1), stiffness));
         if (y > 0)
