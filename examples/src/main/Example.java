@@ -80,10 +80,10 @@ public class Example implements ApplicationListener {
   private void createRope() {
     int i = 0;
     for (; i < 32; i++) {
-      Particle particle = new Particle(i * 8f, 0);
+      Particle particle = new Particle(i * 16f, 0);
       world.particles.add(particle);
       if (i > 0) {
-        world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .75f));
+        world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
       }
     }
     world.joints.add(new StaticJoint(world.particles.get(i - 1), new Vector2()));
@@ -94,10 +94,8 @@ public class Example implements ApplicationListener {
     float yStride = height / segments;
     for (int y = 0; y < segments; ++y) {
       for (int x = 0; x < segments; ++x) {
-
         float px = origin.x + x * xStride - width / 2f + xStride / 2f,
           py = origin.y + y * yStride - height / 2f + yStride / 2f;
-
         world.particles.add(new Particle(px, py));
         if (x > 0)
           world.joints.add(new SpringJoint(world.particles.get(y * segments + x), world.particles.get(y * segments + x - 1), stiffness));

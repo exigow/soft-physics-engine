@@ -21,11 +21,9 @@ public class World {
   public void simulate(int iterations) {
     for (Particle particle : particles) {
       particle.updateVelocity();
-      particle.velocity.x += gravity.x;
-      particle.velocity.y += gravity.y;
+      particle.velocity.add(gravity);
       block(particle);
-      particle.x += particle.velocity.x;
-      particle.y += particle.velocity.y;
+      particle.add(particle.velocity);
     }
 
     //Collections.shuffle(joints, new Random(1235678));
