@@ -4,18 +4,23 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Particle {
 
-  public final Vector2 pos = new Vector2(),
-    prevPosition = new Vector2(),
-    velocity = new Vector2();
+  public final Vec2
+    position = new Vec2(),
+    prevPosition = new Vec2(),
+    velocity = new Vec2();
 
   public Particle(Vector2 destination) {
-    pos.set(destination);
-    prevPosition.set(destination);
+    position.x = destination.x;
+    position.y = destination.y;
+    prevPosition.x = destination.x;
+    prevPosition.y = destination.y;
   }
 
   public void updateVelocity() {
-    velocity.set(prevPosition).scl(-1f).add(pos);
-    prevPosition.set(pos);
+    velocity.x = -prevPosition.x + position.x;
+    velocity.y = -prevPosition.y + position.y;
+    prevPosition.x = position.x;
+    prevPosition.y = position.y;
   }
 
 }

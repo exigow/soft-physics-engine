@@ -32,7 +32,7 @@ public class DebugDraw {
     renderer.setColor(SHAPE_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles)
-      renderer.circle(particle.pos.x, particle.pos.y, 1f);
+      renderer.circle(particle.position.x, particle.position.y, 1f);
     renderer.end();
   }
 
@@ -40,7 +40,7 @@ public class DebugDraw {
     renderer.setColor(VELOCITY_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Particle particle : particles)
-      renderer.line(particle.pos.x, particle.pos.y, particle.pos.x + particle.velocity.x, particle.pos.y + particle.velocity.y);
+      renderer.line(particle.position.x, particle.position.y, particle.position.x + particle.velocity.x, particle.position.y + particle.velocity.y);
     renderer.end();
   }
 
@@ -52,7 +52,7 @@ public class DebugDraw {
         green = (1 - tension) * JOINT_COLOR.g;
       Color color = new Color(red, green, 1f * JOINT_COLOR.b, 1f * JOINT_COLOR.a);
       renderer.setColor(color);
-      renderer.line(constraint.red.pos.x, constraint.red.pos.y, constraint.blue.pos.x, constraint.blue.pos.y);
+      renderer.line(constraint.red.position.x, constraint.red.position.y, constraint.blue.position.x, constraint.blue.position.y);
     }
     renderer.end();
   }

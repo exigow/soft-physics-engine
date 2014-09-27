@@ -2,6 +2,7 @@ package softsys.joints;
 
 import com.badlogic.gdx.math.Vector2;
 import softsys.Particle;
+import softsys.Vec2;
 
 public class DistanceJoint extends Joint {
 
@@ -10,33 +11,27 @@ public class DistanceJoint extends Joint {
   public DistanceJoint(Particle red, Particle blue, float flexibility) {
     super(red, blue);
     this.flexibility = flexibility;
-    this.length = distance(red.pos, blue.pos);
+    this.length = distance(red.position, blue.position);
   }
-
-  /*public void relax(float delta) {
-    Vector2 normal = normal();
-    float mul = normal.len2(),
-      scale = ((length * length - mul) / mul) * flexibility * delta;
-    normal.scl(scale);
-    red.pos.add(normal);
-    blue.pos.add(normal.scl(-1f));
-  }*/
 
   // based on hooke's law
   public void relax(float delta) {
-    Vector2 normal = normal();
+    Vec2 normal = normal();
     float scalar = (length / normal.len() - 1f) * flexibility * delta;
-    normal.scl(scalar);
-    red.pos.add(normal);
-    blue.pos.add(normal.scl(-1f));
+    normal.x *= scalar;
+    normal.y *= scalar;
+    red.position.x += normal.x;
+    red.position.y += normal.y;
+    blue.position.x += -normal.x;
+    blue.position.y += -normal.y;
   }
 
   public float getTension() {
-    float dist = distance(red.pos, blue.pos);
+    float dist = distance(red.position, blue.position);
     return Math.abs(dist - length) / length;
   }
 
-  private float distance(Vector2 a, Vector2 b) {
+  private float distance(Vec2 a, Vec2 b) {
     return Vector2.dst(a.x, a.y, b.x, b.y);
   }
 

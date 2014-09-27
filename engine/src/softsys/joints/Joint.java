@@ -1,12 +1,12 @@
 package softsys.joints;
 
-import com.badlogic.gdx.math.Vector2;
 import softsys.Particle;
+import softsys.Vec2;
 
 public abstract class Joint {
 
   public final Particle red, blue;
-  private final Vector2 normal = new Vector2();
+  private final Vec2 normal = new Vec2();
 
   public Joint(Particle red, Particle blue) {
     this.red = red;
@@ -15,8 +15,10 @@ public abstract class Joint {
 
   public abstract void relax(float delta);
 
-  protected Vector2 normal() {
-    return normal.set(blue.pos).scl(-1f).add(red.pos);
+  protected Vec2 normal() {
+    normal.x = -blue.position.x + red.position.x;
+    normal.y = -blue.position.y + red.position.y;
+    return normal;
   }
 
 }

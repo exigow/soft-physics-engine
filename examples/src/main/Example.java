@@ -30,7 +30,7 @@ public class Example implements ApplicationListener {
     Vector2 size = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector2(0f, -0.0125f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vector2(0f, -0.025f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
     createCloth(new Vector2(0f, 0f), 512, 512, 32, .975f);
     /*for (int i = 0; i < 128; i++) {
@@ -58,8 +58,10 @@ public class Example implements ApplicationListener {
     }
     if (prevClicked && !clicked)
       selected = null;
-    if (selected != null)
-      selected.pos.set(mousePosition.x, mousePosition.y);
+    if (selected != null) {
+      selected.position.x = mousePosition.x;
+      selected.position.y = mousePosition.y;
+    }
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     shapeRenderer.setProjectionMatrix(camera.combined);
@@ -73,7 +75,7 @@ public class Example implements ApplicationListener {
     float length = 32f;
     Particle nearest = null;
     for (Particle particle : particles) {
-      float checkLength = Vector2.dst(particle.pos.x, particle.pos.y, position.x, position.y);
+      float checkLength = Vector2.dst(particle.position.x, particle.position.y, position.x, position.y);
       if (checkLength < length) {
         nearest = particle;
         length = checkLength;
