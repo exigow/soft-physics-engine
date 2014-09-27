@@ -1,13 +1,13 @@
 package softsys.joints;
 
 import softsys.Particle;
-import softsys.Vector2;
+import softsys.Vector;
 
 public class StaticJoint extends Joint {
 
-  private final Vector2 where;
+  private final Vector where;
 
-  public StaticJoint(Particle particle, Vector2 where) {
+  public StaticJoint(Particle particle, Vector where) {
     super(particle, new Particle(where), 0f);
     this.where = where;
   }

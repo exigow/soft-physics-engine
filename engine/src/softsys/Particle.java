@@ -1,17 +1,17 @@
 package softsys;
 
-public class Particle extends Vector2 {
+public class Particle extends Vector {
 
-  public final Vector2
-    prevPosition = new Vector2(),
-    velocity = new Vector2();
+  public final Vector
+    prevPosition = new Vector(),
+    velocity = new Vector();
 
   public Particle(float x, float y) {
     super(x, y);
     prevPosition.set(this);
   }
 
-  public Particle(Vector2 where) {
+  public Particle(Vector where) {
     this(where.x, where.y);
   }
 

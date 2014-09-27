@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import softsys.DebugDraw;
 import softsys.Particle;
-import softsys.Vector2;
+import softsys.Vector;
 import softsys.World;
 import softsys.joints.SpringJoint;
 import softsys.joints.StaticJoint;
@@ -31,7 +31,7 @@ public class Example implements ApplicationListener {
     com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector2(0f, -0.025f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vector(0f, -0.025f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
     //createCloth(new Vector2(0f, 0f), 512, 512, 16, .75f);
     createRope();
@@ -86,10 +86,10 @@ public class Example implements ApplicationListener {
         world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
       }
     }
-    world.joints.add(new StaticJoint(world.particles.get(i - 1), new Vector2()));
+    world.joints.add(new StaticJoint(world.particles.get(i - 1), new Vector()));
   }
 
-  private void createCloth(Vector2 origin, int width, int height, int segments, float stiffness) {
+  private void createCloth(Vector origin, int width, int height, int segments, float stiffness) {
     float xStride = width / segments;
     float yStride = height / segments;
     for (int y = 0; y < segments; ++y) {

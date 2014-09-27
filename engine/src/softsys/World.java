@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public class World {
 
-  public final Vector2
-    gravity = new Vector2(),
-    size = new Vector2();
+  public final Vector
+    gravity = new Vector(),
+    size = new Vector();
 
   public final ArrayList<Particle> particles = new ArrayList<Particle>();
   public final ArrayList<Joint> joints = new ArrayList<Joint>();
 
-  public World(Vector2 gravity, Vector2 size) {
+  public World(Vector gravity, Vector size) {
     this.gravity.set(gravity);
     this.size.set(size);
   }
