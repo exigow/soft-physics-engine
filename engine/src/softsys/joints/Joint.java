@@ -21,4 +21,8 @@ public abstract class Joint {
     return normal;
   }
 
+  public float getLenght() {
+    return Vec2.distanceBetween(red, blue);
+  }
+
 }

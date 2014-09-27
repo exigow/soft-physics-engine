@@ -28,10 +28,10 @@ public class DebugDraw {
     drawCage(renderer);
   }
 
-  private void drawParticles(ShapeRenderer renderer, Collection<Particle> particles) {
+  private void drawParticles(ShapeRenderer renderer, Collection<? extends Vec2> particles) {
     renderer.setColor(SHAPE_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Filled);
-    for (Particle particle : particles)
+    for (Vec2 particle : particles)
       renderer.circle(particle.x, particle.y, 1f);
     renderer.end();
   }

@@ -13,7 +13,6 @@ public class Vec2 {
     this.y = y;
   }
 
-
   public Vec2 set(float x, float y) {
     this.x = x;
     this.y = y;
@@ -32,12 +31,29 @@ public class Vec2 {
     return this;
   }
 
+  public Vec2 invert() {
+    x = -x;
+    y = -y;
+    return this;
+  }
+
+  public Vec2 scale(float scalar) {
+    x *= scalar;
+    y *= scalar;
+    return this;
+  }
+
   public float getLength() {
     return (float)Math.sqrt(getLengthSquare());
   }
 
   public float getLengthSquare() {
     return x * x + y * y;
+  }
+
+
+  public static float distanceBetween(Vec2 a, Vec2 b) {
+    return com.badlogic.gdx.math.Vector2.dst(a.x, a.y, b.x, b.y);
   }
 
 }
