@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import softsys.DebugDraw;
 import softsys.Particle;
+import softsys.Vec2;
 import softsys.World;
 import softsys.joints.DistanceJoint;
 
@@ -30,7 +31,7 @@ public class Example implements ApplicationListener {
     Vector2 size = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector2(0f, -0.025f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vec2(0f, -0.025f), new Vec2(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
     createCloth(new Vector2(0f, 0f), 512, 512, 32, .975f);
     //createRope();

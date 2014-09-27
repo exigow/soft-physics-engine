@@ -51,9 +51,12 @@ public class Vec2 {
     return x * x + y * y;
   }
 
-
+  private final static Vec2 temp = new Vec2();
   public static float distanceBetween(Vec2 a, Vec2 b) {
-    return com.badlogic.gdx.math.Vector2.dst(a.x, a.y, b.x, b.y);
+    temp.set(a);
+    temp.x -= b.x;
+    temp.y -= b.y;
+    return temp.getLength();
   }
 
 }

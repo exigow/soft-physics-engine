@@ -1,20 +1,21 @@
 package softsys;
 
-import com.badlogic.gdx.math.Vector2;
 import softsys.joints.DistanceJoint;
 
 import java.util.ArrayList;
 
 public class World {
 
-  public final Vector2 gravity, size;
+  public final Vec2
+    gravity = new Vec2(),
+    size = new Vec2();
 
   public final ArrayList<Particle> particles = new ArrayList<Particle>();
   public final ArrayList<DistanceJoint> joints = new ArrayList<DistanceJoint>();
 
-  public World(Vector2 gravity, Vector2 size) {
-    this.gravity = gravity;
-    this.size = size;
+  public World(Vec2 gravity, Vec2 size) {
+    this.gravity.set(gravity);
+    this.size.set(size);
   }
 
   public void simulate(int iterations) {
