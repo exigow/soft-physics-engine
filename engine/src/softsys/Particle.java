@@ -1,10 +1,10 @@
 package softsys;
 
-public class Particle extends Vec2 {
+public class Particle extends Vector2 {
 
-  public final Vec2
-    prevPosition = new Vec2(),
-    velocity = new Vec2();
+  public final Vector2
+    prevPosition = new Vector2(),
+    velocity = new Vector2();
 
   public Particle(float x, float y) {
     super(x, y);

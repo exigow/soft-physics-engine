@@ -1,43 +1,43 @@
 package softsys;
 
-public class Vec2 {
+public class Vector2 {
 
   public float x, y;
 
-  public Vec2() {
+  public Vector2() {
     this(0f, 0f);
   }
 
-  public Vec2(float x, float y) {
+  public Vector2(float x, float y) {
     this.x = x;
     this.y = y;
   }
 
-  public Vec2 set(float x, float y) {
+  public Vector2 set(float x, float y) {
     this.x = x;
     this.y = y;
     return this;
   }
 
-  public Vec2 set(Vec2 from) {
+  public Vector2 set(Vector2 from) {
     x = from.x;
     y = from.y;
     return this;
   }
 
-  public Vec2 add(Vec2 from) {
+  public Vector2 add(Vector2 from) {
     x += from.x;
     y += from.y;
     return this;
   }
 
-  public Vec2 invert() {
+  public Vector2 invert() {
     x = -x;
     y = -y;
     return this;
   }
 
-  public Vec2 scale(float scalar) {
+  public Vector2 scale(float scalar) {
     x *= scalar;
     y *= scalar;
     return this;
@@ -51,8 +51,8 @@ public class Vec2 {
     return x * x + y * y;
   }
 
-  private final static Vec2 temp = new Vec2();
-  public static float distanceBetween(Vec2 a, Vec2 b) {
+  private final static Vector2 temp = new Vector2();
+  public static float distanceBetween(Vector2 a, Vector2 b) {
     temp.set(a);
     temp.x -= b.x;
     temp.y -= b.y;

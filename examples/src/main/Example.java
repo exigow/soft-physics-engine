@@ -6,11 +6,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import softsys.DebugDraw;
 import softsys.Particle;
-import softsys.Vec2;
+import softsys.Vector2;
 import softsys.World;
 import softsys.joints.DistanceJoint;
 
@@ -28,12 +27,12 @@ public class Example implements ApplicationListener {
 
   @Override
   public void create() {
-    Vector2 size = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vec2(0f, -0.025f), new Vec2(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vector2(0f, -0.025f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
-    createCloth(new Vector2(0f, 0f), 512, 512, 32, .975f);
+    createCloth(new com.badlogic.gdx.math.Vector2(0f, 0f), 512, 512, 32, .975f);
     //createRope();
   }
 
@@ -47,7 +46,7 @@ public class Example implements ApplicationListener {
     boolean prevClicked = clicked;
     clicked = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
     if (!prevClicked && clicked) {
-      Particle nearest = findNearestTo(world.particles, new Vector2(mousePosition.x, mousePosition.y));
+      Particle nearest = findNearestTo(world.particles, new com.badlogic.gdx.math.Vector2(mousePosition.x, mousePosition.y));
       if (nearest != null)
         selected = nearest;
     }
@@ -64,11 +63,11 @@ public class Example implements ApplicationListener {
     worldDebugDraw.drawAll(shapeRenderer);
   }
 
-  private Particle findNearestTo(Collection<Particle> particles, Vector2 position) {
+  private Particle findNearestTo(Collection<Particle> particles, com.badlogic.gdx.math.Vector2 position) {
     float length = 32f;
     Particle nearest = null;
     for (Particle particle : particles) {
-      float checkLength = Vector2.dst(particle.x, particle.y, position.x, position.y);
+      float checkLength = com.badlogic.gdx.math.Vector2.dst(particle.x, particle.y, position.x, position.y);
       if (checkLength < length) {
         nearest = particle;
         length = checkLength;
@@ -87,7 +86,7 @@ public class Example implements ApplicationListener {
     }
   }
 
-  private void createCloth(Vector2 origin, int width, int height, int segments, float stiffness) {
+  private void createCloth(com.badlogic.gdx.math.Vector2 origin, int width, int height, int segments, float stiffness) {
     float xStride = width / segments;
     float yStride = height / segments;
     for (int y = 0; y < segments; ++y) {

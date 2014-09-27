@@ -1,12 +1,12 @@
 package softsys.joints;
 
 import softsys.Particle;
-import softsys.Vec2;
+import softsys.Vector2;
 
 public abstract class Joint {
 
   public final Particle red, blue;
-  private final Vec2 normal = new Vec2();
+  private final Vector2 normal = new Vector2();
 
   public Joint(Particle red, Particle blue) {
     this.red = red;
@@ -15,14 +15,14 @@ public abstract class Joint {
 
   public abstract void relax(float delta);
 
-  protected Vec2 normal() {
+  protected Vector2 normal() {
     normal.x = -blue.x + red.x;
     normal.y = -blue.y + red.y;
     return normal;
   }
 
   public float getLenght() {
-    return Vec2.distanceBetween(red, blue);
+    return Vector2.distanceBetween(red, blue);
   }
 
 }
