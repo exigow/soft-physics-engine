@@ -11,7 +11,7 @@ public class Runner {
     cfg.width = 1280;
     cfg.height = 768;
     cfg.resizable = false;
-    new LwjglApplication(new Game(), cfg);
+    new LwjglApplication(new Example(), cfg);
   }
 
 }

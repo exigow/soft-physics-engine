@@ -15,14 +15,13 @@ import softsys.joints.DistanceJoint;
 
 import java.util.Collection;
 
-public class Game implements ApplicationListener {
+public class Example implements ApplicationListener {
 
   private OrthographicCamera camera;
   private ShapeRenderer shapeRenderer;
   private final Vector3 mousePosition = new Vector3();
   private World world;
   private DebugDraw worldDebugDraw;
-
   private Particle selected = null;
   private boolean clicked = false;
 
@@ -31,21 +30,16 @@ public class Game implements ApplicationListener {
     Vector2 size = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector2(0f, -0.125f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vector2(0f, -0.0125f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
-
-
-    createCloth(new Vector2(0f, 0f), 512, 512, 64, .975f);
-
+    createCloth(new Vector2(0f, 0f), 512, 512, 32, .975f);
     /*for (int i = 0; i < 128; i++) {
-      Particle particle = new Particle(new Vector2(i * 2f, 0));
+      Particle particle = new Particle(new Vector2(i * 1f, 0));
       world.particles.add(particle);
       if (i != 0) {
-        world.joints.add(new DistanceJoint(world.particles.get(i - 1), world.particles.get(i), .9875f));
+        world.joints.add(new DistanceJoint(world.particles.get(i - 1), world.particles.get(i), .75f));
       }
     }*/
-
-    //world.createCircle(new Vector2(128f, 0f), 3, 128f);
   }
 
   public void render() {
