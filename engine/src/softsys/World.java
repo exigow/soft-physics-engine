@@ -1,6 +1,6 @@
 package softsys;
 
-import softsys.joints.DistanceJoint;
+import softsys.joints.Joint;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class World {
     size = new Vector2();
 
   public final ArrayList<Particle> particles = new ArrayList<Particle>();
-  public final ArrayList<DistanceJoint> joints = new ArrayList<DistanceJoint>();
+  public final ArrayList<Joint> joints = new ArrayList<Joint>();
 
   public World(Vector2 gravity, Vector2 size) {
     this.gravity.set(gravity);
@@ -31,7 +31,7 @@ public class World {
     //Collections.shuffle(joints, new Random(1235678));
     float delta = 1.0f / iterations;
     for (int iteration = 0; iteration < iterations; ++iteration)
-      for (DistanceJoint joint : joints)
+      for (Joint joint : joints)
         joint.relax(delta);
   }
 

@@ -11,6 +11,10 @@ public class Particle extends Vector2 {
     prevPosition.set(this);
   }
 
+  public Particle(Vector2 where) {
+    this(where.x, where.y);
+  }
+
   public void updateVelocity() {
     velocity.x = -prevPosition.x + x;
     velocity.y = -prevPosition.y + y;

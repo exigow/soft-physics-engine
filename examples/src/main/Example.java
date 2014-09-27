@@ -11,7 +11,8 @@ import softsys.DebugDraw;
 import softsys.Particle;
 import softsys.Vector2;
 import softsys.World;
-import softsys.joints.DistanceJoint;
+import softsys.joints.SpringJoint;
+import softsys.joints.StaticJoint;
 
 import java.util.Collection;
 
@@ -32,8 +33,8 @@ public class Example implements ApplicationListener {
     shapeRenderer  = new ShapeRenderer();
     world = new World(new Vector2(0f, -0.025f), new Vector2(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
-    createCloth(new com.badlogic.gdx.math.Vector2(0f, 0f), 512, 512, 32, .975f);
-    //createRope();
+    //createCloth(new Vector2(0f, 0f), 512, 512, 16, .75f);
+    createRope();
   }
 
   public void render() {
@@ -77,16 +78,18 @@ public class Example implements ApplicationListener {
   }
 
   private void createRope() {
-    for (int i = 0; i < 32; i++) {
+    int i = 0;
+    for (; i < 32; i++) {
       Particle particle = new Particle(i * 8f, 0);
       world.particles.add(particle);
-      if (i != 0) {
-        world.joints.add(new DistanceJoint(world.particles.get(i - 1), world.particles.get(i), .75f));
+      if (i > 0) {
+        world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .75f));
       }
     }
+    world.joints.add(new StaticJoint(world.particles.get(i - 1), new Vector2()));
   }
 
-  private void createCloth(com.badlogic.gdx.math.Vector2 origin, int width, int height, int segments, float stiffness) {
+  private void createCloth(Vector2 origin, int width, int height, int segments, float stiffness) {
     float xStride = width / segments;
     float yStride = height / segments;
     for (int y = 0; y < segments; ++y) {
@@ -97,9 +100,9 @@ public class Example implements ApplicationListener {
 
         world.particles.add(new Particle(px, py));
         if (x > 0)
-          world.joints.add(new DistanceJoint(world.particles.get(y * segments + x), world.particles.get(y * segments + x - 1), stiffness));
+          world.joints.add(new SpringJoint(world.particles.get(y * segments + x), world.particles.get(y * segments + x - 1), stiffness));
         if (y > 0)
-          world.joints.add(new DistanceJoint(world.particles.get(y * segments + x), world.particles.get((y - 1) * segments + x), stiffness));
+          world.joints.add(new SpringJoint(world.particles.get(y * segments + x), world.particles.get((y - 1) * segments + x), stiffness));
       }
     }
   }

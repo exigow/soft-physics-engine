@@ -2,7 +2,7 @@ package softsys;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import softsys.joints.DistanceJoint;
+import softsys.joints.Joint;
 
 import java.util.Collection;
 
@@ -44,9 +44,9 @@ public class DebugDraw {
     renderer.end();
   }
 
-  private void drawJoints(ShapeRenderer renderer, Collection<DistanceJoint> constraints) {
+  private void drawJoints(ShapeRenderer renderer, Collection<Joint> constraints) {
     renderer.begin(ShapeRenderer.ShapeType.Line);
-    for (DistanceJoint joint : constraints) {
+    for (Joint joint : constraints) {
       float tension = joint.getTension(),
         red = .125f + (tension * JOINT_COLOR.r) * .875f,
         green = .125f + ((1f - tension) * JOINT_COLOR.g) * .875f;
