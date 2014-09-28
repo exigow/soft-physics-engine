@@ -31,6 +31,12 @@ public class Vector {
     return this;
   }
 
+  public Vector add(float x, float y) {
+    this.x += x;
+    this.y += y;
+    return this;
+  }
+
   public Vector invert() {
     x = -x;
     y = -y;
@@ -41,6 +47,13 @@ public class Vector {
     x *= scalar;
     y *= scalar;
     return this;
+  }
+
+  public float angleTo(Vector target) {
+    float angle = (float) Math.toDegrees(Math.atan2(target.y - y, target.x - x));
+    if(angle < 0)
+      angle += 360;
+    return angle;
   }
 
   public float getLength() {

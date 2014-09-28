@@ -11,6 +11,7 @@ import softsys.DebugDraw;
 import softsys.Particle;
 import softsys.Vector;
 import softsys.World;
+import softsys.joints.DirectionJoint;
 import softsys.joints.SpringJoint;
 import softsys.joints.StaticJoint;
 
@@ -83,10 +84,11 @@ public class Example implements ApplicationListener {
       Particle particle = new Particle(i * 16f, 0);
       world.particles.add(particle);
       if (i > 0) {
-        world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
+        //world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
+        world.joints.add(new DirectionJoint(world.particles.get(i - 1), world.particles.get(i)));
       }
     }
-    world.joints.add(new StaticJoint(world.particles.get(i - 1), new Vector()));
+    world.joints.add(new StaticJoint(world.particles.get(0), new Vector()));
   }
 
   private void createCloth(Vector origin, int width, int height, int segments, float stiffness) {
