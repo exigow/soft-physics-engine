@@ -7,17 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import softsys.DebugDraw;
-import softsys.Particle;
-import softsys.Vector;
-import softsys.World;
+import softsys.*;
 import softsys.joints.AngleJoint;
 import softsys.joints.SpringJoint;
 import softsys.joints.StaticJoint;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
 
 public class Example implements ApplicationListener {
 
@@ -36,9 +31,8 @@ public class Example implements ApplicationListener {
     shapeRenderer  = new ShapeRenderer();
     world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
-    //createCloth(new Vector2(0f, 0f), 512, 512, 16, .75f);
+    //createCloth(new Vector(0f, 0f), 512, 512, 16, .75f);
     createRope();
-    Collections.shuffle(world.joints, new Random(1235678));
   }
 
   public void render() {
@@ -46,7 +40,7 @@ public class Example implements ApplicationListener {
     camera.update();
     camera.unproject(mousePosition);
 
-    world.simulate(Gdx.graphics.getDeltaTime(), 64);
+    world.simulate(Gdx.graphics.getDeltaTime(), 4);
 
     boolean prevClicked = clicked;
     clicked = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
@@ -84,11 +78,11 @@ public class Example implements ApplicationListener {
   private void createRope() {
     int i = 0;
     for (; i < 8; i++) {
-      Particle particle = new Particle(i * 64f, 0);
+      AngleParticle particle = new AngleParticle(i * 64f, 0, 0f);
       world.particles.add(particle);
       if (i > 0) {
         world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
-        world.joints.add(new AngleJoint(world.particles.get(i - 1), world.particles.get(i)));
+        world.joints.add(new AngleJoint((AngleParticle)world.particles.get(i - 1), world.particles.get(i)));
       }
     }
     world.joints.add(new StaticJoint(world.particles.get(0), new Vector()));

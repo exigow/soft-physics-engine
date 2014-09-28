@@ -47,11 +47,12 @@ public class DebugDraw {
   private void drawJoints(ShapeRenderer renderer, Collection<Joint> constraints) {
     renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Joint joint : constraints) {
-      float tension = joint.getTension(),
+      /*float tension = joint.getTension(),
         red = .125f + (tension * JOINT_COLOR.r) * .875f,
         green = .125f + ((1f - tension) * JOINT_COLOR.g) * .875f;
       Color color = new Color(red, green, JOINT_COLOR.b, JOINT_COLOR.a);
-      renderer.setColor(color);
+      renderer.setColor(color);*/
+      renderer.setColor(JOINT_COLOR);
       renderer.line(joint.red.x, joint.red.y, joint.blue.x, joint.blue.y);
     }
     renderer.end();

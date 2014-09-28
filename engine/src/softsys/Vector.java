@@ -56,6 +56,12 @@ public class Vector {
     return angle;
   }
 
+  public static float angdiff(float angle0, float angle1) {
+    double angle0Deg = Math.toDegrees(angle0);
+    double angle1Deg = Math.toDegrees(angle1);
+    return (float)Math.toRadians(((((angle0Deg - angle1Deg) % 360f) + 540f) % 360f) - 180f);
+  }
+
   public float distanceTo(Vector target) {
     return distanceBetween(this, target);
   }
