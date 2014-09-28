@@ -50,10 +50,14 @@ public class Vector {
   }
 
   public float angleTo(Vector target) {
-    float angle = (float) Math.toDegrees(Math.atan2(target.y - y, target.x - x));
+    float angle = (float) Math.atan2(target.y - y, target.x - x);
     if(angle < 0)
-      angle += 360;
+      angle += Math.PI * 2;
     return angle;
+  }
+
+  public float distanceTo(Vector target) {
+    return distanceBetween(this, target);
   }
 
   public float getLength() {
