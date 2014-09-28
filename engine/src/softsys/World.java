@@ -18,10 +18,12 @@ public class World {
     this.size.set(size);
   }
 
-  public void simulate(int iterations) {
+  Vector gravityDelta = new Vector();
+  public void simulate(float deltaTime, int iterations) {
+    gravityDelta.set(gravity).scale(deltaTime);
     for (Particle particle : particles) {
       particle.updateVelocity();
-      particle.velocity.add(gravity);
+      particle.velocity.add(gravityDelta);
       block(particle);
       particle.add(particle.velocity);
     }

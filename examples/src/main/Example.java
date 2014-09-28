@@ -31,7 +31,7 @@ public class Example implements ApplicationListener {
     com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector(0f, -0.025f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
     //createCloth(new Vector2(0f, 0f), 512, 512, 16, .75f);
     createRope();
@@ -42,7 +42,7 @@ public class Example implements ApplicationListener {
     camera.update();
     camera.unproject(mousePosition);
 
-    world.simulate(16);
+    world.simulate(Gdx.graphics.getDeltaTime(), 16);
 
     boolean prevClicked = clicked;
     clicked = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
