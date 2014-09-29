@@ -14,11 +14,11 @@ public class ClothConstructor extends Constructor {
       for (int x = 0; x < segments; ++x) {
         float px = origin.x + x * xStride - width / 2f + xStride / 2f,
           py = origin.y + y * yStride - height / 2f + yStride / 2f;
-        localParticles.add(new Particle(px, py));
+        particles.add(new Particle(px, py));
         if (x > 0)
-          localJoints.add(new SpringJoint(localParticles.get(y * segments + x), localParticles.get(y * segments + x - 1), stiffness));
+          joints.add(new SpringJoint(particles.get(y * segments + x), particles.get(y * segments + x - 1), stiffness));
         if (y > 0)
-          localJoints.add(new SpringJoint(localParticles.get(y * segments + x), localParticles.get((y - 1) * segments + x), stiffness));
+          joints.add(new SpringJoint(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
       }
     }
   }

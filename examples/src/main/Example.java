@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import main.constructors.ClothConstructor;
+import main.constructors.PlantConstructor;
 import softsys.DebugDraw;
 import softsys.Particle;
 import softsys.Vector;
@@ -32,9 +33,9 @@ public class Example implements ApplicationListener {
     shapeRenderer  = new ShapeRenderer();
     world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
-    //createCloth(new Vector(0f, 0f), 512, 512, 16, .75f);
+
     new ClothConstructor(new Vector(0f, 0f), 512, 512, 16, .75f).flush(world);
-    //createRope();
+    new PlantConstructor().flush(world);
   }
 
   public void render() {
@@ -76,19 +77,6 @@ public class Example implements ApplicationListener {
     }
     return nearest;
   }
-
-  /*private void createRope() {
-    int i = 0;
-    for (; i < 8; i++) {
-      AngleParticle particle = new AngleParticle(i * 32f, 0, 0f);
-      world.particles.add(particle);
-      if (i > 0) {
-        world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
-        world.joints.add(new AngleJoint((AngleParticle)world.particles.get(i - 1), (AngleParticle)world.particles.get(i)));
-      }
-    }
-    world.joints.add(new StaticJoint(world.particles.get(0), new Vector()));
-  }*/
 
   @Override
   public void resize(int i, int i2) {

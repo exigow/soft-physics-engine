@@ -9,12 +9,12 @@ import java.util.List;
 
 public abstract class Constructor {
 
-  protected List<Particle> localParticles = new ArrayList<Particle>();
-  protected List<Joint> localJoints = new ArrayList<Joint>();
+  protected List<Particle> particles = new ArrayList<Particle>();
+  protected List<Joint> joints = new ArrayList<Joint>();
 
   public final void flush(World world) {
-    world.joints.addAll(localJoints);
-    world.particles.addAll(localParticles);
+    world.joints.addAll(joints);
+    world.particles.addAll(particles);
   }
 
 }
