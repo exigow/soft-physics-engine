@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import softsys.*;
-import softsys.joints.AngleJoint;
-import softsys.joints.SpringJoint;
-import softsys.joints.StaticJoint;
+import main.constructors.ClothConstructor;
+import softsys.DebugDraw;
+import softsys.Particle;
+import softsys.Vector;
+import softsys.World;
 
 import java.util.Collection;
 
@@ -32,7 +33,8 @@ public class Example implements ApplicationListener {
     world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
     //createCloth(new Vector(0f, 0f), 512, 512, 16, .75f);
-    createRope();
+    new ClothConstructor(new Vector(0f, 0f), 512, 512, 16, .75f).flush(world);
+    //createRope();
   }
 
   public void render() {
@@ -40,7 +42,7 @@ public class Example implements ApplicationListener {
     camera.update();
     camera.unproject(mousePosition);
 
-    world.simulate(Gdx.graphics.getDeltaTime(), 4);
+    world.simulate(Gdx.graphics.getDeltaTime(), 16);
 
     boolean prevClicked = clicked;
     clicked = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
@@ -75,34 +77,18 @@ public class Example implements ApplicationListener {
     return nearest;
   }
 
-  private void createRope() {
+  /*private void createRope() {
     int i = 0;
     for (; i < 8; i++) {
-      AngleParticle particle = new AngleParticle(i * 64f, 0, 0f);
+      AngleParticle particle = new AngleParticle(i * 32f, 0, 0f);
       world.particles.add(particle);
       if (i > 0) {
         world.joints.add(new SpringJoint(world.particles.get(i - 1), world.particles.get(i), .875f));
-        world.joints.add(new AngleJoint((AngleParticle)world.particles.get(i - 1), world.particles.get(i)));
+        world.joints.add(new AngleJoint((AngleParticle)world.particles.get(i - 1), (AngleParticle)world.particles.get(i)));
       }
     }
     world.joints.add(new StaticJoint(world.particles.get(0), new Vector()));
-  }
-
-  private void createCloth(Vector origin, int width, int height, int segments, float stiffness) {
-    float xStride = width / segments;
-    float yStride = height / segments;
-    for (int y = 0; y < segments; ++y) {
-      for (int x = 0; x < segments; ++x) {
-        float px = origin.x + x * xStride - width / 2f + xStride / 2f,
-          py = origin.y + y * yStride - height / 2f + yStride / 2f;
-        world.particles.add(new Particle(px, py));
-        if (x > 0)
-          world.joints.add(new SpringJoint(world.particles.get(y * segments + x), world.particles.get(y * segments + x - 1), stiffness));
-        if (y > 0)
-          world.joints.add(new SpringJoint(world.particles.get(y * segments + x), world.particles.get((y - 1) * segments + x), stiffness));
-      }
-    }
-  }
+  }*/
 
   @Override
   public void resize(int i, int i2) {

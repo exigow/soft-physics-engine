@@ -1,12 +1,11 @@
 package softsys.joints;
 
 import softsys.AngleParticle;
-import softsys.Particle;
 import softsys.Vector;
 
 public class AngleJoint extends Joint {
 
-  public AngleJoint(AngleParticle red, Particle blue) {
+  public AngleJoint(AngleParticle red, AngleParticle blue) {
     super(red, blue, 0f);
   }
 
@@ -18,12 +17,16 @@ public class AngleJoint extends Joint {
     //dir += (0f - dir) * delta;
     //dir +=
 
-    float diff = Vector.angdiff(0f, dir);
-    dir += diff * delta * .0125f;
+    float diff = Vector.angdiff(((AngleParticle)red).angle, dir) * delta * .125f;
+
+    dir += diff;
+
+    //((AngleParticle)red).angle += diff;
 
     Vector pos = new Vector().set(red).add(ld(len, dir));
 
     blue.set(pos);
+    ((AngleParticle)blue).angle = dir;
   }
 
   private Vector _ld = new Vector();
