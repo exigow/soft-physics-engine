@@ -37,6 +37,18 @@ public class Vector {
     return this;
   }
 
+  public Vector sub(Vector from) {
+    this.x -= from.x;
+    this.y -= from.y;
+    return this;
+  }
+
+  public Vector mul(Vector from) {
+    this.x *= from.x;
+    this.y *= from.y;
+    return this;
+  }
+
   public Vector invert() {
     x = -x;
     y = -y;
@@ -46,6 +58,11 @@ public class Vector {
   public Vector scale(float scalar) {
     x *= scalar;
     y *= scalar;
+    return this;
+  }
+
+  public Vector divide(float scalar) {
+    scale(1f / scalar);
     return this;
   }
 

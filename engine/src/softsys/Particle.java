@@ -5,7 +5,8 @@ public class Particle extends Vector {
   public final Vector
     prevPosition = new Vector(),
     velocity = new Vector();
-  public float angle;
+
+  public float angle = 0f;
 
   public Particle(float x, float y) {
     super(x, y);

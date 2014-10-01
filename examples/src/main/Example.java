@@ -34,7 +34,7 @@ public class Example implements ApplicationListener {
     world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
 
-    new ClothConstructor(new Vector(0f, 0f), 512, 512, 16, .75f).flush(world);
+    new ClothConstructor(new Vector(0f, 0f), new Vector(384f, 384f), 24, .75f).flush(world);
     new PlantConstructor().flush(world);
   }
 

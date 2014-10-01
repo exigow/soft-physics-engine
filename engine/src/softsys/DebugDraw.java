@@ -28,12 +28,19 @@ public class DebugDraw {
     drawCage(renderer);
   }
 
-  private void drawParticles(ShapeRenderer renderer, Collection<? extends Vector> particles) {
+  private void drawParticles(ShapeRenderer renderer, Collection<Particle> particles) {
     renderer.setColor(SHAPE_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Vector particle : particles)
-      renderer.circle(particle.x, particle.y, 1f);
+      renderer.circle(particle.x, particle.y, 2f);
     renderer.end();
+
+    /*renderer.begin(ShapeRenderer.ShapeType.Line);
+    for (Particle particle : particles)
+      renderer.line(particle.x, particle.y,
+        particle.x + (float)Math.cos(particle.angle) * 16f,
+        particle.y + (float)Math.sin(particle.angle) * 16f);
+    renderer.end();*/
   }
 
   private void drawVelocities(ShapeRenderer renderer, Collection<Particle> particles) {

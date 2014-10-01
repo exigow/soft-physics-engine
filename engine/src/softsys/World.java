@@ -3,6 +3,7 @@ package softsys;
 import softsys.joints.Joint;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class World {
 
@@ -20,7 +21,7 @@ public class World {
 
   Vector gravityDelta = new Vector();
   public void simulate(float deltaTime, int iterations) {
-    //Collections.shuffle(joints);
+    Collections.shuffle(joints);
 
     gravityDelta.set(gravity).scale(deltaTime);
     for (Particle particle : particles) {
@@ -37,7 +38,7 @@ public class World {
   }
 
   private void block(Particle particle) {
-    float mul = .5f;
+    float mul = 1f;
     if (particle.y < -size.y) {
       particle.y = -size.y;
       particle.prevPosition.y = particle.y;

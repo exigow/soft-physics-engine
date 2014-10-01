@@ -12,17 +12,6 @@ public class AngleJoint extends Joint {
 
   @Override
   public void relax(float delta) {
-    /*float len = Vector.distanceBetween(red, blue);
-    float dir = red.angleTo(blue);
-
-    float diff = Vector.angdiff(red.angle, dir) * delta * .125f;
-
-    dir += diff;
-    Vector pos = new Vector().set(red).add(ld(len, dir));
-
-    blue.set(pos);
-    blue.angle -= diff;
-    red.angle += diff;*/
   }
 
   private Vector _ld = new Vector();
