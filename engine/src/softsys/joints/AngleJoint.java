@@ -12,6 +12,8 @@ public class AngleJoint extends Joint {
 
   @Override
   public void relax(float delta) {
+    float direction = red.angleTo(blue);
+    red.angle = direction;
   }
 
   private Vector _ld = new Vector();

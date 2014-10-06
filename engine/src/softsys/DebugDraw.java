@@ -29,25 +29,24 @@ public class DebugDraw {
   }
 
   private void drawParticles(ShapeRenderer renderer, Collection<Particle> particles) {
-    renderer.setColor(SHAPE_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Vector particle : particles)
-      renderer.circle(particle.x, particle.y, 2f);
+      drawOutlinedDot(renderer, particle, 2f, SHAPE_COLOR);
     renderer.end();
 
-    /*renderer.begin(ShapeRenderer.ShapeType.Line);
+    renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Particle particle : particles)
-      renderer.line(particle.x, particle.y,
-        particle.x + (float)Math.cos(particle.angle) * 16f,
-        particle.y + (float)Math.sin(particle.angle) * 16f);
-    renderer.end();*/
+      drawOutlinedLine(renderer, particle.x, particle.y,
+        particle.x + (float) Math.cos(particle.angle) * 16f,
+        particle.y + (float) Math.sin(particle.angle) * 16f, VELOCITY_COLOR);
+    renderer.end();
   }
 
   private void drawVelocities(ShapeRenderer renderer, Collection<Particle> particles) {
     renderer.setColor(VELOCITY_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Particle particle : particles)
-      renderer.line(particle.x, particle.y, particle.x + particle.velocity.x, particle.y + particle.velocity.y);
+      drawOutlinedLine(renderer, particle.x, particle.y, particle.x + particle.velocity.x, particle.y+ particle.velocity.y, VELOCITY_COLOR);
     renderer.end();
   }
 
@@ -57,10 +56,8 @@ public class DebugDraw {
       /*float tension = joint.getTension(),
         red = .125f + (tension * JOINT_COLOR.r) * .875f,
         green = .125f + ((1f - tension) * JOINT_COLOR.g) * .875f;
-      Color color = new Color(red, green, JOINT_COLOR.b, JOINT_COLOR.a);
-      renderer.setColor(color);*/
-      renderer.setColor(JOINT_COLOR);
-      renderer.line(joint.red.x, joint.red.y, joint.blue.x, joint.blue.y);
+      Color color = new Color(red, green, JOINT_COLOR.b, JOINT_COLOR.a);*/
+      drawOutlinedLine(renderer, joint.red.x, joint.red.y, joint.blue.x, joint.blue.y, JOINT_COLOR);
     }
     renderer.end();
   }
@@ -70,6 +67,23 @@ public class DebugDraw {
     renderer.begin(ShapeRenderer.ShapeType.Line);
     renderer.rect(-world.size.x, -world.size.y, world.size.x * 2f, world.size.y * 2f);
     renderer.end();
+  }
+
+  private void drawOutlinedDot(ShapeRenderer renderer, Vector where, float size, Color color) {
+    renderer.setColor(Color.BLACK);
+    renderer.circle(where.x, where.y, size + 1);
+    renderer.setColor(color);
+    renderer.circle(where.x, where.y, size);
+  }
+
+  private final static int scale = 1;
+  private final static int[] samples[] = {new int[] {scale, 0}, new int[] {-scale, 0}, new int[] {0, scale}, new int[] {0, -scale}};
+  private void drawOutlinedLine(ShapeRenderer renderer, float ax, float ay, float bx, float by, Color color) {
+    renderer.setColor(Color.BLACK);
+    for (int[] sample : samples)
+      renderer.line(ax + sample[0], ay + sample[1], bx + sample[0], by + sample[1]);
+    renderer.setColor(color);
+    renderer.line(ax, ay, bx, by);
   }
 
 }
