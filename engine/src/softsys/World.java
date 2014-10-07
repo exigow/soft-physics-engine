@@ -21,8 +21,6 @@ public class World {
 
   Vector gravityDelta = new Vector();
   public void simulate(float deltaTime, int iterations) {
-    Collections.shuffle(joints);
-
     gravityDelta.set(gravity).scale(deltaTime);
     for (Particle particle : particles) {
       particle.updateVelocity();
@@ -32,9 +30,11 @@ public class World {
     }
 
     float delta = 1.0f / iterations;
-    for (int iteration = 0; iteration < iterations; ++iteration)
+    for (int iteration = 0; iteration < iterations; ++iteration) {
+      Collections.shuffle(joints);
       for (Joint joint : joints)
         joint.relax(delta);
+    }
   }
 
   private void block(Particle particle) {
