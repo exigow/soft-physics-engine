@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import main.constructors.PlantConstructor;
+import main.constructors.ClothConstructor;
 import softsys.DebugDraw;
 import softsys.Particle;
 import softsys.Vector;
@@ -30,11 +30,11 @@ public class Example implements ApplicationListener {
     com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
+    world = new World(new Vector(0f, -2.5f), new Vector(size.x / 2f - 32f, size.y / 2f - 32f));
     worldDebugDraw = new DebugDraw(world);
 
-    //new ClothConstructor(new Vector(0f, 0f), new Vector(384f, 384f), 24, .75f).flush(world);
-    new PlantConstructor().flush(world);
+    new ClothConstructor(new Vector(0f, 0f), new Vector(384f, 384f), 24, .75f).flush(world);
+    //new PlantConstructor().flush(world);
   }
 
   public void render() {
@@ -56,7 +56,7 @@ public class Example implements ApplicationListener {
     if (selected != null)
       selected.set(mousePosition.x, mousePosition.y);
 
-    Gdx.gl.glClearColor(.125f, .125f, .125f, 1f);
+    Gdx.gl.glClearColor(.075f, .075f, .075f, 1f);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     shapeRenderer.setProjectionMatrix(camera.combined);
     shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

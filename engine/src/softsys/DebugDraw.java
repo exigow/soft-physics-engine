@@ -12,7 +12,7 @@ public class DebugDraw {
   private final static Color
     SHAPE_COLOR = new Color(.5f, .75f, 1f, ALPHA),
     VELOCITY_COLOR = new Color(.5f, 1f, .75f, ALPHA),
-    JOINT_COLOR = new Color(.75f, .5f, .325f, ALPHA),
+    JOINT_COLOR = new Color(.75f, .75f, .75f, ALPHA),
     CAGE_COLOR = new Color(.325f, .325f, .325f, ALPHA);
 
   private final World world;
@@ -23,7 +23,7 @@ public class DebugDraw {
 
   public void drawAll(ShapeRenderer renderer) {
     drawJoints(renderer, world.joints);
-    drawVelocities(renderer, world.particles);
+    //drawVelocities(renderer, world.particles);
     drawParticles(renderer, world.particles);
     drawCage(renderer);
   }
@@ -31,15 +31,15 @@ public class DebugDraw {
   private void drawParticles(ShapeRenderer renderer, Collection<Particle> particles) {
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Vector particle : particles)
-      drawOutlinedDot(renderer, particle, 2f, SHAPE_COLOR);
+      drawOutlinedDot(renderer, particle, 1.5f, SHAPE_COLOR);
     renderer.end();
 
-    renderer.begin(ShapeRenderer.ShapeType.Line);
+    /*renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Particle particle : particles)
       drawOutlinedLine(renderer, particle.x, particle.y,
         particle.x + (float) Math.cos(particle.angle) * 16f,
         particle.y + (float) Math.sin(particle.angle) * 16f, VELOCITY_COLOR);
-    renderer.end();
+    renderer.end();*/
   }
 
   private void drawVelocities(ShapeRenderer renderer, Collection<Particle> particles) {
@@ -50,14 +50,16 @@ public class DebugDraw {
     renderer.end();
   }
 
+
+  private final Color tensionColor = new Color();
   private void drawJoints(ShapeRenderer renderer, Collection<Joint> constraints) {
     renderer.begin(ShapeRenderer.ShapeType.Line);
     for (Joint joint : constraints) {
-      /*float tension = joint.getTension(),
+      float tension = joint.getTension(),
         red = .125f + (tension * JOINT_COLOR.r) * .875f,
         green = .125f + ((1f - tension) * JOINT_COLOR.g) * .875f;
-      Color color = new Color(red, green, JOINT_COLOR.b, JOINT_COLOR.a);*/
-      drawOutlinedLine(renderer, joint.red.x, joint.red.y, joint.blue.x, joint.blue.y, JOINT_COLOR);
+      tensionColor.set(red, green, JOINT_COLOR.b, JOINT_COLOR.a);
+      drawOutlinedLine(renderer, joint.red.x, joint.red.y, joint.blue.x, joint.blue.y, tensionColor);
     }
     renderer.end();
   }

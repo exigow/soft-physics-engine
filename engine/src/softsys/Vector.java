@@ -99,4 +99,12 @@ public class Vector {
     return temp.getLength();
   }
 
+  @Override
+  public String toString() {
+    return "Vector{" +
+      "x=" + x +
+      ", y=" + y +
+      '}';
+  }
+
 }

@@ -4,6 +4,7 @@ package main.constructors;
 import softsys.Particle;
 import softsys.Vector;
 import softsys.joints.SpringJoint;
+import softsys.joints.StaticJoint;
 
 public class ClothConstructor extends Constructor {
 
@@ -21,6 +22,10 @@ public class ClothConstructor extends Constructor {
           joints.add(new SpringJoint(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
       }
     }
+
+    joints.add(new StaticJoint(particles.get(segments * segments - 1)));
+
+    //joints.get(0)
   }
 
 }
