@@ -1,4 +1,4 @@
-package main.constructors;
+package basic.constructors;
 
 import softsys.Particle;
 import softsys.Vector;

@@ -31,24 +31,6 @@ public class Vector {
     return this;
   }
 
-  public Vector add(float x, float y) {
-    this.x += x;
-    this.y += y;
-    return this;
-  }
-
-  public Vector sub(Vector from) {
-    this.x -= from.x;
-    this.y -= from.y;
-    return this;
-  }
-
-  public Vector mul(Vector from) {
-    this.x *= from.x;
-    this.y *= from.y;
-    return this;
-  }
-
   public Vector invert() {
     x = -x;
     y = -y;
@@ -61,26 +43,11 @@ public class Vector {
     return this;
   }
 
-  public Vector divide(float scalar) {
-    scale(1f / scalar);
-    return this;
-  }
-
   public float angleTo(Vector target) {
     float angle = (float) Math.atan2(target.y - y, target.x - x);
     if(angle < 0)
       angle += Math.PI * 2;
     return angle;
-  }
-
-  public static float angdiff(float angle0, float angle1) {
-    double angle0Deg = Math.toDegrees(angle0);
-    double angle1Deg = Math.toDegrees(angle1);
-    return (float)Math.toRadians(((((angle0Deg - angle1Deg) % 360f) + 540f) % 360f) - 180f);
-  }
-
-  public float distanceTo(Vector target) {
-    return distanceBetween(this, target);
   }
 
   public float getLength() {
@@ -97,14 +64,6 @@ public class Vector {
     temp.x -= b.x;
     temp.y -= b.y;
     return temp.getLength();
-  }
-
-  @Override
-  public String toString() {
-    return "Vector{" +
-      "x=" + x +
-      ", y=" + y +
-      '}';
   }
 
 }

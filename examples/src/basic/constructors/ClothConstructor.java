@@ -1,4 +1,4 @@
-package main.constructors;
+package basic.constructors;
 
 
 import softsys.Particle;
@@ -9,10 +9,11 @@ import softsys.joints.StaticJoint;
 public class ClothConstructor extends Constructor {
 
   public ClothConstructor(Vector centerPos, Vector size, int segments, float stiffness) {
+    segments += 1;
     float xStride = size.x / segments;
     float yStride = size.y / segments;
-    for (int y = 0; y < segments; ++y) {
-      for (int x = 0; x < segments; ++x) {
+    for (int y = 0; y < segments; y++) {
+      for (int x = 0; x < segments; x++) {
         float px = centerPos.x + x * xStride - size.x / 2f + xStride / 2f,
           py = centerPos.y + y * yStride - size.y / 2f + yStride / 2f;
         particles.add(new Particle(px, py));
@@ -23,9 +24,9 @@ public class ClothConstructor extends Constructor {
       }
     }
 
-    joints.add(new StaticJoint(particles.get(segments * segments - 1)));
-
-    //joints.get(0)
+    int step = 4;
+    for (int i = 0; i < segments; i += step)
+      joints.add(new StaticJoint(particles.get(segments * segments - i - 1)));
   }
 
 }

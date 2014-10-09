@@ -17,6 +17,11 @@ public class Particle extends Vector {
     this(where.x, where.y);
   }
 
+  public void forcePosition(float wherex, float wherey) {
+    set(wherex, wherey);
+    prevPosition.set(wherex, wherey);
+  }
+
   public void updateVelocity() {
     velocity.x = -prevPosition.x + x;
     velocity.y = -prevPosition.y + y;

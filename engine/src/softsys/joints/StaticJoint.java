@@ -7,7 +7,6 @@ public class StaticJoint extends Joint {
 
   public StaticJoint(Particle particle, Vector where) {
     super(particle, new Particle(where), 0f);
-    System.out.println(blue);
   }
 
   public StaticJoint(Particle particle) {
@@ -16,8 +15,7 @@ public class StaticJoint extends Joint {
 
   @Override
   public void relax(float delta) {
-    red.set(blue);
-    red.prevPosition.set(blue);
+    red.forcePosition(blue.x, blue.y);
   }
 
 }
