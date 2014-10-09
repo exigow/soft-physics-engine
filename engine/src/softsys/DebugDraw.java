@@ -25,7 +25,7 @@ public class DebugDraw {
     drawJoints(renderer, world.joints);
     //drawVelocities(renderer, world.particles);
     drawParticles(renderer, world.particles);
-    drawCage(renderer);
+    //drawCage(renderer);
   }
 
   private void drawParticles(ShapeRenderer renderer, Collection<Particle> particles) {
@@ -64,12 +64,12 @@ public class DebugDraw {
     renderer.end();
   }
 
-  private void drawCage(ShapeRenderer renderer) {
+  /*private void drawCage(ShapeRenderer renderer) {
     renderer.setColor(CAGE_COLOR);
     renderer.begin(ShapeRenderer.ShapeType.Line);
     renderer.rect(-world.size.x, -world.size.y, world.size.x * 2f, world.size.y * 2f);
     renderer.end();
-  }
+  }*/
 
   private void drawOutlinedDot(ShapeRenderer renderer, Vector where, float size, Color color) {
     renderer.setColor(Color.BLACK);

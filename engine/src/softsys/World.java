@@ -7,28 +7,20 @@ import java.util.Collections;
 
 public class World {
 
-  public final Vector
-    gravity = new Vector(),
-    size = new Vector();
+  /*public final Vector
+    gravity = new Vector();*/
 
   public final ArrayList<Particle> particles = new ArrayList<Particle>();
   public final ArrayList<Joint> joints = new ArrayList<Joint>();
 
-  public World(Vector gravity, Vector size) {
+  /*public World(Vector gravity) {
     this.gravity.set(gravity);
-    this.size.set(size);
-  }
+  }*/
 
-  Vector gravityDelta = new Vector();
+  //Vector gravityDelta = new Vector();
   public void simulate(float deltaTime, int iterations) {
-    gravityDelta.set(gravity).scale(deltaTime);
-    for (Particle particle : particles) {
-      particle.updateVelocity();
-      particle.velocity.add(gravityDelta);
-      block(particle);
-      particle.add(particle.velocity);
-    }
-
+    for (Particle particle : particles)
+      particle.update();
     float delta = 1.0f / iterations;
     for (int iteration = 0; iteration < iterations; ++iteration) {
       Collections.shuffle(joints);
@@ -37,7 +29,7 @@ public class World {
     }
   }
 
-  private void block(Particle particle) {
+  /*private void block(Particle particle) {
     float mul = 1f;
     if (particle.y < -size.y) {
       particle.y = -size.y;
@@ -59,6 +51,6 @@ public class World {
       particle.prevPosition.x = particle.x;
       particle.velocity.x = -particle.velocity.x * mul;
     }
-  }
+  }*/
 
 }

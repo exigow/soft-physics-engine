@@ -30,7 +30,7 @@ public class Example implements ApplicationListener {
     com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
-    world = new World(new Vector(0f, -9f), new Vector(size.x / 2f - 16f, size.y / 2f - 16f));
+    world = new World();
     worldDebugDraw = new DebugDraw(world);
 
     new ClothConstructor(new Vector(0f, 64f), new Vector(384f, 384f), 24, .5f).flush(world);

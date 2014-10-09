@@ -22,10 +22,11 @@ public class Particle extends Vector {
     prevPosition.set(wherex, wherey);
   }
 
-  public void updateVelocity() {
+  public void update() {
     velocity.x = -prevPosition.x + x;
     velocity.y = -prevPosition.y + y;
     prevPosition.set(this);
+    add(velocity);
   }
 
 }
