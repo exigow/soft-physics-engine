@@ -46,7 +46,7 @@ public class Tissue {
     float[] vertices = new float[segments * segments * 2];
     short[] triangles = new short[2 * (segments - 1) * (segments - 1) * 3];
     PolygonRegion region = new PolygonRegion(textureRegion, vertices, triangles);
-    // updateTriangles(region);
+    rewriteTriangles(region.getTriangles());
     printVbo(region);
     return region;
   }
@@ -59,11 +59,25 @@ public class Tissue {
         "\tcoordinates: " + Arrays.toString(region.getTextureCoords()) + " {" + region.getTextureCoords().length + "} floats\n");
   }
 
-  /*private void updateTriangles(PolygonRegion region) {
-    short[] triangles = region.getTriangles();
-    for (short i = 0; i < triangles.length / 6; i += 1) {
-      System.out.println("create quad: " + i);
-    }*/
+  void rewriteTriangles(short[] ret){
+    short rowAlert= (short) (n-1);
+    for(short i=0,j=0;i<(n*(n-1));i++,j+=6){
+      if(i==rowAlert){
+        j-=6;
+        rowAlert+=n;
+        continue;
+      }
+      //1 trojkat
+      ret[j]=i;
+      ret[j+1]= (short) (i+1);
+      ret[j+2]= (short) (i+n);
+      //2trojkat
+      ret[j+3]= (short) (i+1);
+      ret[j+4]= (short) (i+n);
+      ret[j+5]= (short) (i+n+1);
+    }
+
+  }
 
     /*for (int i = 0; i < particles.size(); i++) {
       int ptr = (i * 2);
