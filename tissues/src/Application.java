@@ -4,7 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -16,15 +16,15 @@ import softsys.World;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Tissues implements ApplicationListener {
+public class Application implements ApplicationListener {
 
   private OrthographicCamera camera;
   private final World world = new World();
   private DebugDraw worldDebugDraw = new DebugDraw(world);
   private ShapeRenderer shapeRenderer;
   private PolygonSpriteBatch polygonSpriteBatch;
-  private PolygonRegion quadRegion;
   private Tissue tissue;
+  public static BitmapFont debugFont;
   private final Collection<FingerProcessor> processors = new ArrayList<FingerProcessor>() {{
     for (int i = 0; i < 4; i++)
       add(new FingerProcessor(i));
@@ -37,11 +37,8 @@ public class Tissues implements ApplicationListener {
     shapeRenderer  = new ShapeRenderer();
     polygonSpriteBatch = new PolygonSpriteBatch();
     TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/troll.png")));
-    quadRegion = new PolygonRegion(textureRegion, new float[8], new short[] {0, 1, 2, 1, 2, 3});
-    float[] coords = new float[] {0f, 0f, 1f, 0f, 0, 1f, 1f, 1f};
-    for (int i = 0; i < 8; i++)
-      quadRegion.getTextureCoords()[i] = coords[i];
-    tissue = new Tissue(new Vector(0f, 0f), new Vector(512, 512), 16, .5f).flush(world);
+    debugFont = new BitmapFont(Gdx.files.internal("data/arial_16px.fnt"), Gdx.files.internal("data/arial_16px_0.png"), false);
+    tissue = new Tissue(new Vector(0f, 0f), new Vector(512, 512), 3, .5f, textureRegion).flush(world);
   }
 
   @Override
@@ -52,14 +49,14 @@ public class Tissues implements ApplicationListener {
     world.simulate(Gdx.graphics.getDeltaTime(), 4);
     Gdx.gl.glClearColor(.075f, .075f, .075f, 1f);
     Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
-    polygonSpriteBatch.setProjectionMatrix(camera.combined);
-    polygonSpriteBatch.begin();
-    tissue.draw(polygonSpriteBatch, quadRegion);
-    polygonSpriteBatch.end();
     shapeRenderer.setProjectionMatrix(camera.combined);
     worldDebugDraw.drawAll(shapeRenderer);
     for (FingerProcessor processor : processors)
       processor.draw(shapeRenderer);
+    polygonSpriteBatch.setProjectionMatrix(camera.combined);
+    polygonSpriteBatch.begin();
+    tissue.draw(polygonSpriteBatch);
+    polygonSpriteBatch.end();
   }
 
   @Override
@@ -84,7 +81,7 @@ public class Tissues implements ApplicationListener {
     cfg.width = 640;
     cfg.height = 480;
     cfg.resizable = false;
-    new LwjglApplication(new Tissues(), cfg);
+    new LwjglApplication(new Application(), cfg);
   }
 
 }

@@ -24,18 +24,18 @@ public class FingerProcessor {
     boolean prevClicked = clicked;
     clicked = Gdx.input.isTouched(inputId);
     if (!prevClicked && clicked) {
-      System.out.println(inputId + ": is pressed");
+      //System.out.println(inputId + ": is pressed");
       Particle nearest = findNearestTo(particles, new Vector2(position.x, position.y));
       if (nearest != null) {
-        System.out.println(inputId + ": pin");
+        //System.out.println(inputId + ": pin");
         pinched = nearest;
       }
     }
     if (prevClicked && !clicked) {
-      System.out.println(inputId + ": is released");
+      //System.out.println(inputId + ": is released");
       if (pinched != null) {
         pinched = null;
-        System.out.println(inputId + ": unpin");
+        //System.out.println(inputId + ": unpin");
       }
     }
     if (pinched != null)
