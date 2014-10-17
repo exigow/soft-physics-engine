@@ -19,7 +19,7 @@ public class Tissue {
   private final short n;
 
   public Tissue(Vector centerPos, Vector size, int segments, float stiffness, TextureRegion textureRegion) {
-    n = (short)segments;
+    n = (short) segments;
     float xStride = size.x / segments;
     float yStride = size.y / segments;
     for (int y = 0; y < segments; y++) {
@@ -47,6 +47,7 @@ public class Tissue {
     short[] triangles = new short[2 * (segments - 1) * (segments - 1) * 3];
     PolygonRegion region = new PolygonRegion(textureRegion, vertices, triangles);
     rewriteTriangles(region.getTriangles());
+    rewriteCoordinates(region.getTextureCoords());
     printVbo(region);
     return region;
   }
@@ -79,38 +80,32 @@ public class Tissue {
 
   }
 
-    /*for (int i = 0; i < particles.size(); i++) {
-      int ptr = (i * 2);
-      region.getVertices()[ptr] = particles.get(i).x;
-      region.getVertices()[ptr + 1] = particles.get(i).y;
-    }*/
-  //}
-
-  /*static int[] createTriangle(int n){
-    int[] ret=new int[2*(n-1)*(n-1)*3];
-    int rowAlert=n-1;
-    for(int i=0,j=0;i<(n*(n-1));i++,j+=6){
-      if(i==rowAlert){
-        j-=6;
-        rowAlert+=n;
-        continue;
+  private void rewriteCoordinates(float[] coordinates) {
+    float size = 1f / (n - 1);
+    for (int i = 0; i < n; i++) {
+      float y = i * size;
+      for (int j = 0; j < n; j++) {
+        float x = j * size;
+        coordinates[(i * n + j) * 2] = x;
+        coordinates[(i * n + j) * 2 + 1] = y;
       }
-      //1 trojkat
-      ret[j]=i;
-      ret[j+1]=i+1;
-      ret[j+2]=i+n;
-      //2trojkat
-      ret[j+3]=i+1;
-      ret[j+4]=i+n;
-      ret[j+5]=i+n+1;
     }
-    return ret;
-  }*/
+  }
 
   public void draw(PolygonSpriteBatch batch) {
-    int i = 0;
+    // update vertices positions
+    for (int i = 0; i < particles.size(); i++) {
+      Particle particle = particles.get(i);
+      region.getVertices()[i * 2] = particle.x;
+      region.getVertices()[i * 2 + 1] = particle.y;
+    }
+
+    batch.begin();
+    batch.draw(region, 0, 0);
+    /*int i = 0;
     for (Particle particle : particles)
-      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);
+      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);*/
+    batch.end();
   }
 
 
