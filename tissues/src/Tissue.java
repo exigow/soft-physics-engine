@@ -44,10 +44,8 @@ public class Tissue {
 
   private PolygonRegion createVbo(int segments, TextureRegion textureRegion) {
     float[] vertices = new float[segments * segments * 2];
-    short[] triangles = new short[2 * (segments - 1) * (segments - 1) * 3];
-    PolygonRegion region = new PolygonRegion(textureRegion, vertices, triangles);
-    rewriteTriangles(region.getTriangles());
-    rewriteCoordinates(region.getTextureCoords());
+    PolygonRegion region = new PolygonRegion(textureRegion, vertices, createTriangles(segments));
+    createTextureCoordinates(region.getTextureCoords());
     printVbo(region);
     return region;
   }
@@ -60,7 +58,8 @@ public class Tissue {
       "\tcoordinates: {" + region.getTextureCoords().length + "} " + Arrays.toString(region.getTextureCoords()) + "\n");
   }
 
-  void rewriteTriangles(short[] ret){
+  private short[] createTriangles(int segments){
+    short[] ret = new short[2 * (segments - 1) * (segments - 1) * 3];
     short rowAlert = (short) (n - 1);
     for (short i = 0, j = 0; i < (n * (n - 1)); i++, j += 6) {
       if (i == rowAlert) {
@@ -75,18 +74,16 @@ public class Tissue {
       ret[j + 4] = (short) (i + n);
       ret[j + 5] = (short) (i + n + 1);
     }
+    return ret;
   }
 
-  private void rewriteCoordinates(float[] coordinates) {
+  private void createTextureCoordinates(float[] coordinates) {
     float size = 1f / (n - 1);
-    for (int i = 0; i < n; i++) {
-      float y = i * size;
+    for (int i = 0; i < n; i++)
       for (int j = 0; j < n; j++) {
-        float x = j * size;
-        coordinates[(i * n + j) * 2] = x;
-        coordinates[(i * n + j) * 2 + 1] = y;
+        coordinates[(i * n + j) * 2] = j * size;
+        coordinates[(i * n + j) * 2 + 1] = 1f - i * size;
       }
-    }
   }
 
   public void draw(PolygonSpriteBatch batch) {
