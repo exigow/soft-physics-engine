@@ -55,9 +55,9 @@ public class Tissue {
   private void printVbo(PolygonRegion region) {
     System.out.print(
       "creating region:\n" +
-        "\tvertices: " + Arrays.toString(region.getVertices()) + " {" + region.getVertices().length + "} floats\n" +
-        "\ttriangles: " + Arrays.toString(region.getTriangles()) + " {" + region.getTriangles().length + "} shorts\n" +
-        "\tcoordinates: " + Arrays.toString(region.getTextureCoords()) + " {" + region.getTextureCoords().length + "} floats\n");
+      "\tvertices: {" + region.getVertices().length + "} " + Arrays.toString(region.getVertices()) + "\n" +
+      "\ttriangles: {" + region.getTriangles().length + "} " + Arrays.toString(region.getTriangles()) + "\n" +
+      "\tcoordinates: {" + region.getTextureCoords().length + "} " + Arrays.toString(region.getTextureCoords()) + "\n");
   }
 
   void rewriteTriangles(short[] ret){
@@ -68,16 +68,13 @@ public class Tissue {
         rowAlert += n;
         continue;
       }
-      //1 trojkat
       ret[j] = i;
       ret[j + 1] = (short) (i + 1);
       ret[j + 2] = (short) (i + n);
-      //2trojkat
       ret[j + 3] = (short) (i + 1);
       ret[j + 4] = (short) (i + n);
       ret[j + 5] = (short) (i + n + 1);
     }
-
   }
 
   private void rewriteCoordinates(float[] coordinates) {
@@ -93,21 +90,21 @@ public class Tissue {
   }
 
   public void draw(PolygonSpriteBatch batch) {
-    // update vertices positions
+    updateVerticesPositions();
+    batch.begin();
+    batch.draw(region, 0, 0);
+    int i = 0;
+    for (Particle particle : particles)
+      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);
+    batch.end();
+  }
+
+  public void updateVerticesPositions() {
     for (int i = 0; i < particles.size(); i++) {
       Particle particle = particles.get(i);
       region.getVertices()[i * 2] = particle.x;
       region.getVertices()[i * 2 + 1] = particle.y;
     }
-
-    batch.begin();
-    batch.draw(region, 0, 0);
-    /*int i = 0;
-    for (Particle particle : particles)
-      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);*/
-    batch.end();
   }
-
-
 
 }
