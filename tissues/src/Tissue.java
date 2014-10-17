@@ -60,21 +60,21 @@ public class Tissue {
   }
 
   void rewriteTriangles(short[] ret){
-    short rowAlert= (short) (n-1);
-    for(short i=0,j=0;i<(n*(n-1));i++,j+=6){
-      if(i==rowAlert){
-        j-=6;
-        rowAlert+=n;
+    short rowAlert = (short) (n - 1);
+    for (short i = 0, j = 0; i < (n * (n - 1)); i++, j += 6) {
+      if (i == rowAlert) {
+        j -= 6;
+        rowAlert += n;
         continue;
       }
       //1 trojkat
-      ret[j]=i;
-      ret[j+1]= (short) (i+1);
-      ret[j+2]= (short) (i+n);
+      ret[j] = i;
+      ret[j + 1] = (short) (i + 1);
+      ret[j + 2] = (short) (i + n);
       //2trojkat
-      ret[j+3]= (short) (i+1);
-      ret[j+4]= (short) (i+n);
-      ret[j+5]= (short) (i+n+1);
+      ret[j + 3] = (short) (i + 1);
+      ret[j + 4] = (short) (i + n);
+      ret[j + 5] = (short) (i + n + 1);
     }
 
   }
