@@ -33,6 +33,9 @@ public class Tissue {
           joints.add(new SpringJoint(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
       }
     }
+    /*int step = 4;
+    for (int i = 0; i < segments; i += step)
+      joints.add(new StaticJoint(particles.get(segments * segments - i - 1)));*/
     region = createVbo(segments, textureRegion);
   }
 
@@ -59,7 +62,7 @@ public class Tissue {
   }
 
   private short[] createTriangles(int segments){
-    short[] ret = new short[2 * (segments - 1) * (segments - 1) * 3];
+    short[] result = new short[2 * (segments - 1) * (segments - 1) * 3];
     short rowAlert = (short) (n - 1);
     for (short i = 0, j = 0; i < (n * (n - 1)); i++, j += 6) {
       if (i == rowAlert) {
@@ -67,14 +70,14 @@ public class Tissue {
         rowAlert += n;
         continue;
       }
-      ret[j] = i;
-      ret[j + 1] = (short) (i + 1);
-      ret[j + 2] = (short) (i + n);
-      ret[j + 3] = (short) (i + 1);
-      ret[j + 4] = (short) (i + n);
-      ret[j + 5] = (short) (i + n + 1);
+      result[j] = i;
+      result[j + 1] = (short) (i + 1);
+      result[j + 2] = (short) (i + n);
+      result[j + 3] = (short) (i + 1);
+      result[j + 4] = (short) (i + n);
+      result[j + 5] = (short) (i + n + 1);
     }
-    return ret;
+    return result;
   }
 
   private void createTextureCoordinates(float[] coordinates) {
@@ -91,8 +94,8 @@ public class Tissue {
     batch.begin();
     batch.draw(region, 0, 0);
     int i = 0;
-    for (Particle particle : particles)
-      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);
+    /*for (Particle particle : particles)
+      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);*/
     batch.end();
   }
 
