@@ -2,7 +2,6 @@ package basic;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import softsys.Particle;
 import softsys.World;
@@ -24,23 +23,21 @@ public class Example implements ApplicationListener {
     camera = new OrthographicCamera(size.x, size.y);
     world = new World();
     worldDebugDraw = new WorldDebugDraw(world);
-    Particle a = new Particle(0, 0),
-      b = new Particle(64, 0),
-      c = new Particle(128, 0);
-    world.particles.add(a);
-    world.particles.add(b);
-    world.particles.add(c);
-    world.joints.add(new StaticJoint(a));
-    world.joints.add(new SpringJoint(a, b, 1f));
-    world.joints.add(new SpringJoint(b, c, 1f));
+    Particle prev = new Particle(0, 0);
+    world.particles.add(prev);
+    world.joints.add(new StaticJoint(prev));
+    for (int i = 1; i < 24; i++) {
+      Particle b = new Particle(i * 16, 0);
+      world.joints.add(new SpringJoint(b, prev, 1f));
+      world.particles.add(b);
+      prev = b;
+    }
   }
 
   public void render() {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 16);
-    Gdx.gl.glClearColor(.075f, .075f, .075f, 1f);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     worldDebugDraw.draw(camera.combined);
   }
 

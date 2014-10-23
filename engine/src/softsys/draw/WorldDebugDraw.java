@@ -1,8 +1,10 @@
 package softsys.draw;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import org.lwjgl.opengl.GL11;
 import softsys.Particle;
 import softsys.World;
 import softsys.joints.Joint;
@@ -17,6 +19,8 @@ public class WorldDebugDraw {
     OUTLINE_COLOR = new Color(.223529412f, .258823529f, .278431373f, ALPHA),
     JOINT_COLOR = new Color(.643137255f, .807843137f, .227450981f, ALPHA),
     SHAPE_COLOR = new Color(.785156252f, .854901961f, .160784314f, ALPHA);
+  public final static Color
+    BACKGROUND_COLOR = new Color(.454901961f, .541176471f, .592156863f, ALPHA);
 
   private final World world;
   private final Shapes shapes;
@@ -28,6 +32,8 @@ public class WorldDebugDraw {
   }
 
   public void draw(Matrix4 matrix) {
+    Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+    Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
     renderer.setProjectionMatrix(matrix);
     drawJoints(renderer, world.joints);
     drawParticles(renderer, world.particles);

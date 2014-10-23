@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.lwjgl.opengl.GL11;
 import softsys.Vector;
 import softsys.World;
 import softsys.draw.WorldDebugDraw;
@@ -37,8 +36,6 @@ public class Application implements ApplicationListener {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 4);
-    Gdx.gl.glClearColor(.454901961f, .541176471f, .592156863f, 1);
-    Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
     polygonSpriteBatch.setProjectionMatrix(camera.combined);
     cloth.draw(polygonSpriteBatch);
     worldDebugDraw.draw(camera.combined);
