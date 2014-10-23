@@ -35,11 +35,11 @@ public class WorldDebugDraw {
     Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
     Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
     renderer.setProjectionMatrix(matrix);
-    drawJoints(renderer, world.joints);
-    drawParticles(renderer, world.particles);
+    drawJoints(world.joints);
+    drawParticles(world.particles);
   }
 
-  private void drawParticles(ShapeRenderer renderer, Collection<Particle> particles) {
+  private void drawParticles(Collection<Particle> particles) {
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles)
       shapes.drawOutlinedDot(particle.x, particle.y, SCALE * 2.5f, SHAPE_COLOR, OUTLINE_COLOR);
@@ -47,7 +47,7 @@ public class WorldDebugDraw {
   }
 
   private final Color color = new Color();
-  private void drawJoints(ShapeRenderer renderer, Collection<Joint> constraints) {
+  private void drawJoints(Collection<Joint> constraints) {
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Joint joint : constraints) {
       float tension = Math.min(joint.getTension(), 1f);

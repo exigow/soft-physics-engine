@@ -4,7 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import softsys.Particle;
+import softsys.Vector;
 import softsys.World;
+import softsys.collisions.CollisionLine;
 import softsys.draw.WorldDebugDraw;
 import softsys.interactionhelpers.FingerProcessor;
 import softsys.joints.SpringJoint;
@@ -32,6 +34,7 @@ public class Example implements ApplicationListener {
       world.particles.add(b);
       prev = b;
     }
+    world.colliders.add(new CollisionLine(new Vector(-128, 128), new Vector(128, 128)));
   }
 
   public void render() {

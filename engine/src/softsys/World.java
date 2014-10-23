@@ -1,5 +1,6 @@
 package softsys;
 
+import softsys.collisions.CollisionLine;
 import softsys.joints.Joint;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ public class World {
 
   public final ArrayList<Particle> particles = new ArrayList<Particle>();
   public final ArrayList<Joint> joints = new ArrayList<Joint>();
+  public final ArrayList<CollisionLine> colliders = new ArrayList<CollisionLine>();
 
   private final static Vector velocity = new Vector();
   public void simulate(float deltaTime, int iterations) {
