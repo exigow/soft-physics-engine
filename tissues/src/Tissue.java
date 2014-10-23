@@ -6,9 +6,11 @@ import softsys.Vector;
 import softsys.World;
 import softsys.joints.Joint;
 import softsys.joints.SpringJoint;
+import softsys.joints.StaticJoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Tissue {
@@ -33,13 +35,14 @@ public class Tissue {
           joints.add(new SpringJoint(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
       }
     }
-    /*int step = 4;
-    for (int i = 0; i < segments; i += step)
-      joints.add(new StaticJoint(particles.get(segments * segments - i - 1)));*/
+    int step = 6;
+    for (int i = 0; i <= segments; i += step)
+      joints.add(new StaticJoint(particles.get(segments * segments - i - 1)));
     region = createVbo(segments, textureRegion);
   }
 
   public final Tissue flush(World world) {
+    Collections.shuffle(joints);
     world.joints.addAll(joints);
     world.particles.addAll(particles);
     return this;
@@ -93,9 +96,6 @@ public class Tissue {
     updateVerticesPositions();
     batch.begin();
     batch.draw(region, 0, 0);
-    int i = 0;
-    /*for (Particle particle : particles)
-      Application.debugFont.draw(batch, "" + i++, particle.x, particle.y);*/
     batch.end();
   }
 

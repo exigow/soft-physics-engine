@@ -32,8 +32,6 @@ public class Example implements ApplicationListener {
     world = new World();
     worldDebugDraw = new WorldDebugDraw(world);
 
-    //new ClothConstructor(new Vector(0f, 64f), new Vector(384f, 384f), 24, .5f).flush(world);
-    //new PlantConstructor().flush(world);
     Particle a = new Particle(-64, 0);
     Particle b = new Particle(64, 0);
     world.particles.add(a);

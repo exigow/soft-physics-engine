@@ -34,7 +34,7 @@ public class Application implements ApplicationListener {
     polygonSpriteBatch = new PolygonSpriteBatch();
     TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/troll.png")));
     debugFont = new BitmapFont(Gdx.files.internal("data/arial_16px.fnt"), Gdx.files.internal("data/arial_16px_0.png"), false);
-    tissue = new Tissue(new Vector(0f, 0f), new Vector(512, 512), 8, .75f, textureRegion).flush(world);
+    tissue = new Tissue(new Vector(0f, 0f), new Vector(512, 512), 25, .75f, textureRegion).flush(world);
   }
 
   @Override
