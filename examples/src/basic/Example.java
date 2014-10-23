@@ -66,7 +66,7 @@ public class Example implements ApplicationListener {
     shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
     shapeRenderer.circle(mousePosition.x, mousePosition.y, 32f);
     shapeRenderer.end();
-    worldDebugDraw.drawAll(shapeRenderer);
+    worldDebugDraw.draw(camera.combined);
   }
 
   private Particle findNearestTo(Collection<Particle> particles, com.badlogic.gdx.math.Vector2 position) {
