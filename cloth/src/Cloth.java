@@ -13,15 +13,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Tissue {
+public class Cloth {
 
   private final List<Particle> particles = new ArrayList<Particle>();
   private final List<Joint> joints = new ArrayList<Joint>();
   private final PolygonRegion region;
-  private final short n;
+  private final short segments;
 
-  public Tissue(Vector centerPos, Vector size, int segments, float stiffness, TextureRegion textureRegion) {
-    n = (short) segments;
+  public Cloth(Vector centerPos, Vector size, int segments, float stiffness, TextureRegion textureRegion) {
+    this.segments = (short) segments;
     float xStride = size.x / segments;
     float yStride = size.y / segments;
     for (int y = 0; y < segments; y++) {
@@ -41,7 +41,7 @@ public class Tissue {
     region = createVbo(segments, textureRegion);
   }
 
-  public final Tissue flush(World world) {
+  public final Cloth flush(World world) {
     Collections.shuffle(joints);
     world.joints.addAll(joints);
     world.particles.addAll(particles);
@@ -66,29 +66,29 @@ public class Tissue {
 
   private short[] createTriangles(int segments){
     short[] result = new short[2 * (segments - 1) * (segments - 1) * 3];
-    short rowAlert = (short) (n - 1);
-    for (short i = 0, j = 0; i < (n * (n - 1)); i++, j += 6) {
+    short rowAlert = (short) (this.segments - 1);
+    for (short i = 0, j = 0; i < (this.segments * (this.segments - 1)); i++, j += 6) {
       if (i == rowAlert) {
         j -= 6;
-        rowAlert += n;
+        rowAlert += this.segments;
         continue;
       }
       result[j] = i;
       result[j + 1] = (short) (i + 1);
-      result[j + 2] = (short) (i + n);
+      result[j + 2] = (short) (i + this.segments);
       result[j + 3] = (short) (i + 1);
-      result[j + 4] = (short) (i + n);
-      result[j + 5] = (short) (i + n + 1);
+      result[j + 4] = (short) (i + this.segments);
+      result[j + 5] = (short) (i + this.segments + 1);
     }
     return result;
   }
 
   private void createTextureCoordinates(float[] coordinates) {
-    float size = 1f / (n - 1);
-    for (int i = 0; i < n; i++)
-      for (int j = 0; j < n; j++) {
-        coordinates[(i * n + j) * 2] = j * size;
-        coordinates[(i * n + j) * 2 + 1] = 1f - i * size;
+    float size = 1f / (segments - 1);
+    for (int i = 0; i < segments; i++)
+      for (int j = 0; j < segments; j++) {
+        coordinates[(i * segments + j) * 2] = j * size;
+        coordinates[(i * segments + j) * 2 + 1] = 1f - i * size;
       }
   }
 
