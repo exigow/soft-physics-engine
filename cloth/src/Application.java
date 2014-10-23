@@ -9,9 +9,7 @@ import org.lwjgl.opengl.GL11;
 import softsys.Vector;
 import softsys.World;
 import softsys.draw.WorldDebugDraw;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import softsys.interactionhelpers.FingerProcessor;
 
 public class Application implements ApplicationListener {
 
@@ -21,10 +19,7 @@ public class Application implements ApplicationListener {
   private PolygonSpriteBatch polygonSpriteBatch;
   private Cloth cloth;
   public static BitmapFont debugFont;
-  private final Collection<FingerProcessor> processors = new ArrayList<FingerProcessor>() {{
-    for (int i = 0; i < 4; i++)
-      add(new FingerProcessor(i));
-  }};
+  private final FingerProcessor processor = new FingerProcessor(4);
 
   @Override
   public void create() {
@@ -39,8 +34,7 @@ public class Application implements ApplicationListener {
 
   @Override
   public void render() {
-    for (FingerProcessor processor : processors)
-      processor.update(camera, world.particles);
+    processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 4);
     Gdx.gl.glClearColor(.454901961f, .541176471f, .592156863f, 1);
