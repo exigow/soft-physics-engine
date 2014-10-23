@@ -1,6 +1,5 @@
 package basic;
 
-import basic.constructors.ClothConstructor;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,10 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import softsys.DebugDraw;
 import softsys.Particle;
-import softsys.Vector;
 import softsys.World;
+import softsys.draw.WorldDebugDraw;
+import softsys.joints.SpringJoint;
 
 import java.util.Collection;
 
@@ -21,7 +20,7 @@ public class Example implements ApplicationListener {
   private ShapeRenderer shapeRenderer;
   private final Vector3 mousePosition = new Vector3();
   private World world;
-  private DebugDraw worldDebugDraw;
+  private WorldDebugDraw worldDebugDraw;
   private Particle selected = null;
   private boolean clicked = false;
 
@@ -31,10 +30,15 @@ public class Example implements ApplicationListener {
     camera = new OrthographicCamera(size.x, size.y);
     shapeRenderer  = new ShapeRenderer();
     world = new World();
-    worldDebugDraw = new DebugDraw(world);
+    worldDebugDraw = new WorldDebugDraw(world);
 
-    new ClothConstructor(new Vector(0f, 64f), new Vector(384f, 384f), 24, .5f).flush(world);
+    //new ClothConstructor(new Vector(0f, 64f), new Vector(384f, 384f), 24, .5f).flush(world);
     //new PlantConstructor().flush(world);
+    Particle a = new Particle(-64, 0);
+    Particle b = new Particle(64, 0);
+    world.particles.add(a);
+    world.particles.add(b);
+    world.joints.add(new SpringJoint(a, b, 1f));
   }
 
   public void render() {

@@ -18,9 +18,14 @@ public class World {
   }*/
 
   //Vector gravityDelta = new Vector();
+
+  private final static Vector velocity = new Vector();
   public void simulate(float deltaTime, int iterations) {
-    for (Particle particle : particles)
-      particle.update();
+    for (Particle particle : particles) {
+      velocity.set(-particle.prev.x + particle.x,  -particle.prev.y + particle.y);
+      particle.prev.set(particle);
+      particle.add(velocity);
+    }
     float delta = 1.0f / iterations;
     for (int iteration = 0; iteration < iterations; ++iteration) {
       Collections.shuffle(joints);
@@ -33,22 +38,22 @@ public class World {
     float mul = 1f;
     if (particle.y < -size.y) {
       particle.y = -size.y;
-      particle.prevPosition.y = particle.y;
+      particle.prev.y = particle.y;
       particle.velocity.y = -particle.velocity.y * mul;
     }
     if (particle.y > size.y) {
       particle.y = size.y;
-      particle.prevPosition.y = particle.y;
+      particle.prev.y = particle.y;
       particle.velocity.y = -particle.velocity.y * mul;
     }
     if (particle.x < -size.x) {
       particle.x = -size.x;
-      particle.prevPosition.x = particle.x;
+      particle.prev.x = particle.x;
       particle.velocity.x = -particle.velocity.x * mul;
     }
     if (particle.x > size.x) {
       particle.x = size.x;
-      particle.prevPosition.x = particle.x;
+      particle.prev.x = particle.x;
       particle.velocity.x = -particle.velocity.x * mul;
     }
   }*/
