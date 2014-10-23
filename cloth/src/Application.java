@@ -36,9 +36,10 @@ public class Application implements ApplicationListener {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 4);
-    polygonSpriteBatch.setProjectionMatrix(camera.combined);
-    cloth.draw(polygonSpriteBatch);
     worldDebugDraw.draw(camera.combined);
+    polygonSpriteBatch.setProjectionMatrix(camera.combined);
+    polygonSpriteBatch.setColor(1f, 1f, 1f, .75f);
+    cloth.draw(polygonSpriteBatch);
   }
 
   @Override
