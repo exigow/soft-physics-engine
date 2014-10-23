@@ -12,7 +12,6 @@ public class SpringJoint extends Joint {
     this.flexibility = flexibility;
   }
 
-  // based on hooke's law
   public void relax(float delta) {
     Vector normal = normal();
     float scalar = (expectedLength / normal.getLength() - 1f) * flexibility * delta;
@@ -20,7 +19,5 @@ public class SpringJoint extends Joint {
     red.add(normal);
     blue.add(normal.invert());
   }
-
-
 
 }
