@@ -5,10 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import demos.utils.DefaultConfig;
+import demos.utils.FingerProcessor;
+import demos.utils.WorldDebugRenderer;
 import engine.Particle;
 import engine.World;
-import demos.utils.WorldDebugRenderer;
-import demos.utils.FingerProcessor;
 import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
 
@@ -20,8 +20,7 @@ public class RopeDemo implements ApplicationListener {
 
   @Override
   public void create() {
-    com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    camera = new OrthographicCamera(size.x, size.y);
+    camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     world = new World();
     Particle prev = new Particle(0, 0);
     world.particles.add(prev);
