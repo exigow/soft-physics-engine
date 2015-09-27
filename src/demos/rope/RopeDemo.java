@@ -9,6 +9,7 @@ import demos.utils.FingerProcessor;
 import demos.utils.WorldDebugRenderer;
 import engine.Particle;
 import engine.World;
+import engine.joints.Joint;
 import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
 
@@ -22,14 +23,20 @@ public class RopeDemo implements ApplicationListener {
   public void create() {
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     world = new World();
-    Particle prev = new Particle(0, 0);
-    world.particles.add(prev);
-    world.joints.add(new StaticJoint(prev));
-    for (int i = 1; i < 24; i++) {
-      Particle b = new Particle(i * 16, 0);
-      world.joints.add(new SpringJoint(b, prev, 1f));
-      world.particles.add(b);
-      prev = b;
+    float[] flexibilities = {.25f, .5f, 1f, 2f, 8f};
+    for (int ix = 0; ix < 5; ix++) {
+      int column = -256 + ix * 128;
+      int row = 256;
+      Particle previous = new Particle(column, row);
+      world.particles.add(previous);
+      world.joints.add(new StaticJoint(previous));
+      for (int iy = 1; iy < 32; iy++) {
+        Particle b = new Particle(column - iy * 8, row);
+        Joint joint = new SpringJoint(b, previous, flexibilities[ix]);
+        world.joints.add(joint);
+        world.particles.add(b);
+        previous = b;
+      }
     }
   }
 
