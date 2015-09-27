@@ -2,6 +2,11 @@ package engine;
 
 public class Vector {
 
+  // todo wyjebac tego typu klasy i zastapic jakims gotowym libem, bo pisanie od nowa math jest slabe
+  // todo math javovy jest niesamowicie wolny i operuje na double; potrzebny lib z floatami ktory malo alokuje nowe vary
+  // todo np to jest zajebiste https://github.com/JOML-CI/JOML
+
+
   public float x, y;
 
   public Vector() {
