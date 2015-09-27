@@ -5,26 +5,26 @@ import engine.Vector;
 
 public abstract class Joint {
 
-  public final Particle red, blue;
+  public final Particle from, to;
   protected float expectedLength;
   private final Vector normal = new Vector();
 
-  public Joint(Particle red, Particle blue, float expectedLength) {
-    this.red = red;
-    this.blue = blue;
+  public Joint(Particle from, Particle to, float expectedLength) {
+    this.from = from;
+    this.to = to;
     this.expectedLength = expectedLength;
   }
 
   public abstract void relax(float delta);
 
   protected Vector normal() {
-    normal.x = -blue.x + red.x;
-    normal.y = -blue.y + red.y;
+    normal.x = -to.x + from.x;
+    normal.y = -to.y + from.y;
     return normal;
   }
 
   public float getLength() {
-    return Vector.distanceBetween(red, blue);
+    return Vector.distanceBetween(from, to);
   }
 
   public float getTension() {

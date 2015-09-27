@@ -47,8 +47,8 @@ public class WorldDebugRenderer {
     for (Joint joint : joints) {
       float tension = Math.min(joint.getTension(), 1);
       color.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
-      renderLine(joint.red, joint.blue, 4, OUTLINE_COLOR);
-      renderLine(joint.red, joint.blue, 2, color);
+      renderLine(joint.from, joint.to, 4, OUTLINE_COLOR);
+      renderLine(joint.from, joint.to, 2, color);
     }
     shape.end();
   }

@@ -15,7 +15,7 @@ public class StaticJoint extends Joint {
 
   @Override
   public void relax(float delta) {
-    red.forcePosition(blue.x, blue.y);
+    from.forcePosition(to.x, to.y);
   }
 
 }
