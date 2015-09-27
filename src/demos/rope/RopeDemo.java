@@ -8,7 +8,7 @@ import demos.utils.DefaultConfig;
 import engine.Particle;
 import engine.World;
 import demos.utils.WorldDebugRenderer;
-import engine.interactionhelpers.FingerProcessor;
+import demos.utils.FingerProcessor;
 import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
 

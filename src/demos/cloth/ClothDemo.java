@@ -12,7 +12,7 @@ import demos.utils.DefaultConfig;
 import engine.Vector;
 import engine.World;
 import demos.utils.WorldDebugRenderer;
-import engine.interactionhelpers.FingerProcessor;
+import demos.utils.FingerProcessor;
 
 public class ClothDemo implements ApplicationListener {
 

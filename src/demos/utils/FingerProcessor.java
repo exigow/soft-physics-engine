@@ -1,4 +1,4 @@
-package engine.interactionhelpers;
+package demos.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
