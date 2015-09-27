@@ -43,13 +43,6 @@ public class Vector {
     return this;
   }
 
-  public float angleTo(Vector target) {
-    float angle = (float) Math.atan2(target.y - y, target.x - x);
-    if(angle < 0)
-      angle += Math.PI * 2;
-    return angle;
-  }
-
   public float getLength() {
     return (float)Math.sqrt(getLengthSquare());
   }
