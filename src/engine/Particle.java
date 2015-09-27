@@ -1,5 +1,7 @@
 package engine;
 
+// todo wywalic dziedziczenie. mimo że podobne zachowanie, wektor a czasteczka to sa dwie osobne rzeczy!
+// todo (czaczteczka powinna zawierac pole pozycja ktore jest wektorem)
 public class Particle extends Vector {
 
   public final Vector prev = new Vector();
