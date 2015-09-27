@@ -54,16 +54,7 @@ public class Cloth {
     float[] vertices = new float[segments * segments * 2];
     PolygonRegion region = new PolygonRegion(textureRegion, vertices, createTriangles(segments));
     createTextureCoordinates(region.getTextureCoords());
-    printVbo(region);
     return region;
-  }
-
-  private void printVbo(PolygonRegion region) {
-    System.out.print(
-      "creating region:\n" +
-      "\tvertices: {" + region.getVertices().length + "} " + Arrays.toString(region.getVertices()) + "\n" +
-      "\ttriangles: {" + region.getTriangles().length + "} " + Arrays.toString(region.getTriangles()) + "\n" +
-      "\tcoordinates: {" + region.getTextureCoords().length + "} " + Arrays.toString(region.getTextureCoords()) + "\n");
   }
 
   private short[] createTriangles(int segments){
