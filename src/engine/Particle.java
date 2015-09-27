@@ -3,7 +3,6 @@ package engine;
 public class Particle extends Vector {
 
   public final Vector prev = new Vector();
-  public float angle = 0f;
 
   public Particle(float x, float y) {
     super(x, y);
