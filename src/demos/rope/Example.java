@@ -1,16 +1,16 @@
-package basic;
+package demos.rope;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import softsys.Particle;
-import softsys.Vector;
-import softsys.World;
-import softsys.collisions.Collider;
-import softsys.draw.WorldDebugDraw;
-import softsys.interactionhelpers.FingerProcessor;
-import softsys.joints.SpringJoint;
-import softsys.joints.StaticJoint;
+import engine.Particle;
+import engine.Vector;
+import engine.World;
+import engine.collisions.Collider;
+import engine.draw.WorldDebugDraw;
+import engine.interactionhelpers.FingerProcessor;
+import engine.joints.SpringJoint;
+import engine.joints.StaticJoint;
 
 public class Example implements ApplicationListener {
 

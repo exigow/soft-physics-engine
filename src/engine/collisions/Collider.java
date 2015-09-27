@@ -1,6 +1,6 @@
-package softsys.collisions;
+package engine.collisions;
 
-import softsys.Vector;
+import engine.Vector;
 
 public class Collider {
 

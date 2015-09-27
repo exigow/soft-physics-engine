@@ -1,3 +1,5 @@
+package demos.cloth;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -5,10 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import softsys.Vector;
-import softsys.World;
-import softsys.draw.WorldDebugDraw;
-import softsys.interactionhelpers.FingerProcessor;
+import engine.Vector;
+import engine.World;
+import engine.draw.WorldDebugDraw;
+import engine.interactionhelpers.FingerProcessor;
 
 public class Application implements ApplicationListener {
 

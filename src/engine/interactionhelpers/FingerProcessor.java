@@ -1,11 +1,11 @@
-package softsys.interactionhelpers;
+package engine.interactionhelpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import softsys.Particle;
-import softsys.World;
+import engine.Particle;
+import engine.World;
 
 import java.util.ArrayList;
 import java.util.Collection;

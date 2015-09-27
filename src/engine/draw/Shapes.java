@@ -1,8 +1,8 @@
-package softsys.draw;
+package engine.draw;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import softsys.Vector;
+import engine.Vector;
 
 public class Shapes {
 

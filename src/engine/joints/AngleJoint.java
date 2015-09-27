@@ -1,8 +1,8 @@
-package softsys.joints;
+package engine.joints;
 
 
-import softsys.Particle;
-import softsys.Vector;
+import engine.Particle;
+import engine.Vector;
 
 public class AngleJoint extends Joint {
 

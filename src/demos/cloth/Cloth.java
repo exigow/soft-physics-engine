@@ -1,12 +1,14 @@
+package demos.cloth;
+
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import softsys.Particle;
-import softsys.Vector;
-import softsys.World;
-import softsys.joints.Joint;
-import softsys.joints.SpringJoint;
-import softsys.joints.StaticJoint;
+import engine.Particle;
+import engine.Vector;
+import engine.World;
+import engine.joints.Joint;
+import engine.joints.SpringJoint;
+import engine.joints.StaticJoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
