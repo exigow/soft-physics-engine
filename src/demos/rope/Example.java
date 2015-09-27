@@ -4,9 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import engine.Particle;
-import engine.Vector;
 import engine.World;
-import engine.collisions.Collider;
 import engine.draw.WorldDebugDraw;
 import engine.interactionhelpers.FingerProcessor;
 import engine.joints.SpringJoint;
@@ -34,7 +32,6 @@ public class Example implements ApplicationListener {
       world.particles.add(b);
       prev = b;
     }
-    world.colliders.add(new Collider(new Vector(-128, -256), new Vector(128, -256)));
   }
 
   public void render() {
