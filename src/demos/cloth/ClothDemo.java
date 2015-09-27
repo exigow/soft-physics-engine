@@ -2,17 +2,19 @@ package demos.cloth;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import demos.utils.DefaultConfig;
 import engine.Vector;
 import engine.World;
 import demos.utils.WorldDebugRenderer;
 import engine.interactionhelpers.FingerProcessor;
 
-public class Application implements ApplicationListener {
+public class ClothDemo implements ApplicationListener {
 
   private OrthographicCamera camera;
   private final World world = new World();
@@ -56,6 +58,10 @@ public class Application implements ApplicationListener {
 
   @Override
   public void dispose() {
+  }
+
+  public static void main(String[] args) {
+    new LwjglApplication(new ClothDemo(), DefaultConfig.instantiate());
   }
 
 }

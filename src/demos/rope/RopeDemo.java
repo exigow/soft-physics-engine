@@ -2,7 +2,9 @@ package demos.rope;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import demos.utils.DefaultConfig;
 import engine.Particle;
 import engine.World;
 import demos.utils.WorldDebugRenderer;
@@ -10,7 +12,7 @@ import engine.interactionhelpers.FingerProcessor;
 import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
 
-public class Example implements ApplicationListener {
+public class RopeDemo implements ApplicationListener {
 
   private OrthographicCamera camera;
   private World world;
@@ -53,6 +55,10 @@ public class Example implements ApplicationListener {
 
   @Override
   public void dispose() {
+  }
+
+  public static void main(String[] args) {
+    new LwjglApplication(new RopeDemo(), DefaultConfig.instantiate());
   }
 
 }
