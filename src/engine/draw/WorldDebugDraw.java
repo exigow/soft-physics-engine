@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import engine.Particle;
+import engine.Vector;
 import engine.World;
 import engine.joints.Joint;
 import org.lwjgl.opengl.GL11;
@@ -23,12 +24,10 @@ public class WorldDebugDraw {
     BACKGROUND_COLOR = new Color(.454901961f, .541176471f, .592156863f, ALPHA);
 
   private final World world;
-  private final Shapes shapes;
   private final ShapeRenderer renderer = new ShapeRenderer();
 
   public WorldDebugDraw(World world) {
     this.world = world;
-    this.shapes = new Shapes(renderer);
   }
 
   public void draw(Matrix4 matrix) {
@@ -42,7 +41,7 @@ public class WorldDebugDraw {
   private void drawParticles(Collection<Particle> particles) {
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles)
-      shapes.drawOutlinedDot(particle, SCALE * 2.5f, SHAPE_COLOR, OUTLINE_COLOR);
+      drawOutlinedDot(particle, SCALE * 2.5f, SHAPE_COLOR, OUTLINE_COLOR);
     renderer.end();
   }
 
@@ -52,9 +51,32 @@ public class WorldDebugDraw {
     for (Joint joint : constraints) {
       float tension = Math.min(joint.getTension(), 1f);
       color.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
-      shapes.drawOutlinedLine(joint.red, joint.blue, SCALE, color, OUTLINE_COLOR);
+      drawOutlinedLine(joint.red, joint.blue, SCALE, color, OUTLINE_COLOR);
     }
     renderer.end();
   }
+
+  private void drawDot(Vector point, float size, Color color) {
+    renderer.setColor(color);
+    renderer.circle(point.x, point.y, size / 2f);
+  }
+
+  private void drawOutlinedDot(Vector point, float size, Color color, Color outlineColor) {
+    drawDot(point, size + 2f, outlineColor);
+    drawDot(point, size, color);
+  }
+
+  private void drawLine(Vector a, Vector b, float width, Color color) {
+    renderer.setColor(color);
+    renderer.rectLine(a.x, a.y, b.x, b.y, width);
+    renderer.circle(a.x, a.y, width / 2f);
+    renderer.circle(b.x, b.y, width / 2f);
+  }
+
+  private void drawOutlinedLine(Vector a, Vector b, float width, Color color, Color outlineColor) {
+    drawLine(a, b, width + 2f, outlineColor);
+    drawLine(a, b, width, color);
+  }
+
 
 }
