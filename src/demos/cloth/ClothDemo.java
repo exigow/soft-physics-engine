@@ -5,14 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import demos.utils.DefaultConfig;
+import demos.utils.FingerProcessor;
+import demos.utils.WorldDebugRenderer;
 import engine.Vector;
 import engine.World;
-import demos.utils.WorldDebugRenderer;
-import demos.utils.FingerProcessor;
 
 public class ClothDemo implements ApplicationListener {
 
@@ -20,17 +19,14 @@ public class ClothDemo implements ApplicationListener {
   private final World world = new World();
   private PolygonSpriteBatch polygonSpriteBatch;
   private Cloth cloth;
-  public static BitmapFont debugFont;
-  private final FingerProcessor processor = new FingerProcessor(4);
+  private final FingerProcessor processor = FingerProcessor.withFingerCount(4);
 
   @Override
   public void create() {
     Vector size = new Vector(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     polygonSpriteBatch = new PolygonSpriteBatch();
-    TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/troll.png")));
-    debugFont = new BitmapFont(Gdx.files.internal("data/arial_16px.fnt"), Gdx.files.internal("data/arial_16px_0.png"), false);
-    cloth = new Cloth(new Vector(0f, 0f), new Vector(512, 512), 25, .75f, textureRegion).flush(world);
+    cloth = new Cloth(new Vector(0f, 0f), new Vector(512, 512), 25, .75f, createRegion()).flush(world);
   }
 
   @Override
@@ -42,6 +38,12 @@ public class ClothDemo implements ApplicationListener {
     polygonSpriteBatch.setProjectionMatrix(camera.combined);
     polygonSpriteBatch.setColor(1f, 1f, 1f, .75f);
     cloth.draw(polygonSpriteBatch);
+  }
+
+  private static TextureRegion createRegion() {
+    Texture texture = new Texture(Gdx.files.internal("data/troll.png"));
+    texture.setFilter(Texture.TextureFilter.Linear,  Texture.TextureFilter.Linear);
+    return new TextureRegion(texture);
   }
 
   @Override

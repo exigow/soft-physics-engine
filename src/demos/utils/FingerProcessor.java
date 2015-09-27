@@ -14,11 +14,15 @@ public class FingerProcessor {
 
   private final Collection<Finger> fingers;
 
-  public FingerProcessor(final int howManyFingers) {
-    fingers = new ArrayList<Finger>() {{
-      for (int i = 0; i < howManyFingers; i++)
-        add(new Finger(i));
-    }};
+  private FingerProcessor(Collection<Finger> fingers) {
+    this.fingers = fingers;
+  }
+
+  public static FingerProcessor withFingerCount(int maxCount) {
+    Collection<Finger> fingers = new ArrayList<>();
+    for (int i = 0; i < maxCount; i++)
+      fingers.add(new Finger(i));
+    return new FingerProcessor(fingers);
   }
 
   public void update(OrthographicCamera camera, World world) {

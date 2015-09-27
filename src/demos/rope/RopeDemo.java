@@ -16,7 +16,7 @@ public class RopeDemo implements ApplicationListener {
 
   private OrthographicCamera camera;
   private World world;
-  private final FingerProcessor processor = new FingerProcessor(4);
+  private final FingerProcessor processor = FingerProcessor.withFingerCount(4);
 
   @Override
   public void create() {
