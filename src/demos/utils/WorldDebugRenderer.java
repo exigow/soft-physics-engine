@@ -14,10 +14,10 @@ import java.util.Collection;
 
 public class WorldDebugRenderer {
 
-  private final static Color OUTLINE_COLOR = new Color(.223529412f, .258823529f, .278431373f, 1f);
-  private final static Color JOINT_COLOR = new Color(.643137255f, .807843137f, .227450981f, 1f);
-  private final static Color SHAPE_COLOR = new Color(.785156252f, .854901961f, .160784314f, 1);
-  public final static Color BACKGROUND_COLOR = new Color(.454901961f, .541176471f, .592156863f, 1f);
+  private final static Color OUTLINE_COLOR = new Color(.223f, .258f, .278f, 1f);
+  private final static Color JOINT_COLOR = new Color(.643f, .807f, .227f, 1f);
+  private final static Color SHAPE_COLOR = new Color(.785f, .854f, .160f, 1);
+  public final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
 
   private final static ShapeRenderer shape = new ShapeRenderer();
 
