@@ -45,7 +45,7 @@ public class ClothDemo implements ApplicationListener {
   }
 
   @Override
-  public void resize(int i, int i2) {
+  public void resize(int w, int h) {
   }
 
   @Override
@@ -61,7 +61,7 @@ public class ClothDemo implements ApplicationListener {
   }
 
   public static void main(String[] args) {
-    new LwjglApplication(new ClothDemo(), DefaultConfig.instantiate());
+    new LwjglApplication(new ClothDemo(), DefaultConfig.create());
   }
 
 }

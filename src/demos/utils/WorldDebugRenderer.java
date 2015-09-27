@@ -17,8 +17,7 @@ public class WorldDebugRenderer {
   private final static Color OUTLINE_COLOR = new Color(.223f, .258f, .278f, 1f);
   private final static Color JOINT_COLOR = new Color(.643f, .807f, .227f, 1f);
   private final static Color SHAPE_COLOR = new Color(.785f, .854f, .160f, 1);
-  public final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
-
+  private final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
   private final static ShapeRenderer shape = new ShapeRenderer();
 
   public static void render(World world, Matrix4 matrix) {

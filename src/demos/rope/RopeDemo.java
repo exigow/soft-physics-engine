@@ -42,7 +42,7 @@ public class RopeDemo implements ApplicationListener {
   }
 
   @Override
-  public void resize(int i, int i2) {
+  public void resize(int w, int h) {
   }
 
   @Override
@@ -58,7 +58,7 @@ public class RopeDemo implements ApplicationListener {
   }
 
   public static void main(String[] args) {
-    new LwjglApplication(new RopeDemo(), DefaultConfig.instantiate());
+    new LwjglApplication(new RopeDemo(), DefaultConfig.create());
   }
 
 }

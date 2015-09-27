@@ -3,14 +3,15 @@ package engine;
 import engine.joints.Joint;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class World {
 
-  public final ArrayList<Particle> particles = new ArrayList<Particle>();
-  public final ArrayList<Joint> joints = new ArrayList<Joint>();
+  public final Collection<Particle> particles = new ArrayList<>();
+  public final Collection<Joint> joints = new ArrayList<>();
 
-  private final static Vector velocity = new Vector();
   public void simulate(float deltaTime, int iterations) {
+    Vector velocity = new Vector();
     for (Particle particle : particles) {
       velocity.set(-particle.prev.x + particle.x, -particle.prev.y + particle.y);
       velocity.y -= 7f * deltaTime;
@@ -18,10 +19,9 @@ public class World {
       particle.add(velocity);
     }
     float delta = 1.0f / iterations;
-    for (int iteration = 0; iteration < iterations; ++iteration) {
+    for (int iteration = 0; iteration < iterations; ++iteration)
       for (Joint joint : joints)
         joint.relax(delta);
-    }
   }
 
 }
