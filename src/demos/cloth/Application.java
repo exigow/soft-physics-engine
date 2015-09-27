@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import engine.Vector;
 import engine.World;
-import engine.draw.WorldDebugDraw;
+import demos.utils.WorldDebugRenderer;
 import engine.interactionhelpers.FingerProcessor;
 
 public class Application implements ApplicationListener {
@@ -36,7 +36,7 @@ public class Application implements ApplicationListener {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 4);
-    WorldDebugDraw.draw(world, camera.combined);
+    WorldDebugRenderer.render(world, camera.combined);
     polygonSpriteBatch.setProjectionMatrix(camera.combined);
     polygonSpriteBatch.setColor(1f, 1f, 1f, .75f);
     cloth.draw(polygonSpriteBatch);

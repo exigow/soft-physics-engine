@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import engine.Particle;
 import engine.World;
-import engine.draw.WorldDebugDraw;
+import demos.utils.WorldDebugRenderer;
 import engine.interactionhelpers.FingerProcessor;
 import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
@@ -36,7 +36,7 @@ public class Example implements ApplicationListener {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 16);
-    WorldDebugDraw.draw(world, camera.combined);
+    WorldDebugRenderer.render(world, camera.combined);
   }
 
   @Override
