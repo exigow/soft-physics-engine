@@ -14,7 +14,6 @@ public class Example implements ApplicationListener {
 
   private OrthographicCamera camera;
   private World world;
-  private WorldDebugDraw worldDebugDraw;
   private final FingerProcessor processor = new FingerProcessor(4);
 
   @Override
@@ -22,7 +21,6 @@ public class Example implements ApplicationListener {
     com.badlogic.gdx.math.Vector2 size = new com.badlogic.gdx.math.Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     world = new World();
-    worldDebugDraw = new WorldDebugDraw(world);
     Particle prev = new Particle(0, 0);
     world.particles.add(prev);
     world.joints.add(new StaticJoint(prev));
@@ -38,7 +36,7 @@ public class Example implements ApplicationListener {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 16);
-    worldDebugDraw.draw(camera.combined);
+    WorldDebugDraw.draw(world, camera.combined);
   }
 
   @Override

@@ -16,7 +16,6 @@ public class Application implements ApplicationListener {
 
   private OrthographicCamera camera;
   private final World world = new World();
-  WorldDebugDraw worldDebugDraw;
   private PolygonSpriteBatch polygonSpriteBatch;
   private Cloth cloth;
   public static BitmapFont debugFont;
@@ -26,7 +25,6 @@ public class Application implements ApplicationListener {
   public void create() {
     Vector size = new Vector(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
-    worldDebugDraw = new WorldDebugDraw(world);
     polygonSpriteBatch = new PolygonSpriteBatch();
     TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("data/troll.png")));
     debugFont = new BitmapFont(Gdx.files.internal("data/arial_16px.fnt"), Gdx.files.internal("data/arial_16px_0.png"), false);
@@ -38,7 +36,7 @@ public class Application implements ApplicationListener {
     processor.update(camera, world);
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 4);
-    worldDebugDraw.draw(camera.combined);
+    WorldDebugDraw.draw(world, camera.combined);
     polygonSpriteBatch.setProjectionMatrix(camera.combined);
     polygonSpriteBatch.setColor(1f, 1f, 1f, .75f);
     cloth.draw(polygonSpriteBatch);

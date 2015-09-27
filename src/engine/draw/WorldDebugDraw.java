@@ -23,14 +23,9 @@ public class WorldDebugDraw {
   public final static Color
     BACKGROUND_COLOR = new Color(.454901961f, .541176471f, .592156863f, ALPHA);
 
-  private final World world;
-  private final ShapeRenderer renderer = new ShapeRenderer();
+  private final static ShapeRenderer renderer = new ShapeRenderer();
 
-  public WorldDebugDraw(World world) {
-    this.world = world;
-  }
-
-  public void draw(Matrix4 matrix) {
+  public static void draw(World world, Matrix4 matrix) {
     Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
     Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
     renderer.setProjectionMatrix(matrix);
@@ -38,15 +33,15 @@ public class WorldDebugDraw {
     drawParticles(world.particles);
   }
 
-  private void drawParticles(Collection<Particle> particles) {
+  private static void drawParticles(Collection<Particle> particles) {
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles)
       drawOutlinedDot(particle, SCALE * 2.5f, SHAPE_COLOR, OUTLINE_COLOR);
     renderer.end();
   }
 
-  private final Color color = new Color();
-  private void drawJoints(Collection<Joint> constraints) {
+  private static final Color color = new Color();
+  private static void drawJoints(Collection<Joint> constraints) {
     renderer.begin(ShapeRenderer.ShapeType.Filled);
     for (Joint joint : constraints) {
       float tension = Math.min(joint.getTension(), 1f);
@@ -56,27 +51,26 @@ public class WorldDebugDraw {
     renderer.end();
   }
 
-  private void drawDot(Vector point, float size, Color color) {
+  private static void drawDot(Vector point, float size, Color color) {
     renderer.setColor(color);
     renderer.circle(point.x, point.y, size / 2f);
   }
 
-  private void drawOutlinedDot(Vector point, float size, Color color, Color outlineColor) {
+  private static void drawOutlinedDot(Vector point, float size, Color color, Color outlineColor) {
     drawDot(point, size + 2f, outlineColor);
     drawDot(point, size, color);
   }
 
-  private void drawLine(Vector a, Vector b, float width, Color color) {
+  private static void drawLine(Vector a, Vector b, float width, Color color) {
     renderer.setColor(color);
     renderer.rectLine(a.x, a.y, b.x, b.y, width);
     renderer.circle(a.x, a.y, width / 2f);
     renderer.circle(b.x, b.y, width / 2f);
   }
 
-  private void drawOutlinedLine(Vector a, Vector b, float width, Color color, Color outlineColor) {
+  private static void drawOutlinedLine(Vector a, Vector b, float width, Color color, Color outlineColor) {
     drawLine(a, b, width + 2f, outlineColor);
     drawLine(a, b, width, color);
   }
-
 
 }
