@@ -1,6 +1,5 @@
 package engine;
 
-import engine.collisions.Collider;
 import engine.joints.Joint;
 
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ public class World {
 
   public final ArrayList<Particle> particles = new ArrayList<Particle>();
   public final ArrayList<Joint> joints = new ArrayList<Joint>();
-  public final ArrayList<Collider> colliders = new ArrayList<Collider>();
 
   private final static Vector velocity = new Vector();
   public void simulate(float deltaTime, int iterations) {

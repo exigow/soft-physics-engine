@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
-import org.lwjgl.opengl.GL11;
 import engine.Particle;
-import engine.Vector;
 import engine.World;
-import engine.collisions.Collider;
 import engine.joints.Joint;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Collection;
 
