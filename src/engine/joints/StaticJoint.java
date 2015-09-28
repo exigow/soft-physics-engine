@@ -1,11 +1,11 @@
 package engine.joints;
 
 import engine.Particle;
-import engine.Vector;
+import org.joml.Vector2f;
 
 public class StaticJoint extends Joint {
 
-  public StaticJoint(Particle particle, Vector where) {
+  public StaticJoint(Particle particle, Vector2f where) {
     super(particle, new Particle(where), 0f);
   }
 

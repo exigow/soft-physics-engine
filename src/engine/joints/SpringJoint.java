@@ -1,23 +1,23 @@
 package engine.joints;
 
 import engine.Particle;
-import engine.Vector;
+import org.joml.Vector2f;
 
 public class SpringJoint extends Joint {
 
   private float flexibility;
 
   public SpringJoint(Particle from, Particle to, float flexibility) {
-    super(from, to, Vector.distanceBetween(from.pos, to.pos));
+    super(from, to, from.pos.distance(to.pos));
     this.flexibility = flexibility;
   }
 
   public void relax(float delta) {
-    Vector normal = normal();
-    float scalar = (expectedLength / normal.getLength() - 1f) * flexibility * delta;
-    normal.scale(scalar);
+    Vector2f normal = normal();
+    float scalar = (expectedLength / normal.length() - 1f) * flexibility * delta;
+    normal.mul(scalar);
     from.pos.add(normal);
-    to.pos.add(normal.invert());
+    to.pos.add(normal.negate());
   }
 
 }

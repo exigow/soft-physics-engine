@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import demos.utils.DefaultConfig;
 import demos.utils.FingerProcessor;
 import demos.utils.WorldDebugRenderer;
-import engine.Vector;
 import engine.World;
+import org.joml.Vector2f;
 
 public class ClothDemo implements ApplicationListener {
 
@@ -23,10 +23,10 @@ public class ClothDemo implements ApplicationListener {
 
   @Override
   public void create() {
-    Vector size = new Vector(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    Vector2f size = new Vector2f(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     camera = new OrthographicCamera(size.x, size.y);
     polygonSpriteBatch = new PolygonSpriteBatch();
-    cloth = new Cloth(new Vector(0f, 0f), new Vector(512, 512), 25, .75f, createRegion()).flush(world);
+    cloth = new Cloth(new Vector2f(0f, 0f), new Vector2f(512, 512), 25, .75f, createRegion()).flush(world);
   }
 
   @Override

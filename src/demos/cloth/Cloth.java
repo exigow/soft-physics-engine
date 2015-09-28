@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import engine.Particle;
-import engine.Vector;
 import engine.World;
 import engine.joints.Joint;
 import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class Cloth {
   private final PolygonRegion region;
   private final short segments;
 
-  public Cloth(Vector centerPos, Vector size, int segments, float stiffness, TextureRegion textureRegion) {
+  public Cloth(Vector2f centerPos, Vector2f size, int segments, float stiffness, TextureRegion textureRegion) {
     this.segments = (short) segments;
     float xStride = size.x / segments;
     float yStride = size.y / segments;

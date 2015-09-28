@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import engine.Particle;
-import engine.Vector;
 import engine.World;
 import engine.joints.Joint;
+import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 
 import java.util.Collection;
@@ -53,12 +53,12 @@ public class WorldDebugRenderer {
     shape.end();
   }
 
-  private static void renderDot(Vector point, float size, Color color) {
+  private static void renderDot(Vector2f point, float size, Color color) {
     shape.setColor(color);
     shape.circle(point.x, point.y, size / 2f);
   }
 
-  private static void renderLine(Vector a, Vector b, float width, Color color) {
+  private static void renderLine(Vector2f a, Vector2f b, float width, Color color) {
     shape.setColor(color);
     shape.rectLine(a.x, a.y, b.x, b.y, width);
   }
