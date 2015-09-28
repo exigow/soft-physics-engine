@@ -8,7 +8,7 @@ public class SpringJoint extends Joint {
   private float flexibility;
 
   public SpringJoint(Particle from, Particle to, float flexibility) {
-    super(from, to, Vector.distanceBetween(from, to));
+    super(from, to, Vector.distanceBetween(from.pos, to.pos));
     this.flexibility = flexibility;
   }
 
@@ -16,8 +16,8 @@ public class SpringJoint extends Joint {
     Vector normal = normal();
     float scalar = (expectedLength / normal.getLength() - 1f) * flexibility * delta;
     normal.scale(scalar);
-    from.add(normal);
-    to.add(normal.invert());
+    from.pos.add(normal);
+    to.pos.add(normal.invert());
   }
 
 }

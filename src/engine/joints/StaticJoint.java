@@ -10,12 +10,12 @@ public class StaticJoint extends Joint {
   }
 
   public StaticJoint(Particle particle) {
-    this(particle, particle);
+    this(particle, particle.pos);
   }
 
   @Override
   public void relax(float delta) {
-    from.forcePosition(to.x, to.y);
+    from.forcePosition(to.pos.x, to.pos.y);
   }
 
 }

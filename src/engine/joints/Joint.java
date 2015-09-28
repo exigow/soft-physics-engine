@@ -18,13 +18,13 @@ public abstract class Joint {
   public abstract void relax(float delta);
 
   protected Vector normal() {
-    normal.x = -to.x + from.x;
-    normal.y = -to.y + from.y;
+    normal.x = -to.pos.x + from.pos.x;
+    normal.y = -to.pos.y + from.pos.y;
     return normal;
   }
 
   public float getLength() {
-    return Vector.distanceBetween(from, to);
+    return Vector.distanceBetween(from.pos, to.pos);
   }
 
   public float getTension() {

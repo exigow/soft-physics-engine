@@ -35,8 +35,8 @@ public class WorldDebugRenderer {
   private static void renderParticles(Collection<Particle> particles) {
     shape.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles) {
-      renderDot(particle, 7, OUTLINE_COLOR);
-      renderDot(particle, 5, SHAPE_COLOR);
+      renderDot(particle.pos, 7, OUTLINE_COLOR);
+      renderDot(particle.pos, 5, SHAPE_COLOR);
     }
     shape.end();
   }
@@ -47,8 +47,8 @@ public class WorldDebugRenderer {
     for (Joint joint : joints) {
       float tension = Math.min(joint.getTension(), 1);
       color.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
-      renderLine(joint.from, joint.to, 4, OUTLINE_COLOR);
-      renderLine(joint.from, joint.to, 2, color);
+      renderLine(joint.from.pos, joint.to.pos, 4, OUTLINE_COLOR);
+      renderLine(joint.from.pos, joint.to.pos, 2, color);
     }
     shape.end();
   }

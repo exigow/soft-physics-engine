@@ -11,7 +11,6 @@ import engine.joints.SpringJoint;
 import engine.joints.StaticJoint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -95,8 +94,8 @@ public class Cloth {
   public void updateVerticesPositions() {
     for (int i = 0; i < particles.size(); i++) {
       Particle particle = particles.get(i);
-      region.getVertices()[i * 2] = particle.x;
-      region.getVertices()[i * 2 + 1] = particle.y;
+      region.getVertices()[i * 2] = particle.pos.x;
+      region.getVertices()[i * 2 + 1] = particle.pos.y;
     }
   }
 

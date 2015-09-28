@@ -13,10 +13,10 @@ public class World {
   public void simulate(float deltaTime, int iterations) {
     Vector velocity = new Vector();
     for (Particle particle : particles) {
-      velocity.set(-particle.prev.x + particle.x, -particle.prev.y + particle.y);
+      velocity.set(-particle.prev.x + particle.pos.x, -particle.prev.y + particle.pos.y);
       velocity.y -= 7f * deltaTime;
-      particle.prev.set(particle);
-      particle.add(velocity);
+      particle.prev.set(particle.pos);
+      particle.pos.add(velocity);
     }
     float delta = 1.0f / iterations;
     for (int iteration = 0; iteration < iterations; ++iteration)

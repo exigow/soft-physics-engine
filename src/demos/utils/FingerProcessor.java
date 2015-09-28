@@ -34,7 +34,7 @@ public class FingerProcessor {
     float length = 32f;
     Particle nearest = null;
     for (Particle particle : particles) {
-      float checkLength = Vector2.dst(particle.x, particle.y, position.x, position.y);
+      float checkLength = Vector2.dst(particle.pos.x, particle.pos.y, position.x, position.y);
       if (checkLength < length) {
         nearest = particle;
         length = checkLength;
