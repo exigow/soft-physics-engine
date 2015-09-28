@@ -23,8 +23,7 @@ public class ClothDemo implements ApplicationListener {
 
   @Override
   public void create() {
-    Vector2f size = new Vector2f(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    camera = new OrthographicCamera(size.x, size.y);
+    camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     polygonSpriteBatch = new PolygonSpriteBatch();
     cloth = new Cloth(new Vector2f(0f, 0f), new Vector2f(512, 512), 25, .75f, createRegion()).flush(world);
   }
