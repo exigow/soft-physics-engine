@@ -69,8 +69,9 @@ public class RopeDemo implements ApplicationListener {
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 16);
     WorldDebugRenderer.render(world, camera.combined);
-    List<Vector2f> positions = dividePositions(ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList()), 4);
-    renderRope(renderer, camera.combined, positions, texture);
+    List<Vector2f> points = ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList());
+    List<Vector2f> concentrated = BezierConcentrator.concentrate(points, 4);
+    renderRope(renderer, camera.combined, concentrated, texture);
   }
 
   private static void renderRope(ImmediateModeRenderer20 renderer, Matrix4 matrix, List<Vector2f> positions, Texture tex) {
@@ -96,35 +97,6 @@ public class RopeDemo implements ApplicationListener {
       previous = next;
     }
     renderer.end();
-  }
-
-  private static List<Vector2f> dividePositions(List<Vector2f> positions, int maxSegments) {
-    positions.add(positions.get(positions.size() - 1)); // hack, duplicate last reference
-    List<Vector2f> result = new ArrayList<>();
-    Vector2f controlA = new Vector2f();
-    Vector2f controlB = new Vector2f();
-    Vector2f next = new Vector2f();
-    Vector2f prev = new Vector2f();
-    for (int i = 0; i < positions.size() - 2; i += 1) {
-      Vector2f a = positions.get(i);
-      Vector2f b = positions.get(i + 1);
-      Vector2f c = positions.get(i + 2);
-      next.set(c).sub(a).normalize().mul(32);
-      controlA.set(a.x + prev.x, a.y + prev.y);
-      controlB.set(b.x - next.x, b.y - next.y);
-      prev.set(next);
-      for (int f = 0; f < maxSegments; f += 1) {
-        float t = (1f / maxSegments) * f;
-        result.add(cubic2(a, controlA, controlB, b, t));
-      }
-    }
-    return result;
-  }
-
-  private static Vector2f cubic2(Vector2f p0, Vector2f p1, Vector2f p2, Vector2f p3, float t) {
-    float x = (1 - t) * (1 - t) * (1 - t) * p0.x + 3 * (1 - t) * (1 - t) * t * p1.x + 3 * (1 - t) * t * t * p2.x + t * t * t * p3.x;
-    float y = (1 - t) * (1 - t) * (1 - t) * p0.y + 3 * (1 - t) * (1 - t) * t * p1.y + 3 * (1 - t) * t * t * p2.y + t * t * t * p3.y;
-    return new Vector2f(x, y);
   }
 
   @Override
