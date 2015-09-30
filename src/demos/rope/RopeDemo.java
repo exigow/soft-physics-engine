@@ -121,23 +121,23 @@ public class RopeDemo implements ApplicationListener {
   }
 
   private static List<Vector2f> dividePositions(List<Vector2f> positions) {
+    positions.add(positions.get(positions.size() - 1));
     List<Vector2f> result = new ArrayList<>();
     Vector2f controlA = new Vector2f();
     Vector2f controlB = new Vector2f();
-    Vector2f hehe = new Vector2f();
+    Vector2f next = new Vector2f();
     Vector2f prev = new Vector2f();
     for (int i = 0; i < positions.size() - 2; i += 1) {
       Vector2f a = positions.get(i);
       Vector2f b = positions.get(i + 1);
       Vector2f c = positions.get(i + 2);
-      hehe.set(c).sub(a).normalize().mul(64);
+      next.set(c).sub(a).normalize().mul(64);
       controlA.set(a.x + prev.x, a.y + prev.y);
-      controlB.set(b.x - hehe.x, b.y - hehe.y);
-      prev.set(hehe);
-      for (float t = 0; t < 1f; t += .125f)
+      controlB.set(b.x - next.x, b.y - next.y);
+      prev.set(next);
+      for (float t = 0; t < 1f; t += .05f)
         result.add(cubic2(a, controlA, controlB, b, t));
     }
-    result.add(positions.get(positions.size() - 1));
     return result;
   }
 
