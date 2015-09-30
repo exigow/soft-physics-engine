@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import demos.utils.DefaultConfig;
+import demos.utils.DemoTextureLoader;
 import demos.utils.FingerProcessor;
 import demos.utils.WorldDebugRenderer;
 import engine.Particle;
@@ -35,7 +35,6 @@ public class RopeDemo implements ApplicationListener {
   private final Collection<Joint> ropeJoints = createJointsBetween(ropeParticles);
   private ImmediateModeRenderer20 renderer;
   private Texture texture;
-  private ShapeRenderer shape;
 
   @Override
   public void create() {
@@ -43,8 +42,7 @@ public class RopeDemo implements ApplicationListener {
     world.particles.addAll(ropeParticles);
     world.joints.addAll(ropeJoints);
     renderer = new ImmediateModeRenderer20(false, true, 1);
-    shape = new ShapeRenderer();
-    texture = loadTexture();
+    texture = DemoTextureLoader.loadTroll();
   }
 
   private static List<Particle> createParticles() {
@@ -64,13 +62,6 @@ public class RopeDemo implements ApplicationListener {
       previous = next;
     }
     return joints;
-  }
-
-  private static Texture loadTexture() {
-    Texture texture = new Texture(Gdx.files.internal("data/troll.png"));
-    texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-    texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-    return texture;
   }
 
   public void render() {

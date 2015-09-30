@@ -4,10 +4,10 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import demos.utils.DefaultConfig;
+import demos.utils.DemoTextureLoader;
 import demos.utils.FingerProcessor;
 import demos.utils.WorldDebugRenderer;
 import engine.World;
@@ -25,7 +25,8 @@ public class ClothDemo implements ApplicationListener {
   public void create() {
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     polygonSpriteBatch = new PolygonSpriteBatch();
-    cloth = new Cloth(new Vector2f(0f, 0f), new Vector2f(512, 512), 25, .75f, createRegion()).flush(world);
+    TextureRegion region = new TextureRegion(DemoTextureLoader.loadTroll());
+    cloth = new Cloth(new Vector2f(0f, 0f), new Vector2f(512, 512), 25, .75f, region).flush(world);
   }
 
   @Override
@@ -37,12 +38,6 @@ public class ClothDemo implements ApplicationListener {
     polygonSpriteBatch.setProjectionMatrix(camera.combined);
     polygonSpriteBatch.setColor(1f, 1f, 1f, .75f);
     cloth.draw(polygonSpriteBatch);
-  }
-
-  private static TextureRegion createRegion() {
-    Texture texture = new Texture(Gdx.files.internal("data/troll.png"));
-    texture.setFilter(Texture.TextureFilter.Linear,  Texture.TextureFilter.Linear);
-    return new TextureRegion(texture);
   }
 
   @Override
