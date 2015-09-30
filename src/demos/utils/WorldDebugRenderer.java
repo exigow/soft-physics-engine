@@ -45,7 +45,7 @@ public class WorldDebugRenderer {
   private static void renderJoints(Collection<Joint> joints) {
     shape.begin(ShapeRenderer.ShapeType.Filled);
     for (Joint joint : joints) {
-      float tension = Math.min(joint.getTension(), 1);
+      float tension = Math.min(joint.computeTension(), 1);
       color.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
       renderLine(joint.from.pos, joint.to.pos, 4, OUTLINE_COLOR);
       renderLine(joint.from.pos, joint.to.pos, 2, color);

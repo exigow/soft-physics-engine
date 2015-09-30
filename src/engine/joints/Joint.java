@@ -15,12 +15,8 @@ public abstract class Joint {
 
   public abstract void relax(float delta);
 
-  public float getLength() {
-    return from.pos.distance(to.pos);
-  }
-
-  public float getTension() {
-    float length = getLength();
+  public float computeTension() {
+    float length = from.pos.distance(to.pos);
     return Math.abs(length - expectedLength) / expectedLength;
   }
 
