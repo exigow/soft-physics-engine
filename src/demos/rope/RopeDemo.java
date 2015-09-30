@@ -46,8 +46,8 @@ public class RopeDemo implements ApplicationListener {
   }
 
   private static List<Particle> createParticles() {
-    return IntStream.rangeClosed(-3, 3)
-      .mapToObj(i -> new Particle(0, -i * 96))
+    return IntStream.rangeClosed(-4, 4)
+      .mapToObj(i -> new Particle(0, -i * 64))
       .collect(Collectors.toList());
   }
 
