@@ -121,40 +121,24 @@ public class RopeDemo implements ApplicationListener {
 
   private static List<Vector2f> dividePositions(List<Vector2f> positions) {
     List<Vector2f> result = new ArrayList<>();
-    for (int i = 0; i < positions.size() - 3; i += 1) {
+    Vector2f controlA = new Vector2f();
+    Vector2f controlB = new Vector2f();
+    for (int i = 0; i < positions.size() - 1; i += 1) {
       Vector2f a = positions.get(i);
       Vector2f b = positions.get(i + 1);
-      Vector2f c = positions.get(i + 2);
-      Vector2f d = positions.get(i + 3);
-      /*result.add(cubic2(a, b, c, d, .1f));
-      result.add(cubic2(a, b, c, d, .2f));
-      result.add(cubic2(a, b, c, d, .3f));
-      result.add(cubic2(a, b, c, d, .4f));
-      result.add(cubic2(a, b, c, d, .5f));
-      result.add(cubic2(a, b, c, d, .6f));
-      result.add(cubic2(a, b, c, d, .7f));
-      result.add(cubic2(a, b, c, d, .8f));
-      result.add(cubic2(a, b, c, d, .9f));
-      result.add(cubic2(a, b, c, d, 1f));*/
-      for (float t = 0; t < 1f; t += .05f) {
-        result.add(cubic2(a, b, c, d, t));
-      }
+      controlA.set(a.x - 128, a.y);
+      controlB.set(b.x + 128, b.y);
+      for (float t = 0; t < 1f; t += .05f)
+        result.add(cubic2(a, controlA, controlB, b, t));
     }
     return result;
   }
 
-  private static Vector2f cubic(Vector2f start, Vector2f control, Vector2f end, float t) {
-    float x = (1 - t) * (1 - t) * start.x + 2 * (1 - t) * t * control.x + t * t * end.x;
-    float y = (1 - t) * (1 - t) * start.y + 2 * (1 - t) * t * control.y + t * t * end.y;
-    return new Vector2f(x, y);
-  }
-
   private static Vector2f cubic2(Vector2f p0, Vector2f p1, Vector2f p2, Vector2f p3, float t) {
-    float x = (1-t)*(1-t)*(1-t)*p0.x + 3*(1-t)*(1-t)*t*p1.x + 3*(1-t)*t*t*p2.x + t*t*t*p3.x;
-    float y = (1-t)*(1-t)*(1-t)*p0.y + 3*(1-t)*(1-t)*t*p1.y + 3*(1-t)*t*t*p2.y + t*t*t*p3.y;
+    float x = (1 - t) * (1 - t) * (1 - t) * p0.x + 3 * (1 - t) * (1 - t) * t * p1.x + 3 * (1 - t) * t * t * p2.x + t * t * t * p3.x;
+    float y = (1 - t) * (1 - t) * (1 - t) * p0.y + 3 * (1 - t) * (1 - t) * t * p1.y + 3 * (1 - t) * t * t * p2.y + t * t * t * p3.y;
     return new Vector2f(x, y);
   }
-
 
   @Override
   public void resize(int w, int h) {
