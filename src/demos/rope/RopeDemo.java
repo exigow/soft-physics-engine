@@ -67,7 +67,7 @@ public class RopeDemo implements ApplicationListener {
   public void render() {
     processor.update(camera, world);
     camera.update();
-    world.simulate(Gdx.graphics.getDeltaTime(), 16);
+    world.simulate(Gdx.graphics.getDeltaTime(), 4);
     WorldDebugRenderer.render(world, camera.combined);
     List<Vector2f> points = ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList());
     List<Vector2f> concentrated = BezierConcentrator.concentrate(points, 4);
