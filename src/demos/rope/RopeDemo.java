@@ -3,7 +3,6 @@ package demos.rope;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -77,7 +76,7 @@ public class RopeDemo implements ApplicationListener {
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 16);
     WorldDebugRenderer.render(world, camera.combined);
-    List<Vector2f> pos = dividePositions(ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList()), shape);
+    List<Vector2f> pos = dividePositions(ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList()));
     shape.setProjectionMatrix(camera.combined);
     shape.begin(ShapeRenderer.ShapeType.Filled);
     boolean swapColor = false;
@@ -121,29 +120,24 @@ public class RopeDemo implements ApplicationListener {
     renderer.end();
   }
 
-  private static List<Vector2f> dividePositions(List<Vector2f> positions, ShapeRenderer shape) {
-    shape.begin(ShapeRenderer.ShapeType.Filled);
+  private static List<Vector2f> dividePositions(List<Vector2f> positions) {
     List<Vector2f> result = new ArrayList<>();
     Vector2f controlA = new Vector2f();
     Vector2f controlB = new Vector2f();
     Vector2f hehe = new Vector2f();
     Vector2f prev = new Vector2f();
-    for (int i = 0; i < positions.size() - 1; i += 1) {
+    for (int i = 0; i < positions.size() - 2; i += 1) {
       Vector2f a = positions.get(i);
       Vector2f b = positions.get(i + 1);
-      hehe.set(b).sub(a).normalize().mul(64);
+      Vector2f c = positions.get(i + 2);
+      hehe.set(c).sub(a).normalize().mul(64);
       controlA.set(a.x + prev.x, a.y + prev.y);
       controlB.set(b.x - hehe.x, b.y - hehe.y);
       prev.set(hehe);
-      shape.setColor(Color.WHITE);
-      shape.rectLine(a.x, a.y, controlA.x, controlA.y, 2);
-      shape.rectLine(b.x, b.y, controlB.x, controlB.y, 2);
-      shape.setColor(Color.GREEN);
-      shape.rectLine(controlA.x, controlA.y, controlB.x, controlB.y, 2);
-      for (float t = 0; t < 1f; t += .25f)
+      for (float t = 0; t < 1f; t += .125f)
         result.add(cubic2(a, controlA, controlB, b, t));
     }
-    shape.end();
+    result.add(positions.get(positions.size() - 1));
     return result;
   }
 
