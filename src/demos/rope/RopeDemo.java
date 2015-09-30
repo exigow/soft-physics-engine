@@ -49,8 +49,8 @@ public class RopeDemo implements ApplicationListener {
   }
 
   private static List<Particle> createParticles() {
-    return IntStream.range(-3, 3)
-      .mapToObj(i -> new Particle(0, -i * 128))
+    return IntStream.rangeClosed(-3, 3)
+      .mapToObj(i -> new Particle(-i * 96, -i * 96))
       .collect(Collectors.toList());
   }
 
@@ -64,6 +64,7 @@ public class RopeDemo implements ApplicationListener {
       joints.add(new SpringJoint(previous, next, .25f));
       previous = next;
     }
+    joints.add(new StaticJoint(previous));
     return joints;
   }
 
@@ -126,18 +127,20 @@ public class RopeDemo implements ApplicationListener {
     Vector2f controlA = new Vector2f();
     Vector2f controlB = new Vector2f();
     Vector2f hehe = new Vector2f();
+    Vector2f prev = new Vector2f();
     for (int i = 0; i < positions.size() - 1; i += 1) {
       Vector2f a = positions.get(i);
       Vector2f b = positions.get(i + 1);
-      hehe.set(32, 0);
-      controlA.set(a.x + hehe.x, a.y + hehe.y);
+      hehe.set(b).sub(a).normalize().mul(64);
+      controlA.set(a.x + prev.x, a.y + prev.y);
       controlB.set(b.x - hehe.x, b.y - hehe.y);
+      prev.set(hehe);
       shape.setColor(Color.WHITE);
       shape.rectLine(a.x, a.y, controlA.x, controlA.y, 2);
       shape.rectLine(b.x, b.y, controlB.x, controlB.y, 2);
       shape.setColor(Color.GREEN);
       shape.rectLine(controlA.x, controlA.y, controlB.x, controlB.y, 2);
-      for (float t = 0; t < 1f; t += .1f)
+      for (float t = 0; t < 1f; t += .25f)
         result.add(cubic2(a, controlA, controlB, b, t));
     }
     shape.end();
