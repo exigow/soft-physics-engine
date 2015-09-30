@@ -67,7 +67,10 @@ public class RopeDemo implements ApplicationListener {
   }
 
   private static Texture loadTexture() {
-    return new Texture(Gdx.files.internal("data/troll.png"));
+    Texture texture = new Texture(Gdx.files.internal("data/troll.png"));
+    texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+    texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+    return texture;
   }
 
   public void render() {
@@ -88,23 +91,17 @@ public class RopeDemo implements ApplicationListener {
     Iterator<Vector2f> iterator = positions.iterator();
     Vector2f previous = iterator.next();
     Vector2f perpendicular = new Vector2f();
-    boolean swapTextures = false;
     float step = 0f;
     while (iterator.hasNext()) {
       Vector2f next = iterator.next();
-      step += .125f;
-      float swapped = swapTextures ? step : 1f - step;
+      step += .25f;
       perpendicular.set(next).sub(previous).normalize().perpendicular().mul(32);
-      renderer.texCoord(1, swapped);
+      renderer.texCoord(1, step);
       renderer.color(1, 1, 1, alpha);
       renderer.vertex(next.x + perpendicular.x, next.y + perpendicular.y, 0);
-      renderer.texCoord(0, swapped);
+      renderer.texCoord(0, step);
       renderer.color(1, 1, 1, alpha);
       renderer.vertex(next.x - perpendicular.x, next.y - perpendicular.y, 0);
-      if (step > 1f) {
-        step -= 1f;
-        swapTextures = !swapTextures;
-      }
       previous = next;
     }
     renderer.end();
