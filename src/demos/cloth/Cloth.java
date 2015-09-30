@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import engine.Particle;
 import engine.World;
 import engine.joints.Joint;
+import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
-import engine.joints.StaticJoint;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class Cloth {
     }
     int step = 6;
     for (int i = 0; i <= segments; i += step)
-      joints.add(new StaticJoint(particles.get(segments * segments - i - 1)));
+      joints.add(PinJoint.toActualPosition(particles.get(segments * segments - i - 1)));
     region = createVbo(segments, textureRegion);
   }
 

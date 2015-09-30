@@ -3,14 +3,14 @@ package engine.joints;
 import engine.Particle;
 import org.joml.Vector2f;
 
-public class StaticJoint extends Joint {
+public class PinJoint extends Joint {
 
-  public StaticJoint(Particle particle, Vector2f where) {
+  private PinJoint(Particle particle, Vector2f where) {
     super(particle, new Particle(where), 0f);
   }
 
-  public StaticJoint(Particle particle) {
-    this(particle, particle.pos);
+  public static PinJoint toActualPosition(Particle particle) {
+    return new PinJoint(particle, particle.pos);
   }
 
   @Override

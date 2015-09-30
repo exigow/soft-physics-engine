@@ -5,6 +5,8 @@ import org.joml.Vector2f;
 
 public class SpringJoint extends Joint {
 
+  // todo factory & private constructor
+
   private final float flexibility;
   private final Vector2f normal = new Vector2f();
 

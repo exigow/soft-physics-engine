@@ -15,8 +15,8 @@ import demos.utils.WorldDebugRenderer;
 import engine.Particle;
 import engine.World;
 import engine.joints.Joint;
+import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
-import engine.joints.StaticJoint;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class RopeDemo implements ApplicationListener {
     Iterator<Particle> iterator = particles.iterator();
     Particle previous = iterator.next();
     Collection<Joint> joints = new ArrayList<>();
-    joints.add(new StaticJoint(previous));
+    joints.add(PinJoint.toActualPosition(previous));
     while (iterator.hasNext()) {
       Particle next = iterator.next();
       joints.add(new SpringJoint(previous, next, .25f));
