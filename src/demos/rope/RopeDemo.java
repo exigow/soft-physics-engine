@@ -49,7 +49,7 @@ public class RopeDemo implements ApplicationListener {
 
   private static List<Particle> createParticles() {
     return IntStream.rangeClosed(-3, 3)
-      .mapToObj(i -> new Particle(-i * 96, -i * 96))
+      .mapToObj(i -> new Particle(0, -i * 96))
       .collect(Collectors.toList());
   }
 
@@ -63,7 +63,6 @@ public class RopeDemo implements ApplicationListener {
       joints.add(new SpringJoint(previous, next, .25f));
       previous = next;
     }
-    joints.add(new StaticJoint(previous));
     return joints;
   }
 
@@ -76,19 +75,8 @@ public class RopeDemo implements ApplicationListener {
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 16);
     WorldDebugRenderer.render(world, camera.combined);
-    List<Vector2f> pos = dividePositions(ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList()));
-    shape.setProjectionMatrix(camera.combined);
-    shape.begin(ShapeRenderer.ShapeType.Filled);
-    boolean swapColor = false;
-    for (int i = 1; i < pos.size(); i++) {
-      Vector2f prev = pos.get(i - 1);
-      Vector2f next = pos.get(i);
-      shape.setColor(swapColor ? 1 : 0, 0, !swapColor ? 1 : 0, 1);
-      swapColor = !swapColor;
-      shape.rectLine(prev.x, prev.y, next.x, next.y, 4);
-    }
-    shape.end();
-    //renderRope(renderer, camera.combined, dividePositions(ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList())), texture);
+    List<Vector2f> positions = dividePositions(ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList()), 4);
+    renderRope(renderer, camera.combined, positions, texture);
   }
 
   private static void renderRope(ImmediateModeRenderer20 renderer, Matrix4 matrix, List<Vector2f> positions, Texture tex) {
@@ -99,29 +87,31 @@ public class RopeDemo implements ApplicationListener {
     renderer.begin(matrix, GL20.GL_TRIANGLE_STRIP);
     Iterator<Vector2f> iterator = positions.iterator();
     Vector2f previous = iterator.next();
-    renderer.texCoord(.5f, 1);
-    renderer.color(1, 1, 1, alpha);
-    renderer.vertex(previous.x, previous.y, 0);
     Vector2f perpendicular = new Vector2f();
     boolean swapTextures = false;
+    float step = 0f;
     while (iterator.hasNext()) {
       Vector2f next = iterator.next();
-      int swapped = swapTextures ? 1 : 0;
-      perpendicular.set(next).sub(previous).normalize().perpendicular().mul(64);
+      step += .125f;
+      float swapped = swapTextures ? step : 1f - step;
+      perpendicular.set(next).sub(previous).normalize().perpendicular().mul(32);
       renderer.texCoord(1, swapped);
       renderer.color(1, 1, 1, alpha);
       renderer.vertex(next.x + perpendicular.x, next.y + perpendicular.y, 0);
       renderer.texCoord(0, swapped);
       renderer.color(1, 1, 1, alpha);
       renderer.vertex(next.x - perpendicular.x, next.y - perpendicular.y, 0);
-      swapTextures = !swapTextures;
+      if (step > 1f) {
+        step -= 1f;
+        swapTextures = !swapTextures;
+      }
       previous = next;
     }
     renderer.end();
   }
 
-  private static List<Vector2f> dividePositions(List<Vector2f> positions) {
-    positions.add(positions.get(positions.size() - 1));
+  private static List<Vector2f> dividePositions(List<Vector2f> positions, int maxSegments) {
+    positions.add(positions.get(positions.size() - 1)); // hack, duplicate last reference
     List<Vector2f> result = new ArrayList<>();
     Vector2f controlA = new Vector2f();
     Vector2f controlB = new Vector2f();
@@ -131,12 +121,14 @@ public class RopeDemo implements ApplicationListener {
       Vector2f a = positions.get(i);
       Vector2f b = positions.get(i + 1);
       Vector2f c = positions.get(i + 2);
-      next.set(c).sub(a).normalize().mul(64);
+      next.set(c).sub(a).normalize().mul(32);
       controlA.set(a.x + prev.x, a.y + prev.y);
       controlB.set(b.x - next.x, b.y - next.y);
       prev.set(next);
-      for (float t = 0; t < 1f; t += .05f)
+      for (int f = 0; f < maxSegments; f += 1) {
+        float t = (1f / maxSegments) * f;
         result.add(cubic2(a, controlA, controlB, b, t));
+      }
     }
     return result;
   }
