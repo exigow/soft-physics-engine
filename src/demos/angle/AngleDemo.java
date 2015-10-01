@@ -36,8 +36,8 @@ public class AngleDemo implements ApplicationListener {
   }
 
   private static List<Particle> createParticles() {
-    return IntStream.rangeClosed(-4, 4)
-      .mapToObj(i -> new Particle(0, -i * 64))
+    return IntStream.rangeClosed(-1, 1)
+      .mapToObj(i -> new Particle(0, -i * 128))
       .collect(Collectors.toList());
   }
 
@@ -50,7 +50,7 @@ public class AngleDemo implements ApplicationListener {
       result.add(new SpringJoint(a, b, .5f));
       if (i < particles.size() - 2) {
         Particle c = particles.get(i + 2);
-        result.add(new AngleJoint(a, b, c));
+        result.add(new AngleJoint(a, b, c, 0, 0));
       }
     }
     return result;
