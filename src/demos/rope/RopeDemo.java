@@ -55,7 +55,7 @@ public class RopeDemo implements ApplicationListener {
     Iterator<Particle> iterator = particles.iterator();
     Particle previous = iterator.next();
     Collection<Joint> joints = new ArrayList<>();
-    joints.add(PinJoint.toActualPosition(previous));
+    joints.add(PinJoint.pin(previous));
     while (iterator.hasNext()) {
       Particle next = iterator.next();
       joints.add(new SpringJoint(previous, next, .25f));
@@ -67,7 +67,7 @@ public class RopeDemo implements ApplicationListener {
   public void render() {
     processor.update(camera, world);
     camera.update();
-    world.simulate(Gdx.graphics.getDeltaTime(), 4);
+    world.simulate(Gdx.graphics.getDeltaTime(), 32);
     WorldDebugRenderer.render(world, camera.combined);
     List<Vector2f> points = ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList());
     List<Vector2f> concentrated = BezierConcentrator.concentrate(points, 4);

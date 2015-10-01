@@ -12,11 +12,7 @@ public class Particle {
     prev.set(pos);
   }
 
-  public Particle(Vector2f where) {
-    this(where.x, where.y);
-  }
-
-  public void forcePosition(float x, float y) {
+  public void reset(float x, float y) {
     pos.set(x, y);
     prev.set(x, y);
   }

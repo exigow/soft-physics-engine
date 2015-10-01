@@ -16,8 +16,8 @@ import java.util.List;
 
 public class Cloth {
 
-  private final List<Particle> particles = new ArrayList<Particle>();
-  private final List<Joint> joints = new ArrayList<Joint>();
+  private final List<Particle> particles = new ArrayList<>();
+  private final List<Joint> joints = new ArrayList<>();
   private final PolygonRegion region;
   private final short segments;
 
@@ -38,7 +38,7 @@ public class Cloth {
     }
     int step = 6;
     for (int i = 0; i <= segments; i += step)
-      joints.add(PinJoint.toActualPosition(particles.get(segments * segments - i - 1)));
+      joints.add(PinJoint.pin(particles.get(segments * segments - i - 1)));
     region = createVbo(segments, textureRegion);
   }
 

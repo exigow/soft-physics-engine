@@ -68,7 +68,7 @@ public class FingerProcessor {
         if (pinched != null)
           pinched = null;
       if (pinched != null)
-        pinched.forcePosition(position.x, position.y);
+        pinched.reset(position.x, position.y);
     }
 
   }

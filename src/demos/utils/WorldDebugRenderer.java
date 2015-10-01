@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Matrix4;
 import engine.Particle;
 import engine.World;
 import engine.joints.Joint;
+import engine.joints.PinJoint;
+import engine.joints.SpringJoint;
 import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 
@@ -18,6 +20,7 @@ public class WorldDebugRenderer {
   private final static Color JOINT_COLOR = new Color(.643f, .807f, .227f, 1f);
   private final static Color SHAPE_COLOR = new Color(.785f, .854f, .160f, 1);
   private final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
+  private final static Color PIN_JOINT_COLOR = new Color(.733f, .329f, .458f, 1f);
   private final static ShapeRenderer shape = new ShapeRenderer();
 
   public static void render(World world, Matrix4 matrix) {
@@ -34,31 +37,45 @@ public class WorldDebugRenderer {
 
   private static void renderParticles(Collection<Particle> particles) {
     shape.begin(ShapeRenderer.ShapeType.Filled);
-    for (Particle particle : particles) {
-      renderDot(particle.pos, 7, OUTLINE_COLOR);
-      renderDot(particle.pos, 5, SHAPE_COLOR);
-    }
+    for (Particle particle : particles)
+      renderPoint(particle.pos, 5, SHAPE_COLOR);
     shape.end();
   }
 
-  private static final Color color = new Color();
+  private static final Color MUTABLE_TENSION_COLOR = new Color();
   private static void renderJoints(Collection<Joint> joints) {
     shape.begin(ShapeRenderer.ShapeType.Filled);
     for (Joint joint : joints) {
-      float tension = Math.min(joint.computeTension(), 1);
-      color.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
-      renderLine(joint.from.pos, joint.to.pos, 4, OUTLINE_COLOR);
-      renderLine(joint.from.pos, joint.to.pos, 2, color);
+      if (joint instanceof PinJoint) {
+        PinJoint pin = (PinJoint) joint;
+        renderPoint(pin.where, 13, PIN_JOINT_COLOR);
+        renderLine(pin.where, pin.which.pos, 7, PIN_JOINT_COLOR);
+      }
+      if (joint instanceof SpringJoint) {
+        SpringJoint spring = (SpringJoint) joint;
+        float tension = Math.min(tensionOf(spring), 1);
+        MUTABLE_TENSION_COLOR.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
+        renderLine(spring.from.pos, spring.to.pos, 2, MUTABLE_TENSION_COLOR);
+      }
     }
     shape.end();
   }
 
-  private static void renderDot(Vector2f point, float size, Color color) {
+  private static float tensionOf(SpringJoint joint) {
+    float length = joint.from.pos.distance(joint.to.pos);
+    return Math.abs(length - joint.expectedLength) / joint.expectedLength;
+  }
+
+  private static void renderPoint(Vector2f point, float size, Color color) {
+    shape.setColor(OUTLINE_COLOR);
+    shape.circle(point.x, point.y, size / 2f + 2);
     shape.setColor(color);
     shape.circle(point.x, point.y, size / 2f);
   }
 
   private static void renderLine(Vector2f a, Vector2f b, float width, Color color) {
+    shape.setColor(OUTLINE_COLOR);
+    shape.rectLine(a.x, a.y, b.x, b.y, width + 2);
     shape.setColor(color);
     shape.rectLine(a.x, a.y, b.x, b.y, width);
   }

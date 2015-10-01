@@ -3,19 +3,24 @@ package engine.joints;
 import engine.Particle;
 import org.joml.Vector2f;
 
-public class PinJoint extends Joint {
+public class PinJoint implements Joint {
 
-  private PinJoint(Particle particle, Vector2f where) {
-    super(particle, new Particle(where), 0f);
+  public final Particle which;
+  public final Vector2f where;
+
+  private PinJoint(Particle which, Vector2f where) {
+    this.which = which;
+    this.where = where;
   }
 
-  public static PinJoint toActualPosition(Particle particle) {
-    return new PinJoint(particle, particle.pos);
+  public static PinJoint pin(Particle particle) {
+    Vector2f where = new Vector2f(particle.pos);
+    return new PinJoint(particle, where);
   }
 
   @Override
   public void relax(float delta) {
-    from.forcePosition(to.pos.x, to.pos.y);
+    which.reset(where.x, where.y);
   }
 
 }
