@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import engine.Particle;
 import engine.World;
+import engine.joints.AngleJoint;
 import engine.joints.Joint;
 import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
@@ -56,6 +57,20 @@ public class WorldDebugRenderer {
         float tension = Math.min(tensionOf(spring), 1);
         MUTABLE_TENSION_COLOR.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
         renderLine(spring.from.pos, spring.to.pos, 2, MUTABLE_TENSION_COLOR);
+      }
+      if (joint instanceof AngleJoint) {
+        AngleJoint angle = (AngleJoint) joint;
+        Vector2f prev = new Vector2f(angle.a.pos);
+        Vector2f next = new Vector2f();
+        for (float t = 0f; t <= 1f; t += .125f) {
+          Vector2f a = angle.a.pos;
+          Vector2f b = angle.b.pos;
+          Vector2f c = angle.c.pos;
+          next.x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * b.x + t * t * c.x;
+          next.y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * b.y + t * t * c.y;
+          renderLine(prev, next, 1.5f, Color.RED);
+          prev.set(next);
+        }
       }
     }
     shape.end();
