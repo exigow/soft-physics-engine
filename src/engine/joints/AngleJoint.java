@@ -8,26 +8,23 @@ public class AngleJoint implements Joint{
   public final Particle a;
   public final Particle b;
   public final Particle c;
-  private final float angle;
   private final float stiffness;
 
   public AngleJoint(Particle a, Particle b, Particle c, float angle, float stiffness) {
     this.a = a;
     this.b = b;
     this.c = c;
-    this.angle = angle;
     this.stiffness = stiffness;
   }
 
   @Override
   public void relax(float delta) {
-    float angle = angle2(b.pos, a.pos, c.pos);
-    float diff = angle - this.angle;
+    float diff = angle2(a.pos, b.pos, c.pos);
     if (diff <= -Math.PI)
       diff += 2*Math.PI;
     else if (diff >= Math.PI)
       diff -= 2*Math.PI;
-    diff *= .00125f;
+    diff *= .0125f;
     a.pos.set(rotate(a.pos, b.pos, diff));
     c.pos.set(rotate(c.pos, b.pos, -diff));
     b.pos.set(rotate(b.pos, a.pos, diff));
@@ -39,7 +36,6 @@ public class AngleJoint implements Joint{
     Vector2f copyRight = new Vector2f(vRight);
     return copyLeft.sub(middle).angle(copyRight.sub(middle));
   }
-
 
   public Vector2f rotate(Vector2f from, Vector2f origin, float theta) {
     float x = from.x - origin.x;
