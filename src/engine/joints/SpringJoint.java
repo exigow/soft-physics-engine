@@ -13,11 +13,15 @@ public class SpringJoint implements Joint {
 
   // todo fabryka i prywatyzacja
 
-  public SpringJoint(Particle from, Particle to, float flexibility) {
+  public SpringJoint(Particle from, Particle to, float flexibility, float expectedLength) {
     this.from = from;
     this.to = to;
-    expectedLength = from.pos.distance(to.pos);
     this.flexibility = flexibility;
+    this.expectedLength = expectedLength;
+  }
+
+  public SpringJoint(Particle from, Particle to, float flexibility) {
+    this(from, to, flexibility, from.pos.distance(to.pos));
   }
 
   @Override

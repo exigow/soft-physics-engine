@@ -11,6 +11,10 @@ public class Particle {
     return new Particle(x, y);
   }
 
+  public static Particle onZero() {
+    return Particle.on(0, 0);
+  }
+
   // todo prywatyzacja
 
   public Particle(float x, float y) {
