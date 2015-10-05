@@ -22,6 +22,8 @@ public class WorldDebugRenderer {
   private final static Color SHAPE_COLOR = new Color(.785f, .854f, .160f, 1);
   private final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
   private final static Color PIN_JOINT_COLOR = new Color(.733f, .329f, .458f, 1f);
+  private final static Color ANGLE_JOINT_A_COLOR = new Color(.997f, .905f, .298f, 1f);
+  private final static Color ANGLE_JOINT_B_COLOR = new Color(.356F, .751f, .921f, 1f);
   private final static ShapeRenderer shape = new ShapeRenderer();
 
   public static void render(World world, Matrix4 matrix) {
@@ -62,13 +64,15 @@ public class WorldDebugRenderer {
         AngleJoint angle = (AngleJoint) joint;
         Vector2f prev = new Vector2f(angle.a.pos);
         Vector2f next = new Vector2f();
+        boolean tick = false;
         for (float t = 0f; t <= 1f; t += .125f) {
           Vector2f a = angle.a.pos;
           Vector2f b = angle.b.pos;
           Vector2f c = angle.c.pos;
           next.x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * b.x + t * t * c.x;
           next.y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * b.y + t * t * c.y;
-          renderLine(prev, next, 1.5f, Color.RED);
+          renderLine(prev, next, 1.5f, tick ? ANGLE_JOINT_A_COLOR : ANGLE_JOINT_B_COLOR);
+          tick = !tick;
           prev.set(next);
         }
       }

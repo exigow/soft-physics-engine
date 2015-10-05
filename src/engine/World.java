@@ -15,7 +15,7 @@ public class World {
     Vector2f velocity = new Vector2f();
     for (Particle particle : particles) {
       velocity.set(-particle.prev.x + particle.pos.x, -particle.prev.y + particle.pos.y);
-      //velocity.y -= 7f * deltaTime;
+      velocity.y -= 7f * deltaTime;
       particle.prev.set(particle.pos);
       particle.pos.add(velocity);
     }
