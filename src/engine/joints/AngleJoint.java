@@ -10,7 +10,7 @@ public class AngleJoint implements Joint{
   public final Particle c;
   private final float stiffness;
 
-  public AngleJoint(Particle a, Particle b, Particle c, float angle, float stiffness) {
+  public AngleJoint(Particle a, Particle b, Particle c, float stiffness) {
     this.a = a;
     this.b = b;
     this.c = c;
@@ -24,7 +24,7 @@ public class AngleJoint implements Joint{
       diff += 2*Math.PI;
     else if (diff >= Math.PI)
       diff -= 2*Math.PI;
-    diff *= .0125f;
+    diff *= stiffness * delta;
     a.pos.set(rotate(a.pos, b.pos, diff));
     c.pos.set(rotate(c.pos, b.pos, -diff));
     b.pos.set(rotate(b.pos, a.pos, diff));

@@ -50,7 +50,7 @@ public class AngleDemo implements ApplicationListener {
       result.add(new SpringJoint(a, b, .5f));
       if (i < particles.size() - 2) {
         Particle c = particles.get(i + 2);
-        result.add(new AngleJoint(a, b, c, 0, 0));
+        result.add(new AngleJoint(a, b, c, .25f));
       }
     }
     return result;
