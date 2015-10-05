@@ -7,6 +7,12 @@ public class Particle {
   public final Vector2f pos = new Vector2f();
   public final Vector2f prev = new Vector2f();
 
+  public static Particle on(float x, float y) {
+    return new Particle(x, y);
+  }
+
+  // todo prywatyzacja
+
   public Particle(float x, float y) {
     pos.set(x, y);
     prev.set(pos);

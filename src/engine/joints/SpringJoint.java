@@ -11,6 +11,8 @@ public class SpringJoint implements Joint {
   public float expectedLength;
   private final Vector2f normal = new Vector2f();
 
+  // todo fabryka i prywatyzacja
+
   public SpringJoint(Particle from, Particle to, float flexibility) {
     this.from = from;
     this.to = to;

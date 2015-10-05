@@ -11,6 +11,8 @@ public class AngleJoint implements Joint{
   private final float stiffness;
   private final float convolution;
 
+  // todo fabryka i prywatyzacja
+
   public AngleJoint(Particle a, Particle b, Particle c, float stiffness, float convolution) {
     this.a = a;
     this.b = b;
