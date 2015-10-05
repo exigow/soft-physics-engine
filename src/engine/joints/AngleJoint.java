@@ -9,17 +9,19 @@ public class AngleJoint implements Joint{
   public final Particle b;
   public final Particle c;
   private final float stiffness;
+  private final float convolution;
 
-  public AngleJoint(Particle a, Particle b, Particle c, float stiffness) {
+  public AngleJoint(Particle a, Particle b, Particle c, float stiffness, float convolution) {
     this.a = a;
     this.b = b;
     this.c = c;
     this.stiffness = stiffness;
+    this.convolution = convolution;
   }
 
   @Override
   public void relax(float delta) {
-    float diff = angle2(a.pos, b.pos, c.pos);
+    float diff = angle2(a.pos, b.pos, c.pos) + convolution;
     if (diff <= -Math.PI)
       diff += 2*Math.PI;
     else if (diff >= Math.PI)
