@@ -45,21 +45,27 @@ public class TreeDemo implements ApplicationListener {
   }
 
   private SpringJoint addMainBranch() {
-    Particle start = Particle.onZero();
+    float startingHeight = -128;
+    Particle start = Particle.on(0, startingHeight);
     world.particles.add(start);
-    Particle end = Particle.on(0, 64);
+    Particle middle = Particle.on(0, startingHeight + 64);
+    world.particles.add(middle);
+    Particle end = Particle.on(0, startingHeight + 128);
     world.particles.add(end);
-    SpringJoint branch = connect(start, end);
-    world.joints.add(branch);
+    SpringJoint toMiddle = connect(start, middle);
+    SpringJoint fromMiddle = connect(middle, end);
+    world.joints.add(toMiddle);
+    world.joints.add(fromMiddle);
     world.joints.add(PinJoint.pin(start));
-    world.joints.add(PinJoint.pin(end));
-    return branch;
+    world.joints.add(PinJoint.pin(middle));
+    world.joints.add(new AngleJoint(start, middle, end, .5f, 0f));
+    return fromMiddle;
   }
 
   private Collection<SpringJoint> growth(SpringJoint joint) {
     return Arrays.asList(
-      addBranch(joint, -.5f),
-      addBranch(joint, .5f)
+      addBranch(joint, -.35f),
+      addBranch(joint, .35f)
     );
   }
 
@@ -73,7 +79,7 @@ public class TreeDemo implements ApplicationListener {
   }
 
   private static SpringJoint connect(Particle a, Particle b) {
-    return new SpringJoint(a, b, .75f, 64);
+    return new SpringJoint(a, b, 1.25f, 64);
   }
 
   @Override
