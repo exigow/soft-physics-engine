@@ -48,17 +48,17 @@ public class TreeDemo implements ApplicationListener {
     float startingHeight = -128;
     Particle start = Particle.on(0, startingHeight);
     world.particles.add(start);
-    Particle middle = Particle.on(0, startingHeight + 64);
+    Particle middle = Particle.on(0, startingHeight + 32);
     world.particles.add(middle);
-    Particle end = Particle.on(0, startingHeight + 128);
+    Particle end = Particle.on(0, startingHeight + 64);
     world.particles.add(end);
-    SpringJoint toMiddle = connect(start, middle);
-    SpringJoint fromMiddle = connect(middle, end);
+    SpringJoint toMiddle = new SpringJoint(start, middle, 4, 32);
+    SpringJoint fromMiddle =new SpringJoint(middle, end, 4, 32);
     world.joints.add(toMiddle);
     world.joints.add(fromMiddle);
     world.joints.add(PinJoint.pin(start));
     world.joints.add(PinJoint.pin(middle));
-    world.joints.add(new AngleJoint(start, middle, end, .5f, 0f));
+    world.joints.add(new AngleJoint(start, middle, end, 1, 0f));
     return fromMiddle;
   }
 
