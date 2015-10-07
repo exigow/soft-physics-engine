@@ -27,13 +27,13 @@ public class TreeDemo implements ApplicationListener {
   public void create() {
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     SpringJoint branchJoint = addMainBranch();
-    addBranches(addBranches(addBranch(branchJoint)));
+    addBranches(addBranches(growth(branchJoint)));
   }
 
   private Collection<SpringJoint> addBranches(Collection<SpringJoint> joints) {
     Collection<SpringJoint> result = new ArrayList<>();
     for (SpringJoint joint : joints)
-      result.addAll(addBranch(joint));
+      result.addAll(growth(joint));
     return result;
   }
 
@@ -56,18 +56,20 @@ public class TreeDemo implements ApplicationListener {
     return branch;
   }
 
-  private Collection<SpringJoint> addBranch(SpringJoint joint) {
+  private Collection<SpringJoint> growth(SpringJoint joint) {
+    return Arrays.asList(
+      addBranch(joint, -.5f),
+      addBranch(joint, .5f)
+    );
+  }
+
+  private SpringJoint addBranch(SpringJoint joint, float angle) {
     Particle left = Particle.onZero();
     world.particles.add(left);
     SpringJoint leftBranch = connect(joint.to, left);
     world.joints.add(leftBranch);
-    world.joints.add(new AngleJoint(joint.from, joint.to, left, .5f, .35f));
-    Particle right = Particle.onZero();
-    world.particles.add(right);
-    SpringJoint rightBranch = connect(joint.to, right);
-    world.joints.add(rightBranch);
-    world.joints.add(new AngleJoint(joint.from, joint.to, right, .5f, -.35f));
-    return Arrays.asList(leftBranch, rightBranch);
+    world.joints.add(new AngleJoint(joint.from, joint.to, left, .5f, angle));
+    return leftBranch;
   }
 
   private static SpringJoint connect(Particle a, Particle b) {
