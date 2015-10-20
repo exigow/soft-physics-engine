@@ -1,19 +1,13 @@
 package demos.rope;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.math.Matrix4;
-import demos.utils.DefaultConfig;
+import demos.Demo;
 import demos.utils.DemoTextureLoader;
-import demos.utils.FingerProcessor;
-import demos.utils.WorldDebugRenderer;
 import engine.Particle;
-import engine.World;
 import engine.joints.Joint;
 import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
@@ -26,23 +20,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class RopeDemo implements ApplicationListener {
+public class RopeDemo extends Demo {
 
-  private OrthographicCamera camera;
-  private World world = new World();
-  private final FingerProcessor processor = FingerProcessor.withFingerCount(4);
   private final List<Particle> ropeParticles = createParticles();
   private final Collection<Joint> ropeJoints = createJointsBetween(ropeParticles);
-  private ImmediateModeRenderer20 renderer;
-  private Texture texture;
+  private final ImmediateModeRenderer20 renderer = new ImmediateModeRenderer20(false, true, 1);
+  private final Texture texture = DemoTextureLoader.loadTroll();
 
-  @Override
-  public void create() {
-    camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+  {
     world.particles.addAll(ropeParticles);
     world.joints.addAll(ropeJoints);
-    renderer = new ImmediateModeRenderer20(false, true, 1);
-    texture = DemoTextureLoader.loadTroll();
   }
 
   private static List<Particle> createParticles() {
@@ -64,11 +51,7 @@ public class RopeDemo implements ApplicationListener {
     return joints;
   }
 
-  public void render() {
-    processor.update(camera, world);
-    camera.update();
-    world.simulate(Gdx.graphics.getDeltaTime(), 32);
-    WorldDebugRenderer.render(world, camera.combined);
+  public void onUpdate() {
     List<Vector2f> points = ropeParticles.stream().map(p -> p.pos).collect(Collectors.toList());
     List<Vector2f> concentrated = BezierConcentrator.concentrate(points, 4);
     renderRope(renderer, camera.combined, concentrated, texture);
@@ -99,24 +82,8 @@ public class RopeDemo implements ApplicationListener {
     renderer.end();
   }
 
-  @Override
-  public void resize(int w, int h) {
-  }
-
-  @Override
-  public void pause() {
-  }
-
-  @Override
-  public void resume() {
-  }
-
-  @Override
-  public void dispose() {
-  }
-
   public static void main(String[] args) {
-    new LwjglApplication(new RopeDemo(), DefaultConfig.create());
+    Initializer.initializeLazy(RopeDemo::new);
   }
 
 }
