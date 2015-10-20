@@ -1,14 +1,7 @@
 package demos.tree;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import demos.utils.DefaultConfig;
-import demos.utils.FingerProcessor;
-import demos.utils.WorldDebugRenderer;
+import demos.Demo;
 import engine.Particle;
-import engine.World;
 import engine.joints.AngleJoint;
 import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
@@ -17,15 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class TreeDemo implements ApplicationListener {
+public class TreeDemo extends Demo {
 
-  private OrthographicCamera camera;
-  private World world = new World();
-  private final FingerProcessor processor = FingerProcessor.withFingerCount(4);
-
-  @Override
-  public void create() {
-    camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+  {
     SpringJoint branchJoint = addMainBranch();
     addBranches(addBranches(growth(branchJoint)));
   }
@@ -35,13 +22,6 @@ public class TreeDemo implements ApplicationListener {
     for (SpringJoint joint : joints)
       result.addAll(growth(joint));
     return result;
-  }
-
-  public void render() {
-    processor.update(camera, world);
-    camera.update();
-    world.simulate(Gdx.graphics.getDeltaTime(), 32);
-    WorldDebugRenderer.render(world, camera.combined);
   }
 
   private SpringJoint addMainBranch() {
@@ -82,24 +62,8 @@ public class TreeDemo implements ApplicationListener {
     return new SpringJoint(a, b, 1.25f, 64);
   }
 
-  @Override
-  public void resize(int w, int h) {
-  }
-
-  @Override
-  public void pause() {
-  }
-
-  @Override
-  public void resume() {
-  }
-
-  @Override
-  public void dispose() {
-  }
-
   public static void main(String[] args) {
-    new LwjglApplication(new TreeDemo(), DefaultConfig.create());
+    Initializer.initializeLazy(TreeDemo::new);
   }
 
 }
