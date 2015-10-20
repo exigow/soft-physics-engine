@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public abstract class Demo {
 
   protected final World world = new World();
-  private final OrthographicCamera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+  protected final OrthographicCamera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
   private final FingerProcessor processor = FingerProcessor.withFingerCount(4);
 
   public final void onRender() {
@@ -22,6 +22,9 @@ public abstract class Demo {
     camera.update();
     world.simulate(Gdx.graphics.getDeltaTime(), 32);
     WorldDebugRenderer.render(world, camera.combined);
+  }
+
+  public void onUpdate() {
   }
 
   protected static class Initializer implements ApplicationListener {
@@ -45,6 +48,7 @@ public abstract class Demo {
     @Override
     public void render() {
       demo.onRender();
+      demo.onUpdate();
     }
 
     private static LwjglApplicationConfiguration createDefaultConfiguration() {
