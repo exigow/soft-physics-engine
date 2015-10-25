@@ -28,8 +28,8 @@ public class LSystemTest implements ApplicationListener {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
-    glTranslatef(-256, 0, 0);
-    applyFunction(root, 8);
+    glRotatef(90, 0, 0, 1);
+    applyFunction(root, 5);
     glPopMatrix();
   }
 
@@ -42,16 +42,15 @@ public class LSystemTest implements ApplicationListener {
       float length = Float.parseFloat(product.select("translate").first().text());
       float rotation = Float.parseFloat(product.select("rotate").first().text());
       float scale = Float.parseFloat(product.select("scale").first().text());
-      glScalef(scale, scale, scale);
       glTranslatef(length, 0, 0);
+      glScalef(scale, scale, 1);
       glRotatef(rotation, 0, 0, 1);
-      drawLine(length * scale);
+      drawLine(length);
       applyFunction(element, --depth);
       depth += 1;
       glPopMatrix();
     }
   }
-
 
   private static void drawLine(float length) {
     glColor3f(.5f, .5f, 1f);
@@ -84,7 +83,7 @@ public class LSystemTest implements ApplicationListener {
   public static void main(String[] args) throws Exception {
     new LwjglApplication(new LSystemTest(), new LwjglApplicationConfiguration() {{
       title = "demo";
-      width = 1280;
+      width = 768;
       height = 768;
       resizable = false;
       samples = 8;
