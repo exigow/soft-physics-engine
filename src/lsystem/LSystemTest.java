@@ -33,9 +33,6 @@ public class LSystemTest implements ApplicationListener {
     glTranslatef(-256, 0, 0);
     applyFunction(root, 3);
     glPopMatrix();
-
-    //for (int i = 0; i < 32; i++)
-      //System.out.println(random.nextGaussian());
   }
 
   private static void applyFunction(Element element, int depth) {
@@ -47,10 +44,10 @@ public class LSystemTest implements ApplicationListener {
       float length = Float.parseFloat(product.select("translate").val());
       Rotate rotation = parseRotate(product.select("rotate").first());
       float scale = Float.parseFloat(product.select("scale").val());
+      drawLine(length);
       glTranslatef(length, 0, 0);
       glScalef(scale, scale, 1);
-      glRotatef(rotation.mean, 0, 0, 1);
-      drawLine(length);
+      glRotatef(gaussianOf(rotation.mean, rotation.variance), 0, 0, 1);
       applyFunction(element, --depth);
       depth += 1;
       glPopMatrix();

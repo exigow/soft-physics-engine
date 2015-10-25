@@ -3,11 +3,11 @@
         <product>
             <translate value = "64"/>
             <scale value = ".75"/>
-            <rotate mean = "32" variance = "8"/>
+            <rotate mean = "45" variance = "8"/>
         </product>
 
         <product>
-            <translate value = "256"/>
+            <translate value = "128"/>
             <scale value = ".75"/>
             <rotate mean = "0" variance = "4"/>
         </product>
@@ -15,7 +15,7 @@
         <product>
             <translate value = "64"/>
             <scale value = ".75"/>
-            <rotate mean = "-32" variance = "8"/>
+            <rotate mean = "-45" variance = "8"/>
         </product>
     </rule>
 </lsystem>
