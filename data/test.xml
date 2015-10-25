@@ -1,0 +1,14 @@
+<lsystem>
+    <rule>
+        <product>
+            <translate>256</translate>
+            <scale>.6</scale>
+            <rotate>45</rotate>
+        </product>
+        <product>
+            <translate>256</translate>
+            <scale>.6</scale>
+            <rotate>-45</rotate>
+        </product>
+    </rule>
+</lsystem>
