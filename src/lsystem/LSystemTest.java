@@ -3,6 +3,7 @@ package lsystem;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import lsystem.models.Rotate;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Random;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -28,9 +30,12 @@ public class LSystemTest implements ApplicationListener {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
-    glRotatef(90, 0, 0, 1);
-    applyFunction(root, 5);
+    glTranslatef(-256, 0, 0);
+    applyFunction(root, 3);
     glPopMatrix();
+
+    //for (int i = 0; i < 32; i++)
+      //System.out.println(random.nextGaussian());
   }
 
   private static void applyFunction(Element element, int depth) {
@@ -39,17 +44,24 @@ public class LSystemTest implements ApplicationListener {
     Elements products = element.select("product");
     for (Element product : products) {
       glPushMatrix();
-      float length = Float.parseFloat(product.select("translate").first().text());
-      float rotation = Float.parseFloat(product.select("rotate").first().text());
-      float scale = Float.parseFloat(product.select("scale").first().text());
+      float length = Float.parseFloat(product.select("translate").val());
+      Rotate rotation = parseRotate(product.select("rotate").first());
+      float scale = Float.parseFloat(product.select("scale").val());
       glTranslatef(length, 0, 0);
       glScalef(scale, scale, 1);
-      glRotatef(rotation, 0, 0, 1);
+      glRotatef(rotation.mean, 0, 0, 1);
       drawLine(length);
       applyFunction(element, --depth);
       depth += 1;
       glPopMatrix();
     }
+  }
+
+  private static Rotate parseRotate(Element from) {
+    Rotate rotate = new Rotate();
+    rotate.mean = Float.parseFloat(from.attr("mean"));
+    rotate.variance = Float.parseFloat(from.attr("variance"));
+    return rotate;
   }
 
   private static void drawLine(float length) {
@@ -88,6 +100,12 @@ public class LSystemTest implements ApplicationListener {
       resizable = false;
       samples = 8;
     }});
+  }
+
+  private final static Random random = new Random();
+
+  private static float gaussianOf(float mean, float variance){
+    return mean + (float) random.nextGaussian() * variance;
   }
 
   @Override

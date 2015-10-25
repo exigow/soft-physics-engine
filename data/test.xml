@@ -1,14 +1,21 @@
 <lsystem>
     <rule>
         <product>
-            <translate>128</translate>
-            <scale>.6</scale>
-            <rotate>45</rotate>
+            <translate value = "64"/>
+            <scale value = ".75"/>
+            <rotate mean = "32" variance = "8"/>
         </product>
+
         <product>
-            <translate>128</translate>
-            <scale>.5</scale>
-            <rotate>-45</rotate>
+            <translate value = "256"/>
+            <scale value = ".75"/>
+            <rotate mean = "0" variance = "4"/>
+        </product>
+
+        <product>
+            <translate value = "64"/>
+            <scale value = ".75"/>
+            <rotate mean = "-32" variance = "8"/>
         </product>
     </rule>
 </lsystem>
