@@ -3,7 +3,7 @@ package lsystem;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import lsystem.models.Rotate;
+import lsystem.models.GaussRandomProperties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Random;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -31,7 +30,7 @@ public class LSystemTest implements ApplicationListener {
 
     glPushMatrix();
     glTranslatef(-256, 0, 0);
-    applyFunction(root, 3);
+    applyFunction(root, 4);
     glPopMatrix();
   }
 
@@ -41,24 +40,26 @@ public class LSystemTest implements ApplicationListener {
     Elements products = element.select("product");
     for (Element product : products) {
       glPushMatrix();
-      float length = Float.parseFloat(product.select("translate").val());
-      Rotate rotation = parseRotate(product.select("rotate").first());
-      float scale = Float.parseFloat(product.select("scale").val());
-      drawLine(length);
-      glTranslatef(length, 0, 0);
-      glScalef(scale, scale, 1);
-      glRotatef(gaussianOf(rotation.mean, rotation.variance), 0, 0, 1);
+      GaussRandomProperties displacement = parseGauss(product.select("displacement").first());
+      GaussRandomProperties rotation = parseGauss(product.select("rotation").first());
+      GaussRandomProperties scale = parseGauss(product.select("scale").first());
+      float displacementValue = displacement.nextValue();
+      drawLine(displacementValue);
+      glTranslatef(displacementValue, 0, 0);
+      float scaleValue = scale.nextValue();
+      glScalef(scaleValue, scaleValue, 1);
+      glRotatef(rotation.nextValue(), 0, 0, 1);
       applyFunction(element, --depth);
       depth += 1;
       glPopMatrix();
     }
   }
 
-  private static Rotate parseRotate(Element from) {
-    Rotate rotate = new Rotate();
-    rotate.mean = Float.parseFloat(from.attr("mean"));
-    rotate.variance = Float.parseFloat(from.attr("variance"));
-    return rotate;
+  private static GaussRandomProperties parseGauss(Element from) {
+    GaussRandomProperties gaussRandomProperties = new GaussRandomProperties();
+    gaussRandomProperties.mean = Float.parseFloat(from.attr("mean"));
+    gaussRandomProperties.variance = Float.parseFloat(from.attr("variance"));
+    return gaussRandomProperties;
   }
 
   private static void drawLine(float length) {
@@ -97,12 +98,6 @@ public class LSystemTest implements ApplicationListener {
       resizable = false;
       samples = 8;
     }});
-  }
-
-  private final static Random random = new Random();
-
-  private static float gaussianOf(float mean, float variance){
-    return mean + (float) random.nextGaussian() * variance;
   }
 
   @Override

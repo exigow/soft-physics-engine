@@ -1,21 +1,21 @@
 <lsystem>
     <rule>
         <product>
-            <translate value = "64"/>
-            <scale value = ".75"/>
-            <rotate mean = "45" variance = "8"/>
+            <displacement mean = "64" variance = "0"/>
+            <scale mean = ".75" variance = "0"/>
+            <rotation mean = "32" variance = "0"/>
         </product>
 
         <product>
-            <translate value = "128"/>
-            <scale value = ".75"/>
-            <rotate mean = "0" variance = "4"/>
+            <displacement mean = "128" variance = "0"/>
+            <scale mean = ".75" variance = "0"/>
+            <rotation mean = "0" variance = "0"/>
         </product>
 
         <product>
-            <translate value = "64"/>
-            <scale value = ".75"/>
-            <rotate mean = "-45" variance = "8"/>
+            <displacement mean = "64" variance = "0"/>
+            <scale mean = ".75" variance = "0"/>
+            <rotation mean = "-32" variance = "0"/>
         </product>
     </rule>
 </lsystem>
