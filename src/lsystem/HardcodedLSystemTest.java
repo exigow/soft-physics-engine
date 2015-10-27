@@ -32,9 +32,9 @@ public class HardcodedLSystemTest implements ApplicationListener {
   private void applyFunction() {
     if (depth < 0)
       return;
-    put(96, .65f, -.35f);
+    put(96, .65f, -.45f);
     put(128, .85f, 0);
-    put(96, .65f, .35f);
+    put(96, .65f, .45f);
   }
 
   private void put(float displacement, float scale, float angle) {

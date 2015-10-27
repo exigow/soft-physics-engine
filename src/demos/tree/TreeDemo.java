@@ -2,64 +2,52 @@ package demos.tree;
 
 import demos.Demo;
 import engine.Particle;
-import engine.joints.AngleJoint;
-import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import org.joml.Matrix4f;
+import org.joml.MatrixStack;
+import org.joml.Vector3f;
 
 public class TreeDemo extends Demo {
 
+  private final MatrixStack stack = new MatrixStack(6);
+  private final Matrix4f result = new Matrix4f();
+  private int depth = 0;
+
   {
-    SpringJoint branchJoint = addMainBranch();
-    addBranches(addBranches(growth(branchJoint)));
+    stack.translate(-256, 0, 0);
+    applyFunction();
   }
 
-  private Collection<SpringJoint> addBranches(Collection<SpringJoint> joints) {
-    Collection<SpringJoint> result = new ArrayList<>();
-    for (SpringJoint joint : joints)
-      result.addAll(growth(joint));
-    return result;
+  private void applyFunction() {
+    if (depth > 4)
+      return;
+    //put(96, .65f, -.45f);
+    //put(128, .85f, 0);
+    //put(96, .65f, .45f);
+
+    put(128, .75f, .45f);
+    put(128, .75f, -.45f);
   }
 
-  private SpringJoint addMainBranch() {
-    float startingHeight = -128;
-    Particle start = Particle.on(0, startingHeight);
-    world.particles.add(start);
-    Particle middle = Particle.on(0, startingHeight + 32);
-    world.particles.add(middle);
-    Particle end = Particle.on(0, startingHeight + 64);
-    world.particles.add(end);
-    SpringJoint toMiddle = new SpringJoint(start, middle, 4, 32);
-    SpringJoint fromMiddle =new SpringJoint(middle, end, 4, 32);
-    world.joints.add(toMiddle);
-    world.joints.add(fromMiddle);
-    world.joints.add(PinJoint.pin(start));
-    world.joints.add(PinJoint.pin(middle));
-    world.joints.add(new AngleJoint(start, middle, end, 1, 0f));
-    return fromMiddle;
-  }
+  private void put(float displacement, float scale, float angle) {
+    stack.pushMatrix();
+    stack.get(result);
 
-  private Collection<SpringJoint> growth(SpringJoint joint) {
-    return Arrays.asList(
-      addBranch(joint, -.35f),
-      addBranch(joint, .35f)
-    );
-  }
+    Vector3f a = new Vector3f(0, 0, 0).mulProject(result);
+    Vector3f b = new Vector3f(displacement, 0, 0).mulProject(result);
+    Particle particleA = Particle.on(a.x, a.y);
+    Particle particleB = Particle.on(b.x, b.y);
+    world.particles.add(particleA);
+    world.particles.add(particleB);
+    world.joints.add(new SpringJoint(particleA, particleB, .1f));
 
-  private SpringJoint addBranch(SpringJoint joint, float angle) {
-    Particle left = Particle.onZero();
-    world.particles.add(left);
-    SpringJoint leftBranch = connect(joint.to, left);
-    world.joints.add(leftBranch);
-    world.joints.add(new AngleJoint(joint.from, joint.to, left, .5f, angle));
-    return leftBranch;
-  }
-
-  private static SpringJoint connect(Particle a, Particle b) {
-    return new SpringJoint(a, b, 1.25f, 64);
+    stack.translate(displacement, 0, 0);
+    stack.scale(scale, scale, 1);
+    stack.rotate(angle, 0, 0, 1);
+    depth += 1;
+    applyFunction();
+    depth -= 1;
+    stack.popMatrix();
   }
 
   public static void main(String[] args) {
