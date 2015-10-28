@@ -2,6 +2,8 @@ package demos.tree;
 
 import demos.Demo;
 import engine.Particle;
+import engine.joints.AngleJoint;
+import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
 import org.joml.Matrix4f;
 import org.joml.MatrixStack;
@@ -14,39 +16,50 @@ public class TreeDemo extends Demo {
   private int depth = 0;
 
   {
-    stack.translate(-256, 0, 0);
-    applyFunction();
+    Particle zero = Particle.onZero();
+    world.particles.add(zero);
+    world.joints.add(PinJoint.pin(zero));
+
+    Particle plus = Particle.on(0, 64);
+    world.particles.add(plus);
+    world.joints.add(PinJoint.pin(plus));
+
+    applyFunction(plus, zero);
   }
 
-  private void applyFunction() {
-    if (depth > 4)
+  private void applyFunction(Particle previous, Particle veryPrevious) {
+    float scale = .875f;
+    put(64, scale, .35f, previous, veryPrevious);
+    //put(96, scale, 0, previous, veryPrevious);
+    put(64, scale, -.35f, previous, veryPrevious);
+  }
+
+  private void put(float displacement, float scale, float angle, Particle previous, Particle veryPrevious) {
+    if (depth > 2)
       return;
-    //put(96, .65f, -.45f);
-    //put(128, .85f, 0);
-    //put(96, .65f, .45f);
 
-    put(128, .75f, .45f);
-    put(128, .75f, -.45f);
-  }
-
-  private void put(float displacement, float scale, float angle) {
     stack.pushMatrix();
-    stack.get(result);
 
-    Vector3f a = new Vector3f(0, 0, 0).mulProject(result);
-    Vector3f b = new Vector3f(displacement, 0, 0).mulProject(result);
-    Particle particleA = Particle.on(a.x, a.y);
-    Particle particleB = Particle.on(b.x, b.y);
-    world.particles.add(particleA);
-    world.particles.add(particleB);
-    world.joints.add(new SpringJoint(particleA, particleB, .1f));
-
-    stack.translate(displacement, 0, 0);
+    stack.translate(0, displacement, 0);
     stack.scale(scale, scale, 1);
     stack.rotate(angle, 0, 0, 1);
+
+    stack.get(result);
+
+    Vector3f b = new Vector3f(0, displacement, 0).mulProject(result);
+    Particle particleB = Particle.on(b.x, b.y);
+    world.particles.add(particleB);
+    if (previous != null) {
+      world.joints.add(new SpringJoint(previous, particleB, .75f));
+      if (veryPrevious != null) {
+        world.joints.add(new AngleJoint(veryPrevious, previous, particleB, .75f, angle));
+      }
+    }
+
     depth += 1;
-    applyFunction();
+    applyFunction(particleB, previous);
     depth -= 1;
+
     stack.popMatrix();
   }
 
