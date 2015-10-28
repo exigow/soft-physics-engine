@@ -17,22 +17,24 @@ public class TreeDemo extends Demo {
   private int depth = 0;
 
   {
-    Particle zero = Particle.onZero();
+    float verticalDisplacement = -256;
+    Particle zero = Particle.on(0, verticalDisplacement);
     world.particles.add(zero);
     world.joints.add(PinJoint.pin(zero));
 
-    Particle plus = Particle.on(0, 64);
+    Particle plus = Particle.on(0, verticalDisplacement + 128);
     world.particles.add(plus);
     world.joints.add(PinJoint.pin(plus));
 
+    stack.translate(0, verticalDisplacement, 0);
     applyFunction(plus, zero);
   }
 
   private void applyFunction(Particle previous, Particle veryPrevious) {
     float scale = 1f;
-    put(64, scale, .75f, previous, veryPrevious);
-    put(72, scale, 0, previous, veryPrevious);
-    put(64, scale, -.75f, previous, veryPrevious);
+    put(96, scale, .75f, previous, veryPrevious);
+    put(128, scale, 0, previous, veryPrevious);
+    put(96, scale, -.75f, previous, veryPrevious);
   }
 
   private void put(float displacement, float scale, float angle, Particle previous, Particle veryPrevious) {
