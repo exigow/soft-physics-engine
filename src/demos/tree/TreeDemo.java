@@ -31,7 +31,7 @@ public class TreeDemo extends Demo {
   private void applyFunction(Particle previous, Particle veryPrevious) {
     float scale = 1f;
     put(64, scale, .75f, previous, veryPrevious);
-    put(96, scale, 0, previous, veryPrevious);
+    put(72, scale, 0, previous, veryPrevious);
     put(64, scale, -.75f, previous, veryPrevious);
   }
 
@@ -51,14 +51,17 @@ public class TreeDemo extends Demo {
     Particle particleB = Particle.on(b.x, b.y);
     world.particles.add(particleB);
     if (previous != null) {
-      world.joints.add(new SpringJoint(previous, particleB, .75f));
+      float var = (depth + 1);
+      float powered = var * var * var;
+      float stiffness = .875f / powered;
+      world.joints.add(new SpringJoint(previous, particleB, stiffness));
       if (veryPrevious != null) {
         float desiredAngle = AngleJoint.angle2(
           new Vector2f(veryPrevious.pos.x, veryPrevious.pos.y),
           new Vector2f(particleB.pos.x, particleB.pos.y),
           new Vector2f(previous.pos.x, previous.pos.y)
         );
-        world.joints.add(new AngleJoint(veryPrevious, previous, particleB, .875f, desiredAngle));
+        world.joints.add(new AngleJoint(veryPrevious, previous, particleB, stiffness, desiredAngle));
       }
     }
 
