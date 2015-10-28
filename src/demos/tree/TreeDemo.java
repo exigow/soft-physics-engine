@@ -21,7 +21,7 @@ public class TreeDemo extends Demo {
     world.particles.add(zero);
     world.joints.add(PinJoint.pin(zero));
 
-    Particle plus = Particle.on(0, 96);
+    Particle plus = Particle.on(0, 64);
     world.particles.add(plus);
     world.joints.add(PinJoint.pin(plus));
 
