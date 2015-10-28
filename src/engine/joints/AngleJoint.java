@@ -35,7 +35,7 @@ public class AngleJoint implements Joint{
     b.pos.set(rotate(b.pos, c.pos, -diff));
   }
 
-  public float angle2(Vector2f middle, Vector2f vLeft, Vector2f vRight) {
+  public static float angle2(Vector2f middle, Vector2f vLeft, Vector2f vRight) {
     Vector2f copyLeft = new Vector2f(vLeft);
     Vector2f copyRight = new Vector2f(vRight);
     return copyLeft.sub(middle).angle(copyRight.sub(middle));

@@ -7,6 +7,7 @@ import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
 import org.joml.Matrix4f;
 import org.joml.MatrixStack;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class TreeDemo extends Demo {
@@ -20,7 +21,7 @@ public class TreeDemo extends Demo {
     world.particles.add(zero);
     world.joints.add(PinJoint.pin(zero));
 
-    Particle plus = Particle.on(0, 64);
+    Particle plus = Particle.on(0, 96);
     world.particles.add(plus);
     world.joints.add(PinJoint.pin(plus));
 
@@ -28,10 +29,10 @@ public class TreeDemo extends Demo {
   }
 
   private void applyFunction(Particle previous, Particle veryPrevious) {
-    float scale = .875f;
-    put(64, scale, .35f, previous, veryPrevious);
-    //put(96, scale, 0, previous, veryPrevious);
-    put(64, scale, -.35f, previous, veryPrevious);
+    float scale = 1f;
+    put(64, scale, .75f, previous, veryPrevious);
+    put(96, scale, 0, previous, veryPrevious);
+    put(64, scale, -.75f, previous, veryPrevious);
   }
 
   private void put(float displacement, float scale, float angle, Particle previous, Particle veryPrevious) {
@@ -52,7 +53,12 @@ public class TreeDemo extends Demo {
     if (previous != null) {
       world.joints.add(new SpringJoint(previous, particleB, .75f));
       if (veryPrevious != null) {
-        world.joints.add(new AngleJoint(veryPrevious, previous, particleB, .75f, angle));
+        float desiredAngle = AngleJoint.angle2(
+          new Vector2f(veryPrevious.pos.x, veryPrevious.pos.y),
+          new Vector2f(particleB.pos.x, particleB.pos.y),
+          new Vector2f(previous.pos.x, previous.pos.y)
+        );
+        world.joints.add(new AngleJoint(veryPrevious, previous, particleB, .875f, desiredAngle));
       }
     }
 
