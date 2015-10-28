@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import engine.Particle;
 import engine.World;
-import engine.joints.AngleJoint;
-import engine.joints.Joint;
-import engine.joints.PinJoint;
-import engine.joints.SpringJoint;
+import engine.joints.*;
 import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 
@@ -19,6 +16,7 @@ public class WorldDebugRenderer {
 
   private final static Color OUTLINE_COLOR = new Color(.223f, .258f, .278f, 1f);
   private final static Color JOINT_COLOR = new Color(.643f, .807f, .227f, 1f);
+  private final static Color COLLISION_JOINT_COLOR = new Color(.985f, .24f, .634f, 1f);
   private final static Color SHAPE_COLOR = new Color(.785f, .854f, .160f, 1);
   private final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
   private final static Color PIN_JOINT_COLOR = new Color(.733f, .329f, .458f, 1f);
@@ -75,6 +73,10 @@ public class WorldDebugRenderer {
           tick = !tick;
           prev.set(next);
         }
+      }
+      if (joint instanceof CollisionJoint) {
+        CollisionJoint collision = (CollisionJoint) joint;
+        renderLine(collision.a.pos, collision.b.pos, 8, COLLISION_JOINT_COLOR);
       }
     }
     shape.end();
