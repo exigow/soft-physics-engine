@@ -20,7 +20,7 @@ public abstract class Demo {
   public final void onRender() {
     processor.update(camera, world);
     camera.update();
-    world.simulate(Gdx.graphics.getDeltaTime(), 32);
+    world.simulate(Gdx.graphics.getDeltaTime(), 8);
     WorldDebugRenderer.render(world, camera.combined);
   }
 

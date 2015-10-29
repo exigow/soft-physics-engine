@@ -67,7 +67,7 @@ public class WorldDebugRenderer {
         boolean tick = false;
         for (float t = 0f; t <= 1f; t += .125f) {
           Vector2f a = angle.first.pos;
-          Vector2f b = angle.second.pos;
+          Vector2f b = angle.middle.pos;
           Vector2f c = angle.last.pos;
           next.x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * b.x + t * t * c.x;
           next.y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * b.y + t * t * c.y;
