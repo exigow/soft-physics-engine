@@ -13,12 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AngleDemo extends Demo {
-
-  private final List<Particle> ropeParticles = createParticles();
-  private final Collection<Joint> ropeJoints = createJointsBetween(ropeParticles);
+public class AngleJointDemo extends Demo {
 
   {
+    List<Particle> ropeParticles = createParticles();
+    Collection<Joint> ropeJoints = createJointsBetween(ropeParticles);
     world.particles.addAll(ropeParticles);
     world.joints.addAll(ropeJoints);
   }
@@ -45,7 +44,7 @@ public class AngleDemo extends Demo {
   }
 
   public static void main(String[] args) {
-    Initializer.initializeLazy(AngleDemo::new);
+    Initializer.initializeLazy(AngleJointDemo::new);
   }
 
 }
