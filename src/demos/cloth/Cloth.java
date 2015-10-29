@@ -19,29 +19,29 @@ public class Cloth {
   private final List<Particle> particles = new ArrayList<>();
   private final List<Joint> joints = new ArrayList<>();
   private final PolygonRegion region;
-  private final short segments;
+  private final short segmentsCount;
 
-  public Cloth(Vector2f centerPos, Vector2f size, int segments, float stiffness, TextureRegion textureRegion) {
-    this.segments = (short) segments;
-    float xStride = size.x / segments;
-    float yStride = size.y / segments;
-    for (int y = 0; y < segments; y++) {
-      for (int x = 0; x < segments; x++) {
+  public Cloth(Vector2f centerPos, Vector2f size, int segmentsCount, float stiffness, TextureRegion textureRegion) {
+    this.segmentsCount = (short) segmentsCount;
+    float xStride = size.x / segmentsCount;
+    float yStride = size.y / segmentsCount;
+    for (int y = 0; y < segmentsCount; y++) {
+      for (int x = 0; x < segmentsCount; x++) {
         float px = centerPos.x + x * xStride - size.x / 2f + xStride / 2f,
           py = centerPos.y + y * yStride - size.y / 2f + yStride / 2f;
         particles.add(Particle.on(px, py));
         if (x > 0)
-          joints.add(SpringJoint.connect(particles.get(y * segments + x), particles.get(y * segments + x - 1), stiffness));
+          joints.add(SpringJoint.connect(particles.get(y * segmentsCount + x), particles.get(y * segmentsCount + x - 1), stiffness));
         if (y > 0)
-          joints.add(SpringJoint.connect(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
+          joints.add(SpringJoint.connect(particles.get(y * segmentsCount + x), particles.get((y - 1) * segmentsCount + x), stiffness));
       }
     }
     int step = 6;
-    for (int i = 0; i <= segments; i += step) {
-      Particle part = particles.get(segments * segments - i - 1);
+    for (int i = 0; i <= segmentsCount; i += step) {
+      Particle part = particles.get(segmentsCount * segmentsCount - i - 1);
       joints.add(PinJoint.pinToActualPlace(part));
     }
-    region = createVbo(segments, textureRegion);
+    region = createVbo(segmentsCount, textureRegion);
   }
 
   public final Cloth flush(Simulator simulator) {
@@ -53,31 +53,32 @@ public class Cloth {
 
   private PolygonRegion createVbo(int segments, TextureRegion textureRegion) {
     float[] vertices = new float[segments * segments * 2];
-    PolygonRegion region = new PolygonRegion(textureRegion, vertices, createTriangles(segments));
-    createTextureCoordinates(region.getTextureCoords());
+    short[] indices = createGridTriangleStripIndices(segments);
+    PolygonRegion region = new PolygonRegion(textureRegion, vertices, indices);
+    createTextureCoordinates(region.getTextureCoords(), segmentsCount);
     return region;
   }
 
-  private short[] createTriangles(int segments){
+  private static short[] createGridTriangleStripIndices(int segments){
     short[] result = new short[2 * (segments - 1) * (segments - 1) * 3];
-    short rowAlert = (short) (this.segments - 1);
-    for (short i = 0, j = 0; i < (this.segments * (this.segments - 1)); i++, j += 6) {
-      if (i == rowAlert) {
+    short cycle = (short) (segments - 1);
+    for (short i = 0, j = 0; i < (segments * (segments - 1)); i++, j += 6) {
+      if (i == cycle) {
         j -= 6;
-        rowAlert += this.segments;
+        cycle += segments;
         continue;
       }
       result[j] = i;
       result[j + 1] = (short) (i + 1);
-      result[j + 2] = (short) (i + this.segments);
+      result[j + 2] = (short) (i + segments);
       result[j + 3] = (short) (i + 1);
-      result[j + 4] = (short) (i + this.segments);
-      result[j + 5] = (short) (i + this.segments + 1);
+      result[j + 4] = (short) (i + segments);
+      result[j + 5] = (short) (i + segments + 1);
     }
     return result;
   }
 
-  private void createTextureCoordinates(float[] coordinates) {
+  private static void createTextureCoordinates(float[] coordinates, int segments) {
     float size = 1f / (segments - 1);
     for (int i = 0; i < segments; i++)
       for (int j = 0; j < segments; j++) {
