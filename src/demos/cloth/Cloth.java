@@ -29,7 +29,7 @@ public class Cloth {
       for (int x = 0; x < segments; x++) {
         float px = centerPos.x + x * xStride - size.x / 2f + xStride / 2f,
           py = centerPos.y + y * yStride - size.y / 2f + yStride / 2f;
-        particles.add(new Particle(px, py));
+        particles.add(Particle.on(px, py));
         if (x > 0)
           joints.add(new SpringJoint(particles.get(y * segments + x), particles.get(y * segments + x - 1), stiffness));
         if (y > 0)

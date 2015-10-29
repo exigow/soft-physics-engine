@@ -25,7 +25,7 @@ public class AngleDemo extends Demo {
 
   private static List<Particle> createParticles() {
     return IntStream.rangeClosed(-4, 4)
-      .mapToObj(i -> new Particle(0, -i * 64))
+      .mapToObj(i -> Particle.on(0, -i * 64))
       .collect(Collectors.toList());
   }
 

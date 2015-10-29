@@ -15,9 +15,7 @@ public class Particle {
     return Particle.on(0, 0);
   }
 
-  // todo prywatyzacja
-
-  public Particle(float x, float y) {
+  private Particle(float x, float y) {
     pos.set(x, y);
     prev.set(pos);
   }
