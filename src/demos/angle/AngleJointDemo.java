@@ -34,7 +34,7 @@ public class AngleJointDemo extends Demo {
     for (int i = 0; i < particles.size() - 1; i++) {
       Particle a = particles.get(i);
       Particle b = particles.get(i + 1);
-      result.add(new SpringJoint(a, b, .5f));
+      result.add(SpringJoint.connect(a, b, .5f));
       if (i < particles.size() - 2) {
         Particle c = particles.get(i + 2);
         result.add(AngleJoint.connectStraightening(a, b, c, .25f));

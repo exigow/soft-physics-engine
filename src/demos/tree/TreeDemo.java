@@ -56,7 +56,7 @@ public class TreeDemo extends Demo {
       float var = (depth + 1);
       float powered = var * var * var;
       float stiffness = .875f / powered;
-      world.joints.add(new SpringJoint(previous, particleB, stiffness));
+      world.joints.add(SpringJoint.connect(previous, particleB, stiffness));
       if (veryPrevious != null) {
         float desiredAngle = -AngleJoint.curvatureBetween(
           new Vector2f(veryPrevious.pos.x, veryPrevious.pos.y),

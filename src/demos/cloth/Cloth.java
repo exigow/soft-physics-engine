@@ -31,9 +31,9 @@ public class Cloth {
           py = centerPos.y + y * yStride - size.y / 2f + yStride / 2f;
         particles.add(Particle.on(px, py));
         if (x > 0)
-          joints.add(new SpringJoint(particles.get(y * segments + x), particles.get(y * segments + x - 1), stiffness));
+          joints.add(SpringJoint.connect(particles.get(y * segments + x), particles.get(y * segments + x - 1), stiffness));
         if (y > 0)
-          joints.add(new SpringJoint(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
+          joints.add(SpringJoint.connect(particles.get(y * segments + x), particles.get((y - 1) * segments + x), stiffness));
       }
     }
     int step = 6;

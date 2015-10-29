@@ -41,7 +41,7 @@ public class RopeDemo extends Demo {
     joints.add(PinJoint.pinToActualPlace(previous));
     while (iterator.hasNext()) {
       Particle next = iterator.next();
-      joints.add(new SpringJoint(previous, next, .25f));
+      joints.add(SpringJoint.connect(previous, next, .25f));
       previous = next;
     }
     return joints;

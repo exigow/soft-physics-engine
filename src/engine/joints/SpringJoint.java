@@ -11,17 +11,20 @@ public class SpringJoint implements Joint {
   public float expectedLength;
   private final Vector2f normal = new Vector2f();
 
-  // todo fabryka i prywatyzacja
-
-  public SpringJoint(Particle from, Particle to, float flexibility, float expectedLength) {
+  private SpringJoint(Particle from, Particle to, float flexibility, float expectedLength) {
     this.from = from;
     this.to = to;
     this.flexibility = flexibility;
     this.expectedLength = expectedLength;
   }
 
-  public SpringJoint(Particle from, Particle to, float flexibility) {
-    this(from, to, flexibility, from.pos.distance(to.pos));
+  public static SpringJoint connect(Particle from, Particle to, float flexibility) {
+    float distance = from.pos.distance(to.pos);
+    return new SpringJoint(from, to, flexibility, distance);
+  }
+
+  public static SpringJoint connectWithFixedLength(Particle from, Particle to, float flexibility, float expectedLength) {
+    return new SpringJoint(from, to, flexibility, expectedLength);
   }
 
   @Override
