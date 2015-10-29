@@ -6,7 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import demos.utils.FingerProcessor;
-import demos.utils.rendering.WorldDebugRenderer;
+import demos.utils.rendering.DebugRenderer;
 import engine.Particle;
 import engine.Simulator;
 
@@ -23,7 +23,7 @@ public abstract class Demo {
     camera.update();
     applyGravityForEachParticle();
     simulator.simulate(8);
-    WorldDebugRenderer.render(simulator, camera.combined);
+    DebugRenderer.render(simulator, camera.combined);
   }
 
   private void applyGravityForEachParticle() {

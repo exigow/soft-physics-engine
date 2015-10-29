@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
 
-public class RenderUtils {
+class RenderingUtilities {
 
   public final static ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
 

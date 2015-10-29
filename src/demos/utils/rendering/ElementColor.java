@@ -2,7 +2,7 @@ package demos.utils.rendering;
 
 import com.badlogic.gdx.graphics.Color;
 
-public enum ElementColor {
+enum ElementColor {
 
   BACKGROUND(.454f, .541f, .592f),
   SHAPE(.785f, .854f, .160f),

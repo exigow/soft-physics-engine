@@ -14,9 +14,9 @@ import org.joml.Vector2f;
 import java.util.Collection;
 
 import static demos.utils.rendering.ElementColor.*;
-import static demos.utils.rendering.RenderUtils.*;
+import static demos.utils.rendering.RenderingUtilities.*;
 
-public class WorldDebugRenderer {
+public class DebugRenderer {
 
   public static void render(Simulator simulator, Matrix4 matrix) {
     fillBackground(BACKGROUND.color);
