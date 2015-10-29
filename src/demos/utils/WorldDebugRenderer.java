@@ -1,9 +1,9 @@
 package demos.utils;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import demos.utils.rendering.ElementColor;
 import engine.Particle;
 import engine.Simulator;
 import engine.joints.AngleJoint;
@@ -11,53 +11,41 @@ import engine.joints.Joint;
 import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
 import org.joml.Vector2f;
-import org.lwjgl.opengl.GL11;
 
 import java.util.Collection;
 
+import static demos.utils.rendering.ElementColor.*;
+import static demos.utils.rendering.RenderUtils.*;
+
 public class WorldDebugRenderer {
 
-  private final static Color OUTLINE_COLOR = new Color(.223f, .258f, .278f, 1f);
-  private final static Color JOINT_COLOR = new Color(.643f, .807f, .227f, 1f);
-  private final static Color SHAPE_COLOR = new Color(.785f, .854f, .160f, 1);
-  private final static Color BACKGROUND_COLOR = new Color(.454f, .541f, .592f, 1f);
-  private final static Color PIN_JOINT_COLOR = new Color(.733f, .329f, .458f, 1f);
-  private final static Color ANGLE_JOINT_A_COLOR = new Color(.997f, .905f, .298f, 1f);
-  private final static Color ANGLE_JOINT_B_COLOR = new Color(.356F, .751f, .921f, 1f);
-  private final static ShapeRenderer shape = new ShapeRenderer();
-
   public static void render(Simulator simulator, Matrix4 matrix) {
-    clearBackground();
-    shape.setProjectionMatrix(matrix);
+    fillBackground(BACKGROUND.color);
+    SHAPE_RENDERER.setProjectionMatrix(matrix);
     renderJoints(simulator.joints);
     renderParticles(simulator.particles);
   }
 
-  private static void clearBackground() {
-    Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
-    Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
-  }
-
   private static void renderParticles(Collection<Particle> particles) {
-    shape.begin(ShapeRenderer.ShapeType.Filled);
+    SHAPE_RENDERER.begin(ShapeRenderer.ShapeType.Filled);
     for (Particle particle : particles)
-      renderPoint(particle.pos, 5, SHAPE_COLOR);
-    shape.end();
+      renderPoint(particle.pos, 5, ElementColor.SHAPE.color);
+    SHAPE_RENDERER.end();
   }
 
   private static final Color MUTABLE_TENSION_COLOR = new Color();
   private static void renderJoints(Collection<Joint> joints) {
-    shape.begin(ShapeRenderer.ShapeType.Filled);
+    SHAPE_RENDERER.begin(ShapeRenderer.ShapeType.Filled);
     for (Joint joint : joints) {
       if (joint instanceof PinJoint) {
         PinJoint pin = (PinJoint) joint;
-        renderPoint(pin.where, 13, PIN_JOINT_COLOR);
-        renderLine(pin.where, pin.which.pos, 7, PIN_JOINT_COLOR);
+        renderPoint(pin.where, 13, PIN_JOINT.color);
+        renderLine(pin.where, pin.which.pos, 7, PIN_JOINT.color);
       }
       if (joint instanceof SpringJoint) {
         SpringJoint spring = (SpringJoint) joint;
         float tension = Math.min(tensionOf(spring), 1);
-        MUTABLE_TENSION_COLOR.set(JOINT_COLOR.r + tension, JOINT_COLOR.g - tension * .5f, JOINT_COLOR.b - tension, JOINT_COLOR.a);
+        MUTABLE_TENSION_COLOR.set(SPRING_JOINT.color.r + tension, SPRING_JOINT.color.g - tension * .5f, SPRING_JOINT.color.b - tension, SPRING_JOINT.color.a);
         renderLine(spring.from.pos, spring.to.pos, 2, MUTABLE_TENSION_COLOR);
       }
       if (joint instanceof AngleJoint) {
@@ -71,32 +59,18 @@ public class WorldDebugRenderer {
           Vector2f c = angle.last.pos;
           next.x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * b.x + t * t * c.x;
           next.y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * b.y + t * t * c.y;
-          renderLine(prev, next, 1.5f, tick ? ANGLE_JOINT_A_COLOR : ANGLE_JOINT_B_COLOR);
+          renderLine(prev, next, 1.5f, tick ? ANGLE_JOINT_A.color : ANGLE_JOINT_B.color);
           tick = !tick;
           prev.set(next);
         }
       }
     }
-    shape.end();
+    SHAPE_RENDERER.end();
   }
 
   private static float tensionOf(SpringJoint joint) {
     float length = joint.from.pos.distance(joint.to.pos);
     return Math.abs(length - joint.expectedLength) / joint.expectedLength;
-  }
-
-  private static void renderPoint(Vector2f point, float size, Color color) {
-    shape.setColor(OUTLINE_COLOR);
-    shape.circle(point.x, point.y, size / 2f + 2);
-    shape.setColor(color);
-    shape.circle(point.x, point.y, size / 2f);
-  }
-
-  private static void renderLine(Vector2f a, Vector2f b, float width, Color color) {
-    shape.setColor(OUTLINE_COLOR);
-    shape.rectLine(a.x, a.y, b.x, b.y, width + 2);
-    shape.setColor(color);
-    shape.rectLine(a.x, a.y, b.x, b.y, width);
   }
 
 }
