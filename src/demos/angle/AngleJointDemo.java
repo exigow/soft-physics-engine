@@ -30,7 +30,7 @@ public class AngleJointDemo extends Demo {
 
   private static Collection<Joint> createJointsBetween(List<Particle> particles) {
     Collection<Joint> result = new ArrayList<>();
-    result.add(PinJoint.pin(particles.get(0)));
+    result.add(PinJoint.pinToActualPlace(particles.get(0)));
     for (int i = 0; i < particles.size() - 1; i++) {
       Particle a = particles.get(i);
       Particle b = particles.get(i + 1);

@@ -13,7 +13,7 @@ public class PinJoint implements Joint {
     this.where = where;
   }
 
-  public static PinJoint pin(Particle particle) {
+  public static PinJoint pinToActualPlace(Particle particle) {
     Vector2f where = new Vector2f(particle.pos);
     return new PinJoint(particle, where);
   }

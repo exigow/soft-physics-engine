@@ -37,8 +37,10 @@ public class Cloth {
       }
     }
     int step = 6;
-    for (int i = 0; i <= segments; i += step)
-      joints.add(PinJoint.pin(particles.get(segments * segments - i - 1)));
+    for (int i = 0; i <= segments; i += step) {
+      Particle part = particles.get(segments * segments - i - 1);
+      joints.add(PinJoint.pinToActualPlace(part));
+    }
     region = createVbo(segments, textureRegion);
   }
 

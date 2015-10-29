@@ -20,11 +20,11 @@ public class TreeDemo extends Demo {
     float verticalDisplacement = -256;
     Particle zero = Particle.on(0, verticalDisplacement);
     world.particles.add(zero);
-    world.joints.add(PinJoint.pin(zero));
+    world.joints.add(PinJoint.pinToActualPlace(zero));
 
     Particle plus = Particle.on(0, verticalDisplacement + 128);
     world.particles.add(plus);
-    world.joints.add(PinJoint.pin(plus));
+    world.joints.add(PinJoint.pinToActualPlace(plus));
 
     stack.translate(0, verticalDisplacement, 0);
     applyFunction(plus, zero);
