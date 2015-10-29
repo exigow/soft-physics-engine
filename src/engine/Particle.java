@@ -20,9 +20,9 @@ public class Particle {
     prev.set(pos);
   }
 
-  public void reset(float x, float y) {
-    pos.set(x, y);
-    prev.set(x, y);
+  public void reset(Vector2f desired) {
+    pos.set(desired);
+    prev.set(desired);
   }
 
 }

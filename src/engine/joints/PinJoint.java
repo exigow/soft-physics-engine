@@ -20,7 +20,7 @@ public class PinJoint implements Joint {
 
   @Override
   public void relax(float delta) {
-    which.reset(where.x, where.y);
+    which.reset(where);
   }
 
 }

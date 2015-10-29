@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import engine.Particle;
 import engine.World;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,7 +69,7 @@ public class FingerProcessor {
         if (pinched != null)
           pinched = null;
       if (pinched != null)
-        pinched.reset(position.x, position.y);
+        pinched.reset(new Vector2f(position.x, position.y));
     }
 
   }
