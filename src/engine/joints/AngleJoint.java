@@ -32,10 +32,10 @@ public class AngleJoint implements Joint {
   @Override
   public void relax(float delta) {
     float diff = computeAngleDifference(delta);
-    first.pos.set(rotate(first.pos, middle.pos, diff));
-    last.pos.set(rotate(last.pos, middle.pos, -diff));
-    middle.pos.set(rotate(middle.pos, first.pos, diff));
-    middle.pos.set(rotate(middle.pos, last.pos, -diff));
+    first.pos.set(computeAngleDifferenceVectorBetween(first.pos, middle.pos, diff));
+    last.pos.set(computeAngleDifferenceVectorBetween(last.pos, middle.pos, -diff));
+    middle.pos.set(computeAngleDifferenceVectorBetween(middle.pos, first.pos, diff));
+    middle.pos.set(computeAngleDifferenceVectorBetween(middle.pos, last.pos, -diff));
   }
 
   private float computeAngleDifference(float delta) {
@@ -57,12 +57,12 @@ public class AngleJoint implements Joint {
     return middleDelta.angle(lastDelta);
   }
 
-  private static Vector2f rotate(Vector2f from, Vector2f origin, float theta) {
-    float x = from.x - origin.x;
-    float y = from.y - origin.y;
-    float cos = (float) Math.cos(theta);
-    float sin = (float) Math.sin(theta);
-    return new Vector2f(x * cos - y*sin + origin.x, x * sin + y * cos + origin.y);
+  private static Vector2f computeAngleDifferenceVectorBetween(Vector2f from, Vector2f to, float angle) {
+    float deltaX = from.x - to.x;
+    float deltaY = from.y - to.y;
+    float cos = (float) Math.cos(angle);
+    float sin = (float) Math.sin(angle);
+    return new Vector2f(deltaX * cos - deltaY*sin + to.x, deltaX * sin + deltaY * cos + to.y);
   }
 
 }
