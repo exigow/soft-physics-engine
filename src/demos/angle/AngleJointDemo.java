@@ -18,8 +18,8 @@ public class AngleJointDemo extends Demo {
   {
     List<Particle> ropeParticles = createParticles();
     Collection<Joint> ropeJoints = createJointsBetween(ropeParticles);
-    world.particles.addAll(ropeParticles);
-    world.joints.addAll(ropeJoints);
+    simulator.particles.addAll(ropeParticles);
+    simulator.joints.addAll(ropeJoints);
   }
 
   private static List<Particle> createParticles() {

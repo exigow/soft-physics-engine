@@ -10,7 +10,7 @@ public class ClothDemo extends Demo {
 
   private final PolygonSpriteBatch polygonSpriteBatch = new PolygonSpriteBatch();
   private final TextureRegion region = new TextureRegion(DemoTextureLoader.loadTroll());
-  private final Cloth cloth = new Cloth(new Vector2f(0f, 0f), new Vector2f(512, 512), 25, .75f, region).flush(world);
+  private final Cloth cloth = new Cloth(new Vector2f(0f, 0f), new Vector2f(512, 512), 25, .75f, region).flush(simulator);
 
   @Override
   public void onUpdate() {

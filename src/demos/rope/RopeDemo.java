@@ -24,8 +24,8 @@ public class RopeDemo extends Demo {
   private final RopeRenderer ropeRenderer = new RopeRenderer();
 
   {
-    world.particles.addAll(ropeParticles);
-    world.joints.addAll(ropeJoints);
+    simulator.particles.addAll(ropeParticles);
+    simulator.joints.addAll(ropeJoints);
   }
 
   private static List<Particle> createParticles() {

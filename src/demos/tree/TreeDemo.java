@@ -19,12 +19,12 @@ public class TreeDemo extends Demo {
   {
     float verticalDisplacement = -256;
     Particle zero = Particle.on(0, verticalDisplacement);
-    world.particles.add(zero);
-    world.joints.add(PinJoint.pinToActualPlace(zero));
+    simulator.particles.add(zero);
+    simulator.joints.add(PinJoint.pinToActualPlace(zero));
 
     Particle plus = Particle.on(0, verticalDisplacement + 128);
-    world.particles.add(plus);
-    world.joints.add(PinJoint.pinToActualPlace(plus));
+    simulator.particles.add(plus);
+    simulator.joints.add(PinJoint.pinToActualPlace(plus));
 
     stack.translate(0, verticalDisplacement, 0);
     applyFunction(plus, zero);
@@ -51,19 +51,19 @@ public class TreeDemo extends Demo {
 
     Vector3f b = new Vector3f(0, displacement, 0).mulProject(result);
     Particle particleB = Particle.on(b.x, b.y);
-    world.particles.add(particleB);
+    simulator.particles.add(particleB);
     if (previous != null) {
       float var = (depth + 1);
       float powered = var * var * var;
       float stiffness = .875f / powered;
-      world.joints.add(SpringJoint.connect(previous, particleB, stiffness));
+      simulator.joints.add(SpringJoint.connect(previous, particleB, stiffness));
       if (veryPrevious != null) {
         float desiredAngle = -AngleJoint.curvatureBetween(
           new Vector2f(veryPrevious.pos.x, veryPrevious.pos.y),
           new Vector2f(previous.pos.x, previous.pos.y),
           new Vector2f(particleB.pos.x, particleB.pos.y)
         );
-        world.joints.add(AngleJoint.connect(veryPrevious, previous, particleB, stiffness, desiredAngle));
+        simulator.joints.add(AngleJoint.connect(veryPrevious, previous, particleB, stiffness, desiredAngle));
       }
     }
 

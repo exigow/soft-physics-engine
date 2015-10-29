@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import engine.Particle;
-import engine.World;
+import engine.Simulator;
 import engine.joints.AngleJoint;
 import engine.joints.Joint;
 import engine.joints.PinJoint;
@@ -26,11 +26,11 @@ public class WorldDebugRenderer {
   private final static Color ANGLE_JOINT_B_COLOR = new Color(.356F, .751f, .921f, 1f);
   private final static ShapeRenderer shape = new ShapeRenderer();
 
-  public static void render(World world, Matrix4 matrix) {
+  public static void render(Simulator simulator, Matrix4 matrix) {
     clearBackground();
     shape.setProjectionMatrix(matrix);
-    renderJoints(world.joints);
-    renderParticles(world.particles);
+    renderJoints(simulator.joints);
+    renderParticles(simulator.particles);
   }
 
   private static void clearBackground() {

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import engine.Particle;
-import engine.World;
+import engine.Simulator;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -26,9 +26,9 @@ public class FingerProcessor {
     return new FingerProcessor(fingers);
   }
 
-  public void update(OrthographicCamera camera, World world) {
+  public void update(OrthographicCamera camera, Simulator simulator) {
     for (Finger finger : fingers)
-      finger.update(camera, world.particles);
+      finger.update(camera, simulator.particles);
   }
 
   private static Particle findNearestTo(Collection<Particle> particles, Vector2 position) {

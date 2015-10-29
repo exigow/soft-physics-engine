@@ -6,21 +6,27 @@ import org.joml.Vector2f;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class World {
+public class Simulator {
 
   public final Collection<Particle> particles = new ArrayList<>();
   public final Collection<Joint> joints = new ArrayList<>();
-  public float gravity = 7f;
 
-  public void simulate(float deltaTime, int iterations) {
+  public void simulate(int iterations) {
+    updateVerletParticles();
+    relaxJoints(iterations);
+  }
+
+  private void updateVerletParticles() {
     Vector2f velocity = new Vector2f();
     for (Particle particle : particles) {
       velocity.set(-particle.prev.x + particle.pos.x, -particle.prev.y + particle.pos.y);
-      velocity.y -= gravity * deltaTime;
       particle.prev.set(particle.pos);
       particle.pos.add(velocity);
     }
-    float delta = 1.0f / iterations;
+  }
+
+  private void relaxJoints(float iterations) {
+    float delta = 1f / iterations;
     for (int iteration = 0; iteration < iterations; ++iteration)
       for (Joint joint : joints)
         joint.relax(delta);

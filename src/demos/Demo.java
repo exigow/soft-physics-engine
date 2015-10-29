@@ -7,21 +7,29 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import demos.utils.FingerProcessor;
 import demos.utils.WorldDebugRenderer;
-import engine.World;
+import engine.Particle;
+import engine.Simulator;
 
 import java.util.function.Supplier;
 
 public abstract class Demo {
 
-  protected final World world = new World();
+  protected final Simulator simulator = new Simulator();
   protected final OrthographicCamera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
   private final FingerProcessor processor = FingerProcessor.withFingerCount(4);
 
   public final void onRender() {
-    processor.update(camera, world);
+    processor.update(camera, simulator);
     camera.update();
-    world.simulate(Gdx.graphics.getDeltaTime(), 8);
-    WorldDebugRenderer.render(world, camera.combined);
+    applyGravityForEachParticle();
+    simulator.simulate(8);
+    WorldDebugRenderer.render(simulator, camera.combined);
+  }
+
+  private void applyGravityForEachParticle() {
+    float delta = Gdx.graphics.getDeltaTime();
+    for (Particle particle : simulator.particles)
+      particle.pos.y -= 7f * delta;
   }
 
   public void onUpdate() {

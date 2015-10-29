@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import engine.Particle;
-import engine.World;
+import engine.Simulator;
 import engine.joints.Joint;
 import engine.joints.PinJoint;
 import engine.joints.SpringJoint;
@@ -44,10 +44,10 @@ public class Cloth {
     region = createVbo(segments, textureRegion);
   }
 
-  public final Cloth flush(World world) {
+  public final Cloth flush(Simulator simulator) {
     Collections.shuffle(joints);
-    world.joints.addAll(joints);
-    world.particles.addAll(particles);
+    simulator.joints.addAll(joints);
+    simulator.particles.addAll(particles);
     return this;
   }
 
