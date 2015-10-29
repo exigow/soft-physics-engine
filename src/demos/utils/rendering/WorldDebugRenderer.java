@@ -57,18 +57,21 @@ public class WorldDebugRenderer {
 
   private static void renderAngleJoint(AngleJoint joint) {
     Vector2f prev = new Vector2f(joint.first.pos);
-    Vector2f next = new Vector2f();
     boolean tick = false;
-    for (float t = 0f; t <= 1f; t += .125f) {
-      Vector2f a = joint.first.pos;
-      Vector2f b = joint.middle.pos;
-      Vector2f c = joint.last.pos;
-      next.x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * b.x + t * t * c.x;
-      next.y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * b.y + t * t * c.y;
-      renderLine(prev, next, 1.5f, tick ? ANGLE_JOINT_A.color : ANGLE_JOINT_B.color);
+    for (float slide = 0f; slide <= 1f; slide += .125f) {
+      Vector2f computed = curvePoint(joint.first.pos, joint.middle.pos, joint.last.pos, slide);
+      renderLine(prev, computed, 1.5f, tick ? ANGLE_JOINT_A.color : ANGLE_JOINT_B.color);
       tick = !tick;
-      prev.set(next);
+      prev.set(computed);
     }
+  }
+
+  private static Vector2f curvePoint(Vector2f from, Vector2f control, Vector2f to, float slide) {
+    float reversed = (1 - slide);
+    return new Vector2f(
+      reversed * reversed * from.x + 2 * reversed * slide * control.x + slide * slide * to.x,
+      reversed * reversed * from.y + 2 * reversed * slide * control.y + slide * slide * to.y
+    );
   }
 
   private static float tensionOf(SpringJoint joint) {
