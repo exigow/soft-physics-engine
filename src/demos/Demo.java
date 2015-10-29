@@ -6,7 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import demos.utils.FingerProcessor;
-import demos.utils.WorldDebugRenderer;
+import demos.utils.rendering.WorldDebugRenderer;
 import engine.Particle;
 import engine.Simulator;
 
