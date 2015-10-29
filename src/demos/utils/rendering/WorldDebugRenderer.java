@@ -29,7 +29,7 @@ public class WorldDebugRenderer {
 
   private static void renderParticles(Collection<Particle> particles) {
     for (Particle particle : particles)
-      renderPoint(particle.pos, 5, ElementColor.SHAPE.color);
+      renderPoint(particle.pos, 5, SHAPE.color);
   }
 
   private static void renderJoints(Collection<Joint> joints) {
