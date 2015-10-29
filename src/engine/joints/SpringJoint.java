@@ -9,7 +9,6 @@ public class SpringJoint implements Joint {
   public final Particle to;
   private final float flexibility;
   public float expectedLength;
-  private final Vector2f normal = new Vector2f();
 
   private SpringJoint(Particle from, Particle to, float flexibility, float expectedLength) {
     this.from = from;
@@ -29,8 +28,7 @@ public class SpringJoint implements Joint {
 
   @Override
   public void relax(float delta) {
-    normal.x = -to.pos.x + from.pos.x;
-    normal.y = -to.pos.y + from.pos.y;
+    Vector2f normal = new Vector2f(to.pos).negate().add(from.pos);
     float scalar = (expectedLength / normal.length() - 1f) * flexibility * delta;
     normal.mul(scalar);
     from.pos.add(normal);
