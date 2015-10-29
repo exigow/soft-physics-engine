@@ -3,39 +3,45 @@ package engine.joints;
 import engine.Particle;
 import org.joml.Vector2f;
 
-public class AngleJoint implements Joint{
+public class AngleJoint implements Joint {
 
-  public final Particle a;
-  public final Particle b;
-  public final Particle c;
+  public final Particle first;
+  public final Particle second;
+  public final Particle last;
   private final float stiffness;
   private final float convolution;
 
-  // todo fabryka i prywatyzacja
-
-  public AngleJoint(Particle a, Particle b, Particle c, float stiffness, float convolution) {
-    this.a = a;
-    this.b = b;
-    this.c = c;
+  private AngleJoint(Particle first, Particle second, Particle last, float stiffness, float convolution) {
+    this.first = first;
+    this.second = second;
+    this.last = last;
     this.stiffness = stiffness;
     this.convolution = convolution;
   }
 
+  public static AngleJoint connect(Particle first, Particle second, Particle last, float stiffness, float convolution) {
+    return new AngleJoint(first, second, last, stiffness, convolution);
+  }
+
+  public static AngleJoint connectStraightening(Particle first, Particle second, Particle last, float stiffness) {
+    return new AngleJoint(first, second, last, stiffness, 0f);
+  }
+
   @Override
   public void relax(float delta) {
-    float diff = angle2(a.pos, b.pos, c.pos) + convolution;
+    float diff = curvatureBetween(first.pos, second.pos, last.pos) + convolution;
     if (diff <= -Math.PI)
       diff += 2*Math.PI;
     else if (diff >= Math.PI)
       diff -= 2*Math.PI;
     diff *= stiffness * delta;
-    a.pos.set(rotate(a.pos, b.pos, diff));
-    c.pos.set(rotate(c.pos, b.pos, -diff));
-    b.pos.set(rotate(b.pos, a.pos, diff));
-    b.pos.set(rotate(b.pos, c.pos, -diff));
+    first.pos.set(rotate(first.pos, second.pos, diff));
+    last.pos.set(rotate(last.pos, second.pos, -diff));
+    second.pos.set(rotate(second.pos, first.pos, diff));
+    second.pos.set(rotate(second.pos, last.pos, -diff));
   }
 
-  public static float angle2(Vector2f middle, Vector2f vLeft, Vector2f vRight) {
+  public static float curvatureBetween(Vector2f middle, Vector2f vLeft, Vector2f vRight) {
     Vector2f copyLeft = new Vector2f(vLeft);
     Vector2f copyRight = new Vector2f(vRight);
     return copyLeft.sub(middle).angle(copyRight.sub(middle));

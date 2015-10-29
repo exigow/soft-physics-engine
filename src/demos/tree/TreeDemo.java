@@ -58,12 +58,12 @@ public class TreeDemo extends Demo {
       float stiffness = .875f / powered;
       world.joints.add(new SpringJoint(previous, particleB, stiffness));
       if (veryPrevious != null) {
-        float desiredAngle = AngleJoint.angle2(
+        float desiredAngle = AngleJoint.curvatureBetween(
           new Vector2f(veryPrevious.pos.x, veryPrevious.pos.y),
           new Vector2f(particleB.pos.x, particleB.pos.y),
           new Vector2f(previous.pos.x, previous.pos.y)
         );
-        world.joints.add(new AngleJoint(veryPrevious, previous, particleB, stiffness, desiredAngle));
+        world.joints.add(AngleJoint.connect(veryPrevious, previous, particleB, stiffness, desiredAngle));
       }
     }
 

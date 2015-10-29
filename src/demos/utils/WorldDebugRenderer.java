@@ -62,13 +62,13 @@ public class WorldDebugRenderer {
       }
       if (joint instanceof AngleJoint) {
         AngleJoint angle = (AngleJoint) joint;
-        Vector2f prev = new Vector2f(angle.a.pos);
+        Vector2f prev = new Vector2f(angle.first.pos);
         Vector2f next = new Vector2f();
         boolean tick = false;
         for (float t = 0f; t <= 1f; t += .125f) {
-          Vector2f a = angle.a.pos;
-          Vector2f b = angle.b.pos;
-          Vector2f c = angle.c.pos;
+          Vector2f a = angle.first.pos;
+          Vector2f b = angle.second.pos;
+          Vector2f c = angle.last.pos;
           next.x = (1 - t) * (1 - t) * a.x + 2 * (1 - t) * t * b.x + t * t * c.x;
           next.y = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * b.y + t * t * c.y;
           renderLine(prev, next, 1.5f, tick ? ANGLE_JOINT_A_COLOR : ANGLE_JOINT_B_COLOR);
