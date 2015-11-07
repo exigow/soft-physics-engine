@@ -19,10 +19,8 @@ public class Cloth {
   private final List<Particle> particles = new ArrayList<>();
   private final List<Joint> joints = new ArrayList<>();
   private final PolygonRegion region;
-  private final short segmentsCount;
 
   public Cloth(Vector2f centerPos, Vector2f size, int segmentsCount, float stiffness, TextureRegion textureRegion) {
-    this.segmentsCount = (short) segmentsCount;
     float xStride = size.x / segmentsCount;
     float yStride = size.y / segmentsCount;
     for (int y = 0; y < segmentsCount; y++) {
@@ -55,7 +53,7 @@ public class Cloth {
     float[] vertices = new float[segments * segments * 2];
     short[] indices = createGridTriangleStripIndices(segments);
     PolygonRegion region = new PolygonRegion(textureRegion, vertices, indices);
-    createTextureCoordinates(region.getTextureCoords(), segmentsCount);
+    createTextureCoordinates(region.getTextureCoords(), segments);
     return region;
   }
 
