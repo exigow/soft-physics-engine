@@ -54,7 +54,7 @@ public class RopeDemo extends Demo {
   }
 
   public static void main(String[] args) {
-    Initializer.initializeLazy(RopeDemo::new);
+    GdxInitializer.initializeLazy(RopeDemo::new);
   }
 
 }

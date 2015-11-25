@@ -44,7 +44,7 @@ public class AngleJointDemo extends Demo {
   }
 
   public static void main(String[] args) {
-    Initializer.initializeLazy(AngleJointDemo::new);
+    GdxInitializer.initializeLazy(AngleJointDemo::new);
   }
 
 }

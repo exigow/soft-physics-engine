@@ -20,7 +20,7 @@ public class ClothDemo extends Demo {
   }
 
   public static void main(String[] args) {
-    Initializer.initializeLazy(ClothDemo::new);
+    GdxInitializer.initializeLazy(ClothDemo::new);
   }
 
 }

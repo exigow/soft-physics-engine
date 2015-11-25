@@ -75,7 +75,7 @@ public class TreeDemo extends Demo {
   }
 
   public static void main(String[] args) {
-    Initializer.initializeLazy(TreeDemo::new);
+    GdxInitializer.initializeLazy(TreeDemo::new);
   }
 
 }

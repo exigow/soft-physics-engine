@@ -35,17 +35,17 @@ public abstract class Demo {
   public void onUpdate() {
   }
 
-  protected static class Initializer implements ApplicationListener {
+  protected static class GdxInitializer implements ApplicationListener {
 
     public final Supplier<Demo> supplier;
     private Demo demo;
 
-    private Initializer(Supplier<Demo> supplier) {
+    private GdxInitializer(Supplier<Demo> supplier) {
       this.supplier = supplier;
     }
 
     public static void initializeLazy(Supplier<Demo> supplier) {
-      new LwjglApplication(new Initializer(supplier), createDefaultConfiguration());
+      new LwjglApplication(new GdxInitializer(supplier), createDefaultConfiguration());
     }
 
     @Override
