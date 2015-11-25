@@ -1,7 +1,7 @@
 Soft Physics Engine
 ===================
 
-A simple soft physics engine fully written in Java.
+A simple 2D soft physics engine fully written in Java.
 
 Design goal
 -----------
