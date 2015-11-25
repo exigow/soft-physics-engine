@@ -18,6 +18,8 @@ Library contains several usage examples in an interesting way, or showing some f
 * [Rope rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/rope) - textured rope smoothed using Bezier curves
 * [Angle joint demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/angle) - stiffened rope with angle joint
 
+Demos are interactive. You can grab every particle using left mouse button. Multi-touch has been tested on mobile devices too.
+
 Dependencies
 ------------
 
