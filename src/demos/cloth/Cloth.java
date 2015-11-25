@@ -1,5 +1,6 @@
 package demos.cloth;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +21,7 @@ public class Cloth {
   private final List<Joint> joints = new ArrayList<>();
   private final PolygonRegion region;
 
-  public Cloth(Vector2f centerPos, Vector2f size, int segments, float stiffness, TextureRegion textureRegion) {
+  public Cloth(Vector2f centerPos, Vector2f size, int segments, float stiffness, Texture texture) {
     Vector2f stride = new Vector2f(size).mul(1f / segments);
     for (int y = 0; y < segments; y++) {
       for (int x = 0; x < segments; x++) {
@@ -40,7 +41,7 @@ public class Cloth {
       Particle part = particles.get(segments * segments - i - 1);
       joints.add(PinJoint.pinToActualPlace(part));
     }
-    region = createVbo(segments, textureRegion);
+    region = createVbo(segments, texture);
   }
 
   public Cloth flush(Simulator simulator) {
@@ -50,10 +51,10 @@ public class Cloth {
     return this;
   }
 
-  private PolygonRegion createVbo(int segments, TextureRegion textureRegion) {
+  private static PolygonRegion createVbo(int segments, Texture texture) {
     float[] vertices = new float[segments * segments * 2];
     short[] indices = createGridTriangleStripIndices(segments);
-    PolygonRegion region = new PolygonRegion(textureRegion, vertices, indices);
+    PolygonRegion region = new PolygonRegion(new TextureRegion(texture), vertices, indices);
     createTextureCoordinates(region.getTextureCoords(), segments);
     return region;
   }
