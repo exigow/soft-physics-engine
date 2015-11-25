@@ -24,9 +24,11 @@ public class Cloth {
     Vector2f stride = new Vector2f(size).mul(1f / segments);
     for (int y = 0; y < segments; y++) {
       for (int x = 0; x < segments; x++) {
-        float px = centerPos.x + x * stride.x - size.x / 2f + stride.x / 2f,
-          py = centerPos.y + y * stride.y - size.y / 2f + stride.y / 2f;
-        particles.add(Particle.on(px, py));
+        Vector2f position = new Vector2f(
+          centerPos.x + x * stride.x - size.x / 2f + stride.x / 2f,
+          centerPos.y + y * stride.y - size.y / 2f + stride.y / 2f
+        );
+        particles.add(Particle.on(position.x, position.y));
         if (x > 0)
           joints.add(SpringJoint.connect(particles.get(y * segments + x), particles.get(y * segments + x - 1), stiffness));
         if (y > 0)
