@@ -6,17 +6,17 @@ A simple soft physics engine fully written in Java.
 Design goal
 -----------
 
-The main goal is to provide easy-to-use, feature-rich physics engine completely written in Java, where each element (model) can be parametrized on-the-fly during simulation by simply assigning the new value of the field.
+The main goal is to provide easy-to-use, feature-rich physics engine completely written in Java, where each model can be parametrized on-the-fly during simulation by simply assigning the new value of the field. It is as simple as it sounds.
 
 Demos
 -----
 
-Library contains several usage examples of engine in an interesting way, or showing some feature.
+Library contains several usage examples in an interesting way, or showing some feature.
 
 * [Cloth rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/cloth) - textured grid-based cloth
-* [Tree demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/tree) - physical-based tree based on angle joint
+* [Tree demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/tree) - building tree with angle joint
 * [Rope rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/rope) - textured rope smoothed using Bezier curves
-* [Angle joint demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/angle) - stiffened rope (angle joint)
+* [Angle joint demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/angle) - stiffened rope with angle joint
 
 Dependencies
 ------------
