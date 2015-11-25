@@ -43,7 +43,7 @@ public class Cloth {
     region = createVbo(segments, textureRegion);
   }
 
-  public final Cloth flush(Simulator simulator) {
+  public Cloth flush(Simulator simulator) {
     Collections.shuffle(joints);
     simulator.joints.addAll(joints);
     simulator.particles.addAll(particles);
