@@ -1,6 +1,8 @@
 Soft Physics Engine
 ===================
 
+![alt text] (https://raw.githubusercontent.com/exigow/soft-physics-engine/master/screenshots/logo.png "Soft Physics Engine logo")
+
 A simple 2D soft physics engine fully written in Java.
 
 Design goal
@@ -13,9 +15,9 @@ Demos
 
 Library contains several usage examples in an interesting way, or showing some feature.
 
-* [Cloth rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/cloth) - textured grid-based cloth
-* [Tree demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/tree) - building tree with angle joint
-* [Rope rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/rope) - textured rope smoothed using Bezier curves
+* [Cloth rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/cloth) ([screenshot] (https://raw.githubusercontent.com/exigow/soft-physics-engine/master/screenshots/cloth-screenshot.png)) - textured grid-based cloth
+* [Tree demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/tree) ([screenshot] (https://raw.githubusercontent.com/exigow/soft-physics-engine/master/screenshots/tree-demo-screenshot.png)) - building tree with angle joint
+* [Rope rendering demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/rope) ([screenshot] (https://raw.githubusercontent.com/exigow/soft-physics-engine/master/screenshots/rope-demo-screenshot.png)) - textured rope smoothed using Bezier curves
 * [Angle joint demo] (https://github.com/exigow/soft-physics-engine/tree/master/src/demos/angle) - stiffened rope with angle joint
 
 Demos are interactive. You can grab every particle using *left mouse button* on desktop. Multi-touch has been tested on mobile devices too.
